@@ -6,6 +6,7 @@ import java.io.*;
 
 //Client : un thread par socket, on crée plusieurs socket sur le même port, 
 //en plus du main thread
+//c'est le test
 
 public class clientTCP {
 	public static void main (String [] args) {
