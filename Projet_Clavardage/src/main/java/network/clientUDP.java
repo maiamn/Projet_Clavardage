@@ -56,7 +56,7 @@ public class clientUDP {
 	}
 	
 	public static void main (String [] args) {
-		broadcast("coucou les petits") ;
+		broadcast("test fonction broadcast") ;
 	}
 
 }
