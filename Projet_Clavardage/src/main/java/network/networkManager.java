@@ -14,4 +14,19 @@ public class networkManager {
 	 * donc si on n'a pas de réponse on dit que c'est OK
 	 */
 
+	// Fonctions possibles:
+	/*
+	 * - Traitement des des paquets broadcasts
+	 * 
+	 * - Communication avec l'<interface table>
+	 * 
+	 * - Broadcast de connexion username (timer a part?)
+	 * 
+	 * - Broadcast de deconnexion
+	 * 
+	 * - Reponse des paquets Broadcast
+	 * 
+	 * - Traitement des paquets TCP aka message users
+	 * */
+	
 }
