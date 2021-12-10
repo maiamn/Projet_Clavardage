@@ -9,10 +9,10 @@ import java.net.NetworkInterface ;
 
 public class clientUDP {
 	
-	// Constructor
-	public clientUDP() {
+	// Constructor => not needed 'cause only used methods are static aka can be called without creating the object
+	//public clientUDP() {
 		// ....
-	}
+	//}
 	
 	public static void broadcast (String msg) {
 		
