@@ -2,18 +2,21 @@ package network;
 
 import java.net.DatagramSocket ;
 import java.net.DatagramPacket ;
+// import table interface
 
-public class serverUDP {
+public class serverUDP implements Runnable {
 	
 	// Constructor
-	public serverUDP() {
-		// ....
+	int port;
+	int length;
+	
+	public serverUDP(int port, int length) {
+		this.port = port;
+		this.length = length;
 	}
 	
-	public static void main (String [] args) {
-		
-		int port = 5000;
-		int length = 50000 ;
+	// Communication directe avec table
+	public void run() {
 		try {
 			DatagramSocket socket = new DatagramSocket(port);
 			DatagramPacket packet = null;
@@ -23,6 +26,7 @@ public class serverUDP {
 				packet = new DatagramPacket(buffer, buffer.length);
 				socket.receive(packet);
 				String data = new String(packet.getData(), 0, packet.getLength());
+				
 				System.out.println("Client : " + data);
 				
 				//clear buffer
@@ -32,7 +36,6 @@ public class serverUDP {
 		catch (Exception e){
 			System.out.println(e);
 		}
-		
 	}
 
 }
