@@ -42,6 +42,7 @@ public class serverTCP extends Thread {
 		}
 		catch (Exception e){
 			System.out.println(e);
+			// test 
 		}
 		
 	}
