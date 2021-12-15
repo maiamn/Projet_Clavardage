@@ -5,11 +5,11 @@ import java.net.DatagramPacket ;
 // import table interface
 
 public class ServerUDP implements Runnable {
-	
-	// Constructor
+	// Attributs 
 	int port;
 	int length;
 	
+	// Constructor
 	public ServerUDP(int port, int length) {
 		this.port = port;
 		this.length = length;

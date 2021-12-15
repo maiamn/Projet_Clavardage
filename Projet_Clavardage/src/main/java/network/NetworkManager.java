@@ -4,20 +4,25 @@ import java.io.*;
 
 public class NetworkManager {
 	
+	// Attributs 
 	ClientUDP clientBroadcast;
 	ServerTCP serverTCP ; 
 	
+	
+	// Constructeur 
 	public NetworkManager() {
 		this.clientBroadcast = new ClientUDP();
 		this.serverTCP = new ServerTCP() ; 
 	}
 	
+	
+	// Mise en forme des messages 
 	public String messageFormatter(int type,String message) {
-		return (type+"|"+message);
+		return (type + "|" + message);
 	}
 	
 	
-	
+	// Disponibilité du pseudo 
 	public synchronized boolean usernameAvailable(String username) {
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
@@ -67,7 +72,6 @@ public class NetworkManager {
 	 * 
 	 * - Traitement des paquets TCP aka message users
 	 * */
-	
-	
+		
 	
 }
