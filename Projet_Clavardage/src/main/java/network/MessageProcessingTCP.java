@@ -9,14 +9,15 @@ import java.net.Socket;
 public class MessageProcessingTCP implements Runnable {
 	Socket clientSocket ;
 	ServerSocket serverSocket ;
-	
+	ServerTCP serverTCP ; 
 	String message;
 	boolean isAvailable;
 	
 	
-	public MessageProcessingTCP(Socket client, ServerSocket server) {
-		clientSocket = client ;
-		serverSocket = server ;
+	public MessageProcessingTCP(Socket client, ServerSocket serverSocket, ServerTCP serverTCP) {
+		this.clientSocket = client ;
+		this.serverSocket = serverSocket ;
+		this.serverTCP = serverTCP ; 
 	}
 	
 	public void dataFilter(String msg) {
@@ -28,16 +29,34 @@ public class MessageProcessingTCP implements Runnable {
 		}
 	}
 	
+	public void forbidUsername() {
+		// Prevenir le serveur que le pseudo n'est pas disponible
+		this.serverTCP.isAvailable = false ;
+		// Reset le booleen isAvailable de MessageProcessingTCP 
+		this.isAvailable = true ; 
+	}
+	
+	public void processMessage() {
+		System.out.println(this.message) ; 
+	}
+	
+	
 	public void run() {
 		BufferedReader input ;		
 		try {
 			input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 			String msg ;
 			msg = input.readLine();
-			while (msg != null ) {
-				System.out.println("Client " + msg);
-				msg = input.readLine();
+			
+			dataFilter(msg) ; 
+			
+			// Traitement du message selon la disponibilite du pseudo
+			if (!this.isAvailable) {
+				forbidUsername() ; 
+			} else {
+				processMessage() ; 
 			}
+			
 			clientSocket.close() ;
 			serverSocket.close();
 			input.close();
@@ -45,7 +64,9 @@ public class MessageProcessingTCP implements Runnable {
 		catch (Exception e) {
 			System.out.println(e) ;
 		}
+		
 	}
+
 	
 	public boolean getAvailable() {
 		return this.isAvailable;

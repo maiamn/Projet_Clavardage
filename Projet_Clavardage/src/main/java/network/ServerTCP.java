@@ -17,7 +17,12 @@ public class ServerTCP extends Thread {
 	
 	boolean isAvailable = true;	
 	
-	public static void main (String [] args) {
+	public boolean getAvailable() {
+		return this.isAvailable ; 
+	}
+	
+	
+	public void main (String [] args) {
 		int port = 5000;
 		Socket clientSocket ; //on ne veut pas l'initialiser
 		ServerSocket serverSocket ;
@@ -30,12 +35,15 @@ public class ServerTCP extends Thread {
 				System.out.println("Waiting for connection") ;
 				clientSocket = serverSocket.accept();
 				System.out.println("Connection successful") ;
-				new Thread(new MessageProcessingTCP (clientSocket, serverSocket)).start() ;
+				new Thread(new MessageProcessingTCP (clientSocket, serverSocket, this)).start() ;
 			}
+			
 		}
 		catch (Exception e){
 			System.out.println(e);
 		}
+		
+		this.isAvailable = true ; 
 		
 	}
 }

@@ -5,9 +5,11 @@ import java.io.*;
 public class NetworkManager {
 	
 	ClientUDP clientBroadcast;
+	ServerTCP serverTCP ; 
 	
 	public NetworkManager() {
-		clientBroadcast = new ClientUDP();
+		this.clientBroadcast = new ClientUDP();
+		this.serverTCP = new ServerTCP() ; 
 	}
 	
 	public String messageFormatter(int type,String message) {
@@ -17,28 +19,26 @@ public class NetworkManager {
 	
 	
 	public synchronized boolean usernameAvailable(String username) {
-		boolean isAvailable = false;
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
 		
 		ClientUDP.broadcast(username);
-		while(!isAvailable  || timeElapsed<1000) {
-			// regarder reponse du serverTCP
+		while(timeElapsed<1000) {
 			finish = System.currentTimeMillis();
-			timeElapsed = finish - start;
+			timeElapsed = finish - start;			
 		}
-		for (Thread threadResponse : ServerTCP.threadList) {
-			// get attribute from class ran by the thread
-		}
-		return isAvailable;
+		
+		// Regarder reponse du serverTCP
+		return serverTCP.getAvailable() ;
 	}
-	
 	
 	
 	public void notifyConnected(String username) {
 		clientBroadcast.broadcast(username);
 	}
+	
+	
 	// Format des messages en broadcast 
 	/* flag de connexion/deconnexion
 	 * adresse ip de celui qui se connecte ou se deconnecte 
