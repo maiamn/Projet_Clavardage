@@ -6,10 +6,16 @@ import java.net.Socket;
 public class ServerTCP extends Thread {
 	// Attributs 
 	boolean isAvailable = true;	
+	boolean connected = true ; 
 	
 	// Getters 
 	public boolean getAvailable() {
 		return this.isAvailable ; 
+	}
+	
+	// Setter 
+	public void setConnected(boolean state) {
+		this.connected = state ; 
 	}
 	
 	
@@ -22,12 +28,14 @@ public class ServerTCP extends Thread {
 			serverSocket = new ServerSocket(port);
 			
 			//on utilise un while pour permettre plusieurs connexions 
-			while(true) {
+			while(connected) {
 				System.out.println("Waiting for connection") ;
 				clientSocket = serverSocket.accept();
 				System.out.println("Connection successful") ;
 				new Thread(new MessageProcessingTCP (clientSocket, serverSocket, this)).start() ;
 			}
+			
+			serverSocket.close() ;
 			
 		}
 		catch (Exception e){

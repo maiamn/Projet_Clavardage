@@ -49,6 +49,8 @@ public class ClientUDP {
 		    	DatagramPacket packet = new DatagramPacket(buffer, buffer.length, ip, port);
 		    	socket.send(packet);
 		    }
+			
+			socket.close() ;
 
 		}
 		catch (Exception e){

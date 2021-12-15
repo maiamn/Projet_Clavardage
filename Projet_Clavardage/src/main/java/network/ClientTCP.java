@@ -24,6 +24,7 @@ public class ClientTCP {
 				output.println(msg);
 				output.flush() ;
 			}
+			
 			clientSocket.close();
 			s.close();
 			output.close();

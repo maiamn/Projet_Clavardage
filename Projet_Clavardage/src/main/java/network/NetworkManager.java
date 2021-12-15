@@ -3,14 +3,14 @@ package network;
 public class NetworkManager {
 	
 	// Attributs 
-	ClientUDP clientBroadcast;
 	ServerTCP serverTCP ; 
+	ServerUDP serverUDP ; 
 	
 	
 	// Constructeur 
 	public NetworkManager() {
-		this.clientBroadcast = new ClientUDP();
 		this.serverTCP = new ServerTCP() ; 
+		this.serverUDP = new ServerUDP(5000, 50000) ; 
 	}
 	
 	
@@ -38,13 +38,14 @@ public class NetworkManager {
 	
 	
 	public void notifyConnected(String username) {
-		clientBroadcast.broadcast(username);
+		ClientUDP.broadcast(username);
 	}
 	
 	
 	// Fonction principale de deconnexion 
 	public void deconnexion() {
-		
+		serverUDP.setConnected(false) ;
+		serverTCP.setConnected(false) ;
 	}
 	
 	

@@ -8,11 +8,18 @@ public class ServerUDP implements Runnable {
 	// Attributs 
 	int port;
 	int length;
+	boolean connected ; 
 	
 	// Constructor
 	public ServerUDP(int port, int length) {
 		this.port = port;
 		this.length = length;
+		this.connected = true ; 
+	}
+	
+	// Setter 
+	public void setConnected(boolean state) {
+		this.connected = state ; 
 	}
 	
 	// Communication directe avec table
@@ -22,7 +29,7 @@ public class ServerUDP implements Runnable {
 			DatagramPacket packet = null;
 			byte[] buffer = new byte[length];
 			
-			while(true) {
+			while(this.connected) {
 				packet = new DatagramPacket(buffer, buffer.length);
 				socket.receive(packet);
 				String data = new String(packet.getData(), 0, packet.getLength());
@@ -32,6 +39,8 @@ public class ServerUDP implements Runnable {
 				//clear buffer
 				buffer = new byte[length];
 			}
+			
+			socket.close();
 		}
 		catch (Exception e){
 			System.out.println(e);
