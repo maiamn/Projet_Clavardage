@@ -8,7 +8,7 @@ import java.io.*;
 //en plus du main thread
 
 
-public class clientTCP {
+public class ClientTCP {
 	public static void main (String [] args) {
 		String host = "10.1.5.47" ;
 		//Socket clientSocket ;

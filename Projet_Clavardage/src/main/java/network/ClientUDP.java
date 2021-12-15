@@ -7,7 +7,7 @@ import java.util.*;
 import java.net.InterfaceAddress ; 
 import java.net.NetworkInterface ; 
 
-public class clientUDP {
+public class ClientUDP {
 	
 	// Constructor => not needed 'cause only used methods are static aka can be called without creating the object
 	//public clientUDP() {

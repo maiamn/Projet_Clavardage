@@ -2,35 +2,39 @@ package network;
 
 import java.io.*;
 
-public class networkManager {
+public class NetworkManager {
 	
-	clientUDP clientBroadcast;
+	ClientUDP clientBroadcast;
 	
-	public networkManager() {
-		clientBroadcast = new clientUDP();
+	public NetworkManager() {
+		clientBroadcast = new ClientUDP();
 	}
 	
 	public String messageFormatter(int type,String message) {
 		return (type+"|"+message);
 	}
 	
-	public boolean usernameAvailable(String username) {
+	
+	
+	public synchronized boolean usernameAvailable(String username) {
 		boolean isAvailable = false;
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
 		
-		clientUDP.broadcast(username);
+		ClientUDP.broadcast(username);
 		while(!isAvailable  || timeElapsed<1000) {
 			// regarder reponse du serverTCP
 			finish = System.currentTimeMillis();
 			timeElapsed = finish - start;
 		}
-		for (Thread threadResponse : serverTCP.threadList) {
+		for (Thread threadResponse : ServerTCP.threadList) {
 			// get attribute from class ran by the thread
 		}
 		return isAvailable;
 	}
+	
+	
 	
 	public void notifyConnected(String username) {
 		clientBroadcast.broadcast(username);

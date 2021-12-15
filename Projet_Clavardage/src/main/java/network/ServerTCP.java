@@ -13,18 +13,15 @@ import java.util.ArrayList;
 //utilisée dans le client 
 
 
-public class serverTCP extends Thread {
+public class ServerTCP extends Thread {
 	
-	boolean isAvailable = true;
-	static ArrayList<Thread> threadList = new ArrayList<Thread>();
-	
+	boolean isAvailable = true;	
 	
 	public static void main (String [] args) {
 		int port = 5000;
 		Socket clientSocket ; //on ne veut pas l'initialiser
 		ServerSocket serverSocket ;
 		
-		int i =0;
 		try {
 			serverSocket = new ServerSocket(port);
 			
@@ -33,16 +30,11 @@ public class serverTCP extends Thread {
 				System.out.println("Waiting for connection") ;
 				clientSocket = serverSocket.accept();
 				System.out.println("Connection successful") ;
-				MessageProcessingTCP msp = new MessageProcessingTCP (clientSocket, serverSocket);
-				threadList.add(new Thread(msp));
-				threadList.get(i).start();
-				//new Thread(new MessageProcessingTCP (clientSocket, serverSocket)).start() ;
-				i++;
+				new Thread(new MessageProcessingTCP (clientSocket, serverSocket)).start() ;
 			}
 		}
 		catch (Exception e){
 			System.out.println(e);
-			// test 
 		}
 		
 	}

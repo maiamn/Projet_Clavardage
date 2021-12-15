@@ -4,13 +4,13 @@ import java.net.DatagramSocket ;
 import java.net.DatagramPacket ;
 // import table interface
 
-public class serverUDP implements Runnable {
+public class ServerUDP implements Runnable {
 	
 	// Constructor
 	int port;
 	int length;
 	
-	public serverUDP(int port, int length) {
+	public ServerUDP(int port, int length) {
 		this.port = port;
 		this.length = length;
 	}

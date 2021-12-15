@@ -9,6 +9,7 @@ import java.net.Socket;
 public class MessageProcessingTCP implements Runnable {
 	Socket clientSocket ;
 	ServerSocket serverSocket ;
+	
 	String message;
 	boolean isAvailable;
 	
