@@ -70,8 +70,6 @@ public class MessageProcessingTCP implements Runnable {
 				processMessage() ; 
 			}
 			
-			clientSocket.close() ;
-			serverSocket.close();
 			input.close();
 		}
 		catch (Exception e) {

@@ -1,7 +1,5 @@
 package network;
 
-import java.io.*;
-
 public class NetworkManager {
 	
 	// Attributs 
@@ -44,6 +42,12 @@ public class NetworkManager {
 	}
 	
 	
+	// Fonction principale de deconnexion 
+	public void deconnexion() {
+		
+	}
+	
+	
 	// Format des messages en broadcast 
 	/* flag de connexion/deconnexion
 	 * adresse ip de celui qui se connecte ou se deconnecte 
@@ -55,10 +59,7 @@ public class NetworkManager {
 	 * a deja le pseudo que l'on veut peut repondre NON -> on met en place en timer
 	 * donc si on n'a pas de reponse on dit que c'est OK
 	 */
-	
-	/*
-	 * 
-	 * */
+
 
 	// Fonctions possibles:
 	/*

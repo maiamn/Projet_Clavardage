@@ -39,7 +39,7 @@ public class ClientUDP {
 		    
 		    
 			DatagramSocket socket = new DatagramSocket();
-			byte buffer[] =null;
+			byte buffer[] = null;
 		    
 
 			buffer = msg.getBytes();
