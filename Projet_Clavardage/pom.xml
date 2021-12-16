@@ -3,4 +3,13 @@
   <groupId>insa.projet.poo</groupId>
   <artifactId>Projet_Clavardage</artifactId>
   <version>1.0</version>
+  
+  <dependencies>
+  	<dependency>
+   		<groupId>org.hibernate</groupId>
+   		<artifactId>hibernate-core</artifactId>
+   		<version>5.6.2.Final</version>
+  	</dependency>
+  </dependencies>
+  
 </project>
