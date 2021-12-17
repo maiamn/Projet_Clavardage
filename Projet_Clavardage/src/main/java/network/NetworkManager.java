@@ -39,7 +39,9 @@ public class NetworkManager {
 	
 	
 	public void notifyConnected(String username) {
-		ClientUDP.broadcast(username);
+		//broadcast UDP of the username : type 0
+		String msg = messageFormatter(0, username) ;
+		ClientUDP.broadcast(msg);
 	}
 	
 	

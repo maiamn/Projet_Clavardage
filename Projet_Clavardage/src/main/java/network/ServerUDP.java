@@ -2,7 +2,8 @@ package network;
 
 import java.net.DatagramSocket ;
 import java.net.DatagramPacket ;
-// import table interface
+import manager.*;
+//import table interface
 
 public class ServerUDP implements Runnable {
 	// Attributs 
@@ -21,6 +22,21 @@ public class ServerUDP implements Runnable {
 	public void setConnected(boolean state) {
 		this.connected = state ; 
 	}
+	
+	
+	public void dataProcessing(String data) {
+		String[] token = data.split("|");
+		//case 0 : connection
+		if (token[0]=="0") {
+			
+		}
+		//case 1 : deconnection
+		else {
+			
+		}
+		
+	}
+	
 	
 	// Communication directe avec table
 	public void run() {

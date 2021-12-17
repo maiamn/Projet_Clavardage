@@ -25,7 +25,6 @@ public class LocalDB {
 		}
 		
 		try {
-			
 			// Make a database connection
 			this.connection = DriverManager.getConnection("jdbc:odbc:LocalDB");
 			
@@ -36,19 +35,14 @@ public class LocalDB {
 			System.out.println(e) ; 
 		}
 		
-		
-	}
-
-	
-	// Create database
-	public void createDatabase() {
 		String query = "CREATE DATABASE UsernameToIP(Username STRING, IP STRING) ;" ;
 		
 		try {
 			// Execute the statement 
 			ResultSet rs = this.statement.executeQuery(query) ; 
 			rs.close(); 
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 	}

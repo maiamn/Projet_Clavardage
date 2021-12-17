@@ -35,7 +35,8 @@ public class MessageProcessingTCP implements Runnable {
 		String[] token = msg.split("|");
 		if (token[0]=="0") { // response new username aka not available
 			this.isAvailable = false;
-		}else { // normal communication
+		}
+		else { // normal communication
 			this.message = token[1];
 		}
 	}
