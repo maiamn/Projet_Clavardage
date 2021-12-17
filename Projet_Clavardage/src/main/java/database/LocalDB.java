@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.sql.ResultSet ; 
 import java.sql.DriverManager;
 
-
+//http://blog.paumard.org/cours/jdbc/chap02-apercu-exemple.html
 public class LocalDB {
 	
 	// Attributes 
@@ -19,14 +19,14 @@ public class LocalDB {
 		
 		// Load the driver class file 
 		try {
-			Class.forName("sun.jdbc.odbc.JdbcOdcDriver") ; 
+			Class.forName("com.mysql.cj.jdbc.Driver") ; 
 		} catch (ClassNotFoundException e) {
 			System.out.println(e) ; 
 		}
 		
 		try {
 			// Make a database connection
-			this.connection = DriverManager.getConnection("jdbc:odbc:LocalDB");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/LocalD");
 			
 			// Create a statement object
 			this.statement = this.connection.createStatement() ; 
