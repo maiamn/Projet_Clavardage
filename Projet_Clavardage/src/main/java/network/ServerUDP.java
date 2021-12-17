@@ -1,6 +1,7 @@
 package network;
 
 import java.net.DatagramSocket ;
+import java.net.InetAddress;
 import java.net.DatagramPacket ;
 import manager.*;
 //import table interface
@@ -28,11 +29,16 @@ public class ServerUDP implements Runnable {
 		String[] token = data.split("|");
 		//case 0 : connection
 		if (token[0]=="0") {
-			
+			try {
+				InetAddress IP = InetAddress.getByName(token[2]); 
+				Manager.newUserConnected(token[1],IP);
+			}
+			catch(Exception e) {
+			}
 		}
 		//case 1 : deconnection
 		else {
-			
+			Manager.userDisconnected(token[1]);
 		}
 		
 	}

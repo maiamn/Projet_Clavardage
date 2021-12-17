@@ -9,7 +9,7 @@ public class Manager {
 	
 	protected String username = null;
 	private NetworkManager networkManager ;
-	private LocalDB localDB = new LocalDB() ;
+	private static LocalDB localDB = new LocalDB() ;
 	
 	public void connection() {
 		String potentialUsername = null ;
@@ -40,9 +40,16 @@ public class Manager {
 		
 	}
 	
-	public void newUserConnected(String username, InetAddress IP) {
+	public static void newUserConnected(String username, InetAddress IP) {
 		localDB.addUser(username, IP);
 	}
 	
+	public static void userDisconnected(String username) {
+		localDB.deleteUserByName(username);
+	}
+	
+	public void main (String [] args) {
+		connection();
+	}
 
 }
