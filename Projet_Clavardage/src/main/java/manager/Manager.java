@@ -7,11 +7,11 @@ import network.* ;
 
 public class Manager {
 	
-	protected String username = null;
-	private NetworkManager networkManager ;
+	protected static String username = null;
+	private static NetworkManager networkManager ;
 	private static LocalDB localDB = new LocalDB() ;
 	
-	public void connection() {
+	public static void connection() {
 		String potentialUsername = null ;
 		
 		//while the username choosen is not available, enter a new one
@@ -48,7 +48,7 @@ public class Manager {
 		localDB.deleteUserByName(username);
 	}
 	
-	public void main (String [] args) {
+	public static void main (String [] args) {
 		connection();
 	}
 
