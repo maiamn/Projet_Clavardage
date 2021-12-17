@@ -36,11 +36,10 @@ public class ServerUDP implements Runnable {
 			catch(Exception e) {
 			}
 		}
-		//case 1 : deconnection
+		//case 1 : disconnection
 		else {
 			Manager.userDisconnected(token[1]);
 		}
-		
 	}
 	
 	
