@@ -26,7 +26,7 @@ public class NetworkManager {
 		long start = System.currentTimeMillis();
 		long finish = 0;
 		
-		ClientUDP.broadcast(username);
+		ClientUDP.broadcast("0|"+username);
 		while(timeElapsed<1000) {
 			finish = System.currentTimeMillis();
 			timeElapsed = finish - start;			
