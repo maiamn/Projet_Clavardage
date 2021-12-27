@@ -16,32 +16,36 @@ public class LocalDB {
 	
 	// Constructor 
 	public LocalDB() {
+		System.out.println("Calling LocalDB constructor");
 		
 		// Load the driver class file 
 		try {
+			System.out.println("loading the driver class file");
 			Class.forName("com.mysql.cj.jdbc.Driver") ; 
-		} catch (ClassNotFoundException e) {
+		} 
+		catch (ClassNotFoundException e) {
 			System.out.println(e) ; 
 		}
 		
 		try {
 			// Make a database connection
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/LocalD");
+			System.out.println("database connection");
+			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/local_db");
+			//this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/local_db", "tp_servlet_008", "ees7Lozu");
 			
 			// Create a statement object
+			System.out.println("statement objects creation");
 			this.statement = this.connection.createStatement() ; 
 
-		} catch (SQLException e) {
-			System.out.println(e) ; 
-		}
+			String query = "CREATE DATABASE UsernameToIP(Username STRING, IP STRING) ;" ;
 		
-		String query = "CREATE DATABASE UsernameToIP(Username STRING, IP STRING) ;" ;
-		
-		try {
 			// Execute the statement 
+			System.out.println("executing the query");
 			ResultSet rs = this.statement.executeQuery(query) ; 
+			System.out.println("closing the result");
 			rs.close(); 
 		} 
+		
 		catch (SQLException e) {
 			System.out.println(e);
 		}

@@ -8,7 +8,7 @@ import network.* ;
 public class Manager {
 	
 	protected static String username = null;
-	private static NetworkManager networkManager ;
+	private static NetworkManager networkManager = new NetworkManager();
 	private static LocalDB localDB = new LocalDB() ;
 	
 	public static void connection() {
@@ -20,8 +20,9 @@ public class Manager {
 				//scan the username entered by the user
 				Scanner scanner = new Scanner(System.in) ;
 				System.out.println("Please enter a username:");
+				
 				potentialUsername = scanner.next(); 
-				scanner.close();
+				//scanner.close(); //à enlever car génère des erreurs quand on le met dans un while
 				
 				//TO-DO : verify that the length of the username is not too important
 				
@@ -49,7 +50,7 @@ public class Manager {
 	}
 	
 	public static void main (String [] args) {
-		connection();
+		//connection();
 	}
 
 }

@@ -22,6 +22,7 @@ public class NetworkManager {
 	
 	// Disponibilité du pseudo 
 	public synchronized boolean usernameAvailable(String username) {
+		System.out.println("Calling usernameAvailable(username)");
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
@@ -39,6 +40,7 @@ public class NetworkManager {
 	
 	
 	public void notifyConnected(String username) {
+		System.out.println("Calling notifyConnected(username)");
 		//broadcast UDP of the username : type 0
 		String msg = messageFormatter(0, username) ;
 		ClientUDP.broadcast(msg);
@@ -46,7 +48,8 @@ public class NetworkManager {
 	
 	
 	// Fonction principale de deconnexion 
-	public void deconnexion() {
+	public void disconnection() {
+		System.out.println("disconnection()");
 		serverUDP.setConnected(false) ;
 		serverTCP.setConnected(false) ;
 	}
