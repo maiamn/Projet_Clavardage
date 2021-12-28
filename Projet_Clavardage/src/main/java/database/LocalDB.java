@@ -13,37 +13,48 @@ public class LocalDB {
 	// Attributes 
 	Connection connection ; 
 	Statement statement ;
+	String addrDb = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_008?";
+	String login = "tp_servlet_008" ;
+	String password = "ees7Lozu" ;
 	
 	// Constructor 
 	public LocalDB() {
-		System.out.println("Calling LocalDB constructor");
+		System.out.println("[LocalDB] Calling LocalDB constructor");
 		
 		// Load the driver class file 
 		try {
-			System.out.println("loading the driver class file");
+			System.out.println("[LocalDB] Loading the driver class file");
 			Class.forName("com.mysql.cj.jdbc.Driver") ; 
 		} 
 		catch (ClassNotFoundException e) {
-			System.out.println(e) ; 
+			System.out.println("Error while loading the driver class file" + e) ; 
 		}
 		
 		try {
 			// Make a database connection
-			System.out.println("database connection");
-			this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/local_db");
-			//this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/local_db", "tp_servlet_008", "ees7Lozu");
+			System.out.println("[LocalDB] Database connection...");
+			this.connection = DriverManager.getConnection(this.addrDb, this.login, this.password);
+			System.out.println("[LocalDB] Database connected");
 			
 			// Create a statement object
-			System.out.println("statement objects creation");
+			System.out.println("[LocalDB] Statement objects creation...");
 			this.statement = this.connection.createStatement() ; 
 
-			String query = "CREATE DATABASE UsernameToIP(Username STRING, IP STRING) ;" ;
-		
+			System.out.println("[LocalDB] Statement objects created");
+
+	
 			// Execute the statement 
-			System.out.println("executing the query");
-			ResultSet rs = this.statement.executeQuery(query) ; 
-			System.out.println("closing the result");
-			rs.close(); 
+			/*System.out.println("[LocalDB] Creating the database...");
+			this.statement.executeUpdate("CREATE DATABASE LocalDB") ; 
+			System.out.println("[LocalDB] Database created");*/
+			
+			String query = "CREATE TABLE IF NOT EXISTS UsernameToIP " +
+	                   "(username VARCHAR(255) not NULL, " +
+	                   " ip VARCHAR(255) not NULL)"; 
+			
+			System.out.println("[LocalDB] Creating the table...");
+			this.statement.executeUpdate(query) ;
+			System.out.println("[LocalDB] Table created");
 		} 
 		
 		catch (SQLException e) {

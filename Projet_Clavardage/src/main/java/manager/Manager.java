@@ -11,6 +11,9 @@ public class Manager {
 	private static NetworkManager networkManager = new NetworkManager();
 	private static LocalDB localDB = new LocalDB() ;
 	
+	//Maximum length of usernames
+	private static int maxLength = 30 ;
+	
 	public static void connection() {
 		String potentialUsername = null ;
 		
@@ -24,11 +27,16 @@ public class Manager {
 				potentialUsername = scanner.next(); 
 				//scanner.close(); //à enlever car génère des erreurs quand on le met dans un while
 				
-				//TO-DO : verify that the length of the username is not too important
-				
-				//check if this username is available
-				if (networkManager.usernameAvailable(potentialUsername)) {
+				//Verify that the length of the username is not too important
+				if (potentialUsername.length() > maxLength) {
+					System.out.println("This username is too long. Please try another one.");
+				}
+				//Then verify that it is available
+				else if (networkManager.usernameAvailable(potentialUsername)) {
 					username = potentialUsername ;
+				}
+				else {
+					System.out.println("This username is already used. Please try another one.");
 				}
 			}
 			catch (Exception e) {
@@ -50,7 +58,7 @@ public class Manager {
 	}
 	
 	public static void main (String [] args) {
-		//connection();
+		connection();
 	}
 
 }
