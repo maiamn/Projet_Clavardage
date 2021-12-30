@@ -34,6 +34,7 @@ public class MessageProcessingTCP implements Runnable {
 	public void dataFilter(String msg) {
 		String[] token = msg.split("|");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
+		// TCP server only receives username availabilty related messages and normal messages
 		switch(type) {
 		case USERNAME_BRDCST :
 			this.isAvailable = false;

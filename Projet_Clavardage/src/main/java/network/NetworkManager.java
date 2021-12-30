@@ -10,13 +10,14 @@ public class NetworkManager {
 	public static enum MessageType {
 		USERNAME_BRDCST,
 		USERNAME_CONNECTED,
+		USERNAME_DISCONNECT,
 		MESSAGE
 	}
 	
 	// Constructeur 
 	public NetworkManager() {
 		this.serverTCP = new ServerTCP() ; 
-		this.serverUDP = new ServerUDP(5000, 50000) ; 
+		this.serverUDP = new ServerUDP(5001, 50000) ; 
 	}
 	
 	
@@ -45,9 +46,15 @@ public class NetworkManager {
 	}
 	
 	
+	public void sendUnavailableUsername(String host) {
+		System.out.println("Calling sendUnavailableUsername(host)");
+		String msg = messageFormatter(MessageType.USERNAME_BRDCST, "") ;
+		ClientTCP.sendMessage(msg, host);
+	}
+	
+	
 	public void notifyConnected(String username) {
 		System.out.println("Calling notifyConnected(username)");
-		//broadcast UDP of the username : type 0
 		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username) ;
 		ClientUDP.broadcast(msg);
 	}

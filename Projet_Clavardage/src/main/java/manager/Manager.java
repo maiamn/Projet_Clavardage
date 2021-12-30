@@ -18,14 +18,15 @@ public class Manager {
 		String potentialUsername = null ;
 		
 		//while the username choosen is not available, enter a new one
+		Scanner scanner = null;
 		while(username==null) {
 			try {
 				//scan the username entered by the user
-				Scanner scanner = new Scanner(System.in) ;
+				scanner = new Scanner(System.in) ;
 				System.out.println("Please enter a username:");
 				
 				potentialUsername = scanner.next(); 
-				//scanner.close(); //à enlever car génère des erreurs quand on le met dans un while
+				//scanner.close(); //ï¿½ enlever car gï¿½nï¿½re des erreurs quand on le met dans un while
 				
 				//Verify that the length of the username is not too important
 				if (potentialUsername.length() > maxLength) {
@@ -43,10 +44,17 @@ public class Manager {
 				System.out.println(e);
 			}
 		}
+		scanner.close();
 		
 		//once the username has been accepted, bc username
 		networkManager.notifyConnected(potentialUsername);
 		
+	}
+	
+	public static void usernameRequest(String pseudo, String host) {
+		if (pseudo == Manager.username) {
+			networkManager.sendUnavailableUsername(host);
+		}
 	}
 	
 	public static void newUserConnected(String username, InetAddress IP) {
