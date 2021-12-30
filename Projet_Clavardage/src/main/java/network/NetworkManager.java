@@ -15,7 +15,16 @@ public class NetworkManager {
 	
 	
 	// Mise en forme des messages 
+	/* Type of messages : 
+	 *   -> 0 pour demander si un pseudo est libre
+	 *   -> 1 pour dire qu'on se connecte
+	 *   -> 2 pour dire qu'on se déconnecte 
+	 *   -> 3 pour envoyer un message
+	 */
 	public String messageFormatter(int type,String message) {
+		if (type<0 && type>3) {
+			throw new IllegalArgumentException("The value of type must be one of followings values : [0;1;2;3]") ;
+		}
 		return (type + "|" + message);
 	}
 	
@@ -42,7 +51,11 @@ public class NetworkManager {
 	public void notifyConnected(String username) {
 		System.out.println("Calling notifyConnected(username)");
 		//broadcast UDP of the username : type 0
-		String msg = messageFormatter(0, username) ;
+		try {
+			String msg = messageFormatter(0, username) ; 
+		} catch (IllegalArgumentException e) {
+			System.out.println(e) ;
+		}
 		ClientUDP.broadcast(msg);
 	}
 	
