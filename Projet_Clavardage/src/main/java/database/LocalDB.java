@@ -13,9 +13,9 @@ public class LocalDB {
 	// Attributes 
 	Connection connection ; 
 	Statement statement ;
-	String addrDb = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_008?";
-	String login = "tp_servlet_008" ;
-	String password = "ees7Lozu" ;
+	String addrDb = "jdbc:mysql://localhost:3306/test?";
+	String login = "root" ;
+	String password = "" ;
 	
 	// Constructor 
 	public LocalDB() {
@@ -43,11 +43,7 @@ public class LocalDB {
 			System.out.println("[LocalDB] Statement objects created");
 
 	
-			// Execute the statement 
-			/*System.out.println("[LocalDB] Creating the database...");
-			this.statement.executeUpdate("CREATE DATABASE LocalDB") ; 
-			System.out.println("[LocalDB] Database created");*/
-			
+			// Execute the statement 			
 			String query = "CREATE TABLE IF NOT EXISTS UsernameToIP " +
 	                   "(username VARCHAR(255) not NULL, " +
 	                   " ip VARCHAR(255) not NULL)"; 
