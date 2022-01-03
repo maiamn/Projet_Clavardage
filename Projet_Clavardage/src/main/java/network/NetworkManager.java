@@ -6,36 +6,34 @@ public class NetworkManager {
 	ServerTCP serverTCP ; 
 	ServerUDP serverUDP ; 
 	
+	// Enum for each message type
+	public static enum MessageType {
+		USERNAME_BRDCST,
+		USERNAME_CONNECTED,
+		USERNAME_DISCONNECT,
+		MESSAGE
+	}
 	
 	// Constructeur 
 	public NetworkManager() {
 		this.serverTCP = new ServerTCP() ; 
-		this.serverUDP = new ServerUDP(5000, 50000) ; 
+		this.serverUDP = new ServerUDP(5001, 50000) ; 
 	}
 	
 	
 	// Mise en forme des messages 
-	/* Type of messages : 
-	 *   -> 0 pour demander si un pseudo est libre
-	 *   -> 1 pour dire qu'on se connecte
-	 *   -> 2 pour dire qu'on se déconnecte 
-	 *   -> 3 pour envoyer un message
-	 */
-	public String messageFormatter(int type,String message) {
-		if (type<0 && type>3) {
-			throw new IllegalArgumentException("The value of type must be one of followings values : [0;1;2;3]") ;
-		}
+	public String messageFormatter(MessageType type,String message) {
 		return (type + "|" + message);
 	}
 	
 	
-	// Disponibilité du pseudo 
+	// Disponibilite du pseudo 
 	public synchronized boolean usernameAvailable(String username) {
 		System.out.println("Calling usernameAvailable(username)");
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
-		String msg = messageFormatter(0, username);
+		String msg = messageFormatter(MessageType.USERNAME_BRDCST, username);
 		
 		ClientUDP.broadcast(msg);
 		while(timeElapsed<1000) {
@@ -48,15 +46,17 @@ public class NetworkManager {
 	}
 	
 	
+	public void sendUnavailableUsername(String host) {
+		System.out.println("Calling sendUnavailableUsername(host)");
+		String msg = messageFormatter(MessageType.USERNAME_BRDCST, "") ;
+		ClientTCP.sendMessage(msg, host);
+	}
+	
+	
 	public void notifyConnected(String username) {
 		System.out.println("Calling notifyConnected(username)");
-		//broadcast UDP of the username : type 0
-		try {
-			String msg = messageFormatter(0, username) ; 
-			ClientUDP.broadcast(msg);
-		} catch (IllegalArgumentException e) {
-			System.out.println(e) ;
-		}		
+		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username) ;
+		ClientUDP.broadcast(msg);
 	}
 	
 	
@@ -68,31 +68,13 @@ public class NetworkManager {
 	}
 	
 	
-	// Format des messages en broadcast 
-	/* flag de connexion/deconnexion
-	 * adresse ip de celui qui se connecte ou se deconnecte 
-	 * pseudo  
-	 * 
-	 * <!> REPONSE EN TCP
-	 * 
-	 * Pour le broadcast du pseudo lors de la connexion, seul l'utilisateur qui 
-	 * a deja le pseudo que l'on veut peut repondre NON -> on met en place en timer
-	 * donc si on n'a pas de reponse on dit que c'est OK
-	 */
-
-
-	// Fonctions possibles:
-	/*
-	 * - Traitement des des paquets broadcasts
-	 * 
-	 * - Broadcast de connexion username (timer a part?)
-	 * 
-	 * - Broadcast de deconnexion
-	 * 
-	 * - Reponse des paquets Broadcast
-	 * 
-	 * - Traitement des paquets TCP aka message users
-	 * */
-		
+	// Classic message sending function
+	public void sendMessage(String msg, String host) {
+		System.out.println("Sending message...");
+		// Classic message between users : type 1 ??
+		String formatedMsg = this.messageFormatter(MessageType.MESSAGE, msg);
+		// Sends message and closes socket
+		ClientTCP.sendMessage(formatedMsg, host);
+	}		
 	
 }

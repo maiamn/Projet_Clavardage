@@ -6,7 +6,7 @@ import java.net.DatagramPacket ;
 import manager.*;
 //import table interface
 
-public class ServerUDP implements Runnable {
+public class ServerUDP {
 	// Attributs 
 	int port;
 	int length;
@@ -27,19 +27,38 @@ public class ServerUDP implements Runnable {
 	
 	public void dataProcessing(String data) {
 		String[] token = data.split("|");
-		//case 0 : connection
-		if (token[0]=="0") {
+		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
+		String host = token[2];
+		String username = token[1];
+		
+		
+		switch (type) {
+		
+		case USERNAME_BRDCST:
+			// traitement pour broacast de demande de co avec reponse 
+			// Envoi de reponse par TCP de disponibilite
+			Manager.usernameRequest(username, host);
+			break;
+			
+		case USERNAME_CONNECTED:
 			try {
-				InetAddress IP = InetAddress.getByName(token[2]); 
-				Manager.newUserConnected(token[1],IP);
+				InetAddress IP = InetAddress.getByName(host); 
+				Manager.newUserConnected(username,IP);
 			}
 			catch(Exception e) {
 			}
+			break;
+			
+		case USERNAME_DISCONNECT:
+			// Traitement pour deconnexion de utilisateur
+			Manager.userDisconnected(username);
+			break;
+		
+		default:
+			break;
+			
 		}
-		//case 1 : disconnection
-		else {
-			Manager.userDisconnected(token[1]);
-		}
+		
 	}
 	
 	

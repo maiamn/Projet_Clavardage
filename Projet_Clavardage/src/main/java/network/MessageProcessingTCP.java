@@ -33,11 +33,18 @@ public class MessageProcessingTCP implements Runnable {
 	// Filtrage des donnees selon le format de message 
 	public void dataFilter(String msg) {
 		String[] token = msg.split("|");
-		if (token[0]=="0") { // response new username aka not available
+		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
+		// TCP server only receives username availabilty related messages and normal messages
+		switch(type) {
+		case USERNAME_BRDCST :
 			this.isAvailable = false;
-		}
-		else { // normal communication
+			break;
+		case MESSAGE :
 			this.message = token[1];
+			break;
+		default:
+			// raise exception?
+			break;
 		}
 	}
 	

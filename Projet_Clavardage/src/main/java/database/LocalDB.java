@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.sql.ResultSet ; 
 import java.sql.DriverManager;
 
-//http://blog.paumard.org/cours/jdbc/chap02-apercu-exemple.html
 public class LocalDB {
 	
 	// Attributes 
@@ -42,11 +41,11 @@ public class LocalDB {
 
 			System.out.println("[LocalDB] Statement objects created");
 
-	
+			
 			// Execute the statement 			
 			String query = "CREATE TABLE IF NOT EXISTS UsernameToIP " +
-	                   "(username VARCHAR(255) not NULL, " +
-	                   " ip VARCHAR(255) not NULL)"; 
+			           "(username VARCHAR(255) not NULL, " +
+			           " ip VARCHAR(255) not NULL)"; 
 			
 			System.out.println("[LocalDB] Creating the table...");
 			this.statement.executeUpdate(query) ;
@@ -157,5 +156,6 @@ public class LocalDB {
 	public static void main(String[] args) {
 		
 	}
-	
+		
+
 }
