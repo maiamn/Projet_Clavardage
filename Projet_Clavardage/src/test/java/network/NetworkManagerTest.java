@@ -15,6 +15,10 @@ public class NetworkManagerTest {
 	//////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/* **************************************************************************************** */
+	// GLOBAL VARIABLES 
+	protected static NetworkManager net = new NetworkManager() ; 
+	
+	/* **************************************************************************************** */
 	///////////////////////////// messageFormatter - global variables ////////////////////////////
 	// Variables needed for the function 
 	protected static MessageType [] correctTypes = new MessageType [4] ; 
@@ -64,10 +68,10 @@ public class NetworkManagerTest {
 		testCorrect[3] = "MESSAGE|Test" ; 
 	
 		for (int i=0; i<correctTypes.length; i++) {
-				resultCorrect[i] = NetworkManager.messageFormatter(correctTypes[i], test) ; 
+				resultCorrect[i] = net.messageFormatter(correctTypes[i], test) ; 
 		}
 		
-		resultUncorrect = NetworkManager.messageFormatter(null, test) ;
+		resultUncorrect = net.messageFormatter(null, test) ;
 	/* **************************************************************************************** */
 	
 		
