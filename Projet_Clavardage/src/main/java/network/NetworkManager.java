@@ -53,10 +53,10 @@ public class NetworkManager {
 		//broadcast UDP of the username : type 0
 		try {
 			String msg = messageFormatter(0, username) ; 
+			ClientUDP.broadcast(msg);
 		} catch (IllegalArgumentException e) {
 			System.out.println(e) ;
-		}
-		ClientUDP.broadcast(msg);
+		}		
 	}
 	
 	
