@@ -95,8 +95,7 @@ public class NetworkManagerTest {
 	public void testCorrectTypesMessage() {
 		assertArrayEquals(testCorrect, resultCorrect) ; 
 	}
-	
-	
+		
 	
 	//////////////////////////////// FUNCTION usernameAvailable /////////////////////////////////	
 	/* Tests of function usernameAvailable
@@ -123,11 +122,8 @@ public class NetworkManagerTest {
 	
 	///////////////////////////////// FUNCTION notifyConnected //////////////////////////////////	
 	
-	
-	
-	
+		
 	////////////////////////////////// FUNCTION disconnection ///////////////////////////////////	
 		
 	
-
 }
