@@ -22,7 +22,7 @@ public class NetworkManager {
 	
 	
 	// Mise en forme des messages 
-	public static String messageFormatter(MessageType type,String message) {
+	public String messageFormatter(MessageType type,String message) {
 		return (type + "|" + message);
 	}
 	
