@@ -31,6 +31,7 @@ public class ServerUDP {
 		String host = token[2];
 		String username = token[1];
 		
+		
 		switch (type) {
 		
 		case USERNAME_BRDCST:
