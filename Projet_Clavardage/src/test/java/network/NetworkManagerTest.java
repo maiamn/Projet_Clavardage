@@ -16,7 +16,10 @@ public class NetworkManagerTest {
 	
 	/* **************************************************************************************** */
 	// GLOBAL VARIABLES 
+	// <!> We need a static instance of network manager to access to the non-static method
 	protected static NetworkManager net = new NetworkManager() ; 
+	/* **************************************************************************************** */
+
 	
 	/* **************************************************************************************** */
 	///////////////////////////// messageFormatter - global variables ////////////////////////////
