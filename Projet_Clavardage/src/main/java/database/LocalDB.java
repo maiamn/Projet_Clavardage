@@ -12,9 +12,9 @@ public class LocalDB {
 	// Attributes 
 	Connection connection ; 
 	Statement statement ;
-	String addrDb = "jdbc:mysql://localhost:3306/test?";
+	String addrDb = "jdbc:mysql://localhost:3306/localdatabase?";
 	String login = "root" ;
-	String password = "" ;
+	String password = "root" ;
 	
 	// Constructor 
 	public LocalDB() {
