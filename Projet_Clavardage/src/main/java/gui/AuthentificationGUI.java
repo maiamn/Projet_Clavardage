@@ -73,7 +73,7 @@ public class AuthentificationGUI implements ActionListener {
 
     public void actionPerformed(ActionEvent event) {        
         String name = username.getText() ; 
-        System.out.println("BRAVO " + name + ", TU AS REUSSI A APPUYER SUR UN BOUTON DEBILE !") ;
+        System.out.println("Welcome " + name + "!");
 
     }
 
