@@ -64,9 +64,36 @@ public class Manager {
 		localDB.deleteUserByName(username);
 	}
 	
+	public static void userDisconnected(InetAddress IP) {
+		localDB.deleteUserByIP(IP);
+	}
+	
+	public static String getUsername(InetAddress IP) {
+		return localDB.getUsername(IP);
+	}
+	
+	public static InetAddress getIP(String name) {
+		return localDB.getIP(name);
+	}
+	
+	public static void disconnection() {
+		localDB.dropDatabase();
+		localDB.closeConnection();
+	}
+	
 	public static void main (String [] args) {
-		connection();
+		//connection();
+		try {
+			for (int i = 0 ; i < 5; i++) {
+					newUserConnected("testCelia"+i, InetAddress.getLocalHost());
+			}
+			System.out.println("The username is: " + getUsername(InetAddress.getLocalHost())) ;
+			System.out.println("The IP is: " + getIP("testCelia0")) ;
+		}
 		
+		catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 }

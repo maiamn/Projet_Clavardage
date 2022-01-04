@@ -9,12 +9,13 @@ import java.sql.DriverManager;
 
 public class LocalDB {
 	
+	//TO-DO: il faudra creer un serveur sur chaque machine sur laquelle on deploie le systeme? Donc installer MySQL?
+	
 	// Attributes 
 	Connection connection ; 
 	Statement statement ;
 	String addrDb = "jdbc:mysql://localhost:3306/localdatabase?";
 	String login = "root" ;
-	//hello tout le monde 
 	String password = "root" ;
 	
 	// Constructor 
@@ -61,44 +62,51 @@ public class LocalDB {
 	
 	// Add a user to the database
 	public void addUser(String username, InetAddress IP) {
+		System.out.println("[LocalDB] Adding a user in the table...");
 		String query = "INSERT INTO UsernameToIP (Username, IP) VALUES ('" + username + "', '" + IP + "') ;" ; 
 		
 		try {
 			// Execute the statement 
-			ResultSet rs = this.statement.executeQuery(query) ; 
-			rs.close(); 
-		} catch (SQLException e) {
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[LocalDB] User added");
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 	
 	// Delete a user to the database
 	public void deleteUserByName(String username) {
+		System.out.println("[LocalDB] Deleting a user using their name from the table...");
 		String query = "DELETE FROM UsernameToIP WHERE Username='" + username + "' ;" ;	
 		
 		try {
 			// Execute the statement 
-			ResultSet rs = this.statement.executeQuery(query) ; 
-			rs.close(); 
-		} catch (SQLException e) {
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[LocalDB] User deleted");
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 	
 	public void deleteUserByIP(InetAddress IP) {
+		System.out.println("[LocalDB] Deleting a user using their IP from the table...");
 		String query = "DELETE FROM UsernameToIP WHERE IP='" + IP + "' ;" ;		
 		
 		try {
 			// Execute the statement 
-			ResultSet rs = this.statement.executeQuery(query) ; 
-			rs.close(); 
-		} catch (SQLException e) {
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[LocalDB] User deleted");
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 	
-	// Get information in the database
+	// Get information from the database
 	public String getUsername(InetAddress IP) {
+		System.out.println("[LocalDB] Getting a username by their IP address...");
 		String query = "SELECT UsernameToIP.Username FROM UsernameToIP WHERE IP = '" + IP + "' ;";	
 		String username = "" ; 
 		try {
@@ -106,14 +114,16 @@ public class LocalDB {
 			ResultSet rs = this.statement.executeQuery(query) ; 
 			username = rs.getString(0) ;
 			rs.close(); 
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
-		
+		System.out.println("[LocalDB] Their username is: " + username);
 		return username ;	
 	}
 	
 	public InetAddress getIP(String username) {
+		System.out.println("[LocalDB] Getting an IP address by their username...");
 		String query = "SELECT UsernameToIP.IP FROM UsernameToIP WHERE Username = '" + username + "' ;";	
 		String IPString = "" ; 
 		InetAddress IP = null ; 
@@ -123,21 +133,26 @@ public class LocalDB {
 			IPString = rs.getString(0) ;
 			IP = InetAddress.getByName(IPString) ; 
 			rs.close(); 
-		} catch (Exception e) {
+		} 
+		catch (Exception e) {
 			System.out.println(e);
 		}
+		
+		System.out.println("[LocalDB] Their username is: " + IP);
 		return IP ; 
 	}
 	
 	// Drop database 
 	public void dropDatabase() {
+		System.out.println("[LocalDB] Dropping the database...");
 		String query = "DROP TABLE UsernameToIP ;" ;
 		
 		try {
 			// Execute the statement 
-			ResultSet rs = this.statement.executeQuery(query) ; 
-			rs.close(); 
-		} catch (SQLException e) {
+			this.statement.executeUpdate(query) ;
+			System.out.println("[LocalDB] Database dropped");
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
@@ -145,9 +160,12 @@ public class LocalDB {
 	
 	// Close the connection of database 
 	public void closeConnection() {
+		System.out.println("[LocalDB] Closing connection...");
 		try {
 			this.connection.close() ;
-		} catch (SQLException e) {
+			System.out.println("[LocalDB] Connection closed");
+		} 
+		catch (SQLException e) {
 			System.out.println(e) ; 
 		}
 		
