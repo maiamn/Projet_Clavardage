@@ -82,18 +82,8 @@ public class Manager {
 	}
 	
 	public static void main (String [] args) {
-		//connection();
-		try {
-			for (int i = 0 ; i < 5; i++) {
-					newUserConnected("testCelia"+i, InetAddress.getLocalHost());
-			}
-			//System.out.println("The username is: " + getUsername(InetAddress.getLocalHost())) ;
-			System.out.println("The IP is: " + getIP("testCelia0")) ;
-		}
-		
-		catch (Exception e) {
-			System.out.println(e);
-		}
+		connection();
+		disconnection();
 	}
 
 }
