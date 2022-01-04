@@ -4,7 +4,6 @@ import java.net.InetAddress;
 import database.* ;
 import network.* ;
 
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,24 +29,36 @@ public class Manager {
 	//////////////////////////////////////////////////////////////////////
 	/////////////////////////// VALID USERNAME ///////////////////////////
 	//////////////////////////////////////////////////////////////////////
-	public static boolean validLengthUsername(String username) {
+	public static boolean validLengthUsername(String username) throws IncorrectUsernameException {
 		boolean res = true ; 
 		res = res && (username.length() < maxLength) ; 
 		res = res && (username.length() > 1) ; 
-		return res ; 
+		if (res) {
+			return res ; 
+		} else {
+			throw new IncorrectUsernameException("Invalid length of username \n The length of the password must be between 0 and 30 characters \n") ;
+		}
 	}
 	
-	public static boolean validCharUsername(String username) {
+	public static boolean validCharUsername(String username) throws IncorrectUsernameException {
 		boolean res = true ; 
-		res = res && containsSpecialCharacter(username) ; 
-		return res ; 
+		res = res && containsSpecialCharacter(username) ;
+		if (res) {
+			return res ;
+		} else {
+			throw new IncorrectUsernameException("Username cannot contain special characters") ; 
+		}
 	}
 	
 	public static boolean validUsername(String username) {
 		boolean res = true ; 
-		res = res && validLengthUsername(username) ; 
-		res = res && validCharUsername(username) ; 
-		res = res && networkManager.usernameAvailable(username) ;
+		try {
+			res = res && validLengthUsername(username) ; 
+			res = res && validCharUsername(username) ; 
+			res = res && networkManager.usernameAvailable(username) ; 
+		} catch (IncorrectUsernameException e) {
+			System.out.println(e) ; 
+		}
 		return res ; 
 	}
 	
