@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet ; 
 import org.junit.Test;
-import database.LocalDB.* ;
-import java.net.InetAddress;
+
+import java.util.Arrays;
 import java.util.Random ; 
 
 
@@ -36,13 +36,14 @@ public class LocalDBTest {
 	protected static String password ;
 	
 	// Person 
-	protected static int nbTests = 100 ; 
-	protected static String [] usernames = new String [nbTests] ; 
-	protected static InetAddress [] IPAddresses = new InetAddress [nbTests] ; 
+	protected static int nbUsers = 100 ; 
+	protected static String [] usernames = new String [nbUsers] ; 
+	protected static InetAddress [] IPAddresses = new InetAddress [nbUsers] ;
 	
 	// Random number 
-	Random rand = new Random() ; 
-	protected static int index ; 
+	Random rand = new Random() ;
+	protected static int nbTests = 10 ;
+	protected static int [] indexes = new int [nbTests] ; 
 	/* **************************************************************************************** */
 
 	
@@ -79,11 +80,14 @@ public class LocalDBTest {
         }
 		
 		// Users and IPAdresses 
-		for (int i=0; i<nbTests ; i++) { 
+		for (int i=0; i<nbUsers ; i++) { 
+			// Usernames
 			usernames[i]="username"+i ;
-			IPAddresses[i]= InetAddress.getLocalHost() ; 
-		}
-	
+			
+			//IPAddresses
+			byte[] ipAddr = new byte[]{(byte)192, (byte)168, (byte)0, (byte)i};
+			IPAddresses[i]= InetAddress.getByAddress(ipAddr); 
+		}	
 	}
 	
 	
@@ -92,7 +96,7 @@ public class LocalDBTest {
 	public void initBeforeTests() throws IOException {
 	/* **************************************************************************************** */
 	//////////////////////////////////// Add users to database ///////////////////////////////////
-		for (int i=0; i<nbTests; i++) {
+		for (int i=0; i<nbUsers; i++) {
 			db.addUser(usernames[i], IPAddresses[i]);
 		}	
 	/* **************************************************************************************** */
@@ -119,7 +123,7 @@ public class LocalDBTest {
 	@Test
 	public void testAddUser() {
 		try {			
-			for (int i=0; i<nbTests; i++) {	
+			for (int i=0; i<nbUsers; i++) {	
 				ResultSet rs=db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE Username='" + usernames[i] + "'") ; 
 				assertTrue(rs.next());
 				// Check usernames
@@ -138,19 +142,27 @@ public class LocalDBTest {
 	@Test
 	public void testDeleteUserByName() {
 		try {
+			// Define an array with 10 different random numbers 
+			int nb=0 ; 
+			while (nb<10) {
+				int j = rand.nextInt(nbUsers) ;
+				if (!(Arrays.asList(indexes).contains(j))) { 
+					indexes[nb]=j ; 
+					nb++ ; 
+				}
+			}
 			// Delete 10 random users by name
-			for (int i=0; i<10; i++) {	
+			for (int i=0; i<nbTests; i++) {	
 				// Delete the user of random index
-				index = rand.nextInt(nbTests);
-				db.deleteUserByName(usernames[index]) ; 
+				db.deleteUserByName(usernames[indexes[i]]) ; 
 				
 				// Check if one and only one user has been deleted 
 				ResultSet rs=db.statement.executeQuery("SELECT COUNT(*) FROM UsernameToIP") ; 
 				if (rs.next()) {
-					assertEquals((nbTests-i-1), rs.getInt(1)) ;
+					assertEquals((nbUsers-i-1), rs.getInt(1)) ;
 				}
 				// Check that the good user has been deleted from the database 
-				ResultSet rs2=db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE Username='" + usernames[index] + "'") ;
+				ResultSet rs2=db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE Username='" + usernames[indexes[i]] + "'") ;
 				assertFalse(rs2.next());
 			}
 			
@@ -164,35 +176,67 @@ public class LocalDBTest {
 	@Test
 	public void testDeleteUserByIP() {
 		try {
-			// All users have same ip -> by deleting by ip the table will be empty
-			db.deleteUserByIP(IPAddresses[index]) ; 
-			ResultSet rs=db.statement.executeQuery("SELECT COUNT(*) FROM UsernameToIP") ; 
-			if (rs.next()) {
-				assertEquals(0, rs.getInt(1)) ;
+			// Define an array with 10 different random numbers 
+			int nb=0 ; 
+			while (nb<10) {
+				int j = rand.nextInt(nbUsers) ;
+				if (!(Arrays.asList(indexes).contains(j))) { 
+					indexes[nb]=j ; 
+					nb++ ; 
+				}
 			}
-			
-			// Check that the good user has been deleted from the database 
-			ResultSet rs2=db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE IP='" + IPAddresses[index] + "'") ;
-			assertFalse(rs2.next());
+			// Delete 10 random users by IP
+			for (int i=0; i<nbTests; i++) {	
+				// Delete the user of random index
+				db.deleteUserByIP(IPAddresses[indexes[i]]) ; 
+				
+				// Check if one and only one user has been deleted 
+				ResultSet rs=db.statement.executeQuery("SELECT COUNT(*) FROM UsernameToIP") ; 
+				if (rs.next()) {
+					assertEquals((nbUsers-i-1), rs.getInt(1)) ;
+				}
+				// Check that the good user has been deleted from the database 
+				ResultSet rs2=db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE ip='" + IPAddresses[indexes[i]] + "'") ;
+				assertFalse(rs2.next());
+			}
 			
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
+		
 	} 
 
 	
 	/////////////////////////////////// FUNCTION getUsername ///////////////////////////////////	
-	/* @Test
+	@Test
 	public void testGetUsername() {
-		fail("Not yet implemented");
-	} */
+		for (int i=0; i<nbUsers; i++) {
+			try {
+				ResultSet rs=db.statement.executeQuery("SELECT username FROM UsernameToIP WHERE ip='" + IPAddresses[i] + "'") ;
+				if (rs.next()) {
+					assertEquals(usernames[i], rs.getString(1)) ; 
+				}
+			} catch (SQLException e) {
+				System.out.println(e) ; 
+			}
+		}
+	} 
 
 	
 	////////////////////////////////////// FUNCTION getIP //////////////////////////////////////	
-	/* @Test
+	@Test
 	public void testGetIP() {
-		fail("Not yet implemented");
-	} */
+		for (int i=0; i<nbUsers; i++) {
+			try {
+				ResultSet rs=db.statement.executeQuery("SELECT ip FROM UsernameToIP WHERE username='" + usernames[i] + "'") ;
+				if (rs.next()) {
+					assertEquals(IPAddresses[i].toString(), rs.getString(1)) ; 
+				}
+			} catch (SQLException e) {
+				System.out.println(e) ; 
+			}
+		}
+	} 
 
 	
 	/////////////////////////////////// FUNCTION dropDatabase //////////////////////////////////	
