@@ -26,8 +26,32 @@ public class Manager {
 	     return m.find();
 	}
 	
-		
-		
+	
+	//////////////////////////////////////////////////////////////////////
+	/////////////////////////// VALID USERNAME ///////////////////////////
+	//////////////////////////////////////////////////////////////////////
+	public static boolean validLengthUsername(String username) {
+		boolean res = true ; 
+		res = res && (username.length() < maxLength) ; 
+		res = res && (username.length() > 1) ; 
+		return res ; 
+	}
+	
+	public static boolean validCharUsername(String username) {
+		boolean res = true ; 
+		res = res && containsSpecialCharacter(username) ; 
+		return res ; 
+	}
+	
+	public static boolean validUsername(String username) {
+		boolean res = true ; 
+		res = res && validLengthUsername(username) ; 
+		res = res && validCharUsername(username) ; 
+		res = res && networkManager.usernameAvailable(username) ;
+		return res ; 
+	}
+	
+	
 	//////////////////////////////////////////////////////////////////////
 	//////////////////////////////CONNECTION//////////////////////////////
 	//////////////////////////////////////////////////////////////////////
