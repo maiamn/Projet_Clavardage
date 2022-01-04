@@ -25,7 +25,11 @@ public class Manager {
 	     return m.find();
 	}
 	
-	
+		
+		
+	//////////////////////////////////////////////////////////////////////
+	//////////////////////////////CONNECTION//////////////////////////////
+	//////////////////////////////////////////////////////////////////////
 	public static void connection() {
 		String potentialUsername = null ;
 		
@@ -49,7 +53,6 @@ public class Manager {
 					System.out.println("The username should not contain special characters. Please try another one.");
 				}
 				
-				
 				//Then verify that it is available
 				else if (networkManager.usernameAvailable(potentialUsername)) {
 					username = potentialUsername ;
@@ -65,10 +68,14 @@ public class Manager {
 		scanner.close();
 		
 		//once the username has been accepted, bc username
-		networkManager.notifyConnected(potentialUsername);
+		networkManager.notifyConnected(username);
 		
 	}
 	
+	
+	//////////////////////////////////////////////////////////////////////
+	////////////////////////////DISCONNECTION/////////////////////////////
+	//////////////////////////////////////////////////////////////////////
 	
 	public static void disconnection() {
 		localDB.dropDatabase();
@@ -84,6 +91,7 @@ public class Manager {
 			networkManager.sendUnavailableUsername(host);
 		}
 	}
+	
 	
 	//////////////////////////////////////////////////////////////////////
 	////////////////////////////LOCAL DATABASE////////////////////////////
