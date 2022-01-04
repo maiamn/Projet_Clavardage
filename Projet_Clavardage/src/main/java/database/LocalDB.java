@@ -14,6 +14,7 @@ public class LocalDB {
 	Statement statement ;
 	String addrDb = "jdbc:mysql://localhost:3306/localdatabase?";
 	String login = "root" ;
+	//hello tout le monde 
 	String password = "root" ;
 	
 	// Constructor 
