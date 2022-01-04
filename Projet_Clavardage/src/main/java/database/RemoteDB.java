@@ -86,8 +86,8 @@ public class RemoteDB {
 		
 		// Query to order DB by descending date and select messages 
 		String query = "SELECT * FROM History "
-				+ "WHERE Sender = '" + person1 + "' AND Receiver = '" + person2 + "' "
-				+ "OR Sender = '" + person2 + "' AND Receiver = '" + person1 + "' "
+				+ "WHERE (Sender = '" + person1 + "' AND Receiver = '" + person2 + "') "
+				+ "OR (Sender = '" + person2 + "' AND Receiver = '" + person1 + "') "
 				+ "ORDER BY Date DESC " ; 
 		
 		ArrayList<String> senders = new ArrayList<String>();
@@ -103,7 +103,7 @@ public class RemoteDB {
 			while(rs.next()) {
 				//getArray not supported by mysql
 				// Move sql.array content to ArrayList
-				senders.add( rs.getString(1) );// First column
+				senders.add( rs.getString(1) );
 				receivers.add(rs.getString(2));
 				messages.add(rs.getString(3));
 				dates.add(rs.getString(4));

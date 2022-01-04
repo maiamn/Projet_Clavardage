@@ -104,7 +104,11 @@ public class RemoteDBTest {
 	@After
 	public void resetAfterTests() throws IOException {
 	//////////////////////////////////////// Drop database ///////////////////////////////////////
-
+		try {
+			db.statement.executeUpdate("TRUNCATE TABLE History") ; 
+		} catch (SQLException e) {
+				System.out.println(e);
+		}
 	}
 
 
@@ -134,14 +138,75 @@ public class RemoteDBTest {
 		} catch (SQLException e) {
 			System.out.println(e);
 		}
-	} 
+	}  
 
 	
 	///////////////////////////////////// FUNCTION getMessage ////////////////////////////////////	
 	@Test
 	public void testGetMessage() {
-		// STILL NEED TO IMPLEMENT
-		assertTrue(true) ; 
+		
+		int count = 0 ; 
+		while(count<(nbMsgs/2)) {
+			int i=count ; 
+			int j=i+1 ; 
+			
+			// Get the messages between user i and user j 
+			resultGet = db.getMessage(usernames.get(i), usernames.get(j)) ;
+			
+			// Check if the number of result is correct in all arraylist of result 
+			assertEquals(2, resultGet.get(0).size()) ; 
+			assertEquals(2, resultGet.get(1).size()) ; 
+			assertEquals(2, resultGet.get(2).size()) ; 
+			assertEquals(2, resultGet.get(3).size()) ;
+			
+			// First message -> user i to user j 
+			if (resultGet.get(0).get(0)==usernames.get(i)) {
+				
+				// Check the sender
+				assertEquals(usernames.get(i), resultGet.get(0).get(0)) ; 
+				assertEquals(usernames.get(j), resultGet.get(0).get(1)) ; 
+				
+				// Check the receiver 
+				assertEquals(usernames.get(j), resultGet.get(1).get(0)) ; 
+				assertEquals(usernames.get(i), resultGet.get(1).get(1)) ; 
+				
+				// Check the message
+				String message0 = formattingMessage(usernames.get(i), usernames.get(j)) ;
+				String message1 = formattingMessage(usernames.get(j), usernames.get(i)) ; 
+				
+				assertEquals(message0, resultGet.get(2).get(0)) ; 
+				assertEquals(message1, resultGet.get(2).get(1)) ; 
+				
+				// Check the date 
+				assertEquals(date, resultGet.get(3).get(0)) ; 
+				assertEquals(date, resultGet.get(3).get(1)) ; 
+			} 
+			
+			// Second message -> user j to user i 
+			else if (resultGet.get(0).get(0)==usernames.get(j)) {
+				// Check the sender
+				assertEquals(usernames.get(j), resultGet.get(0).get(0)) ; 
+				assertEquals(usernames.get(i), resultGet.get(0).get(1)) ; 
+				
+				// Check the receiver 
+				assertEquals(usernames.get(i), resultGet.get(1).get(0)) ; 
+				assertEquals(usernames.get(j), resultGet.get(1).get(1)) ; 
+				
+				// Check the message
+				String message0 = formattingMessage(usernames.get(j), usernames.get(i)) ;
+				String message1 = formattingMessage(usernames.get(i), usernames.get(j)) ; 
+				
+				assertEquals(message0, resultGet.get(2).get(0)) ; 
+				assertEquals(message1, resultGet.get(2).get(1)) ; 
+				
+				// Check the date 
+				assertEquals(date, resultGet.get(3).get(0)) ; 
+				assertEquals(date, resultGet.get(3).get(1)) ; 
+			} 	
+			
+			count++ ; 
+		}
+		
 	}
 	
 
@@ -155,6 +220,6 @@ public class RemoteDBTest {
 			assertTrue(true) ;
 		}	
 		db = new RemoteDB() ; 
-	}
+	} 
 
 }
