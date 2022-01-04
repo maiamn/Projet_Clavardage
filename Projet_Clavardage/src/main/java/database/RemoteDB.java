@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet ; 
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 
 public class RemoteDB {
@@ -90,9 +91,31 @@ public class RemoteDB {
 				+ "OR Sender = '" + person2 + "' AND Receiver = '" + person1 + "' "
 				+ "ORDER BY Date DESC " ; 
 		
+		ArrayList<String> senders = new ArrayList<String>();
+		ArrayList<String> receivers = new ArrayList<String>();
+		ArrayList<String> messages = new ArrayList<String>();
+		
+		
 		try {
 			// Execute the statement 
 			ResultSet rs = this.statement.executeQuery(query) ; 
+			
+			// Move sql.array content to ArrayList
+			java.sql.Array sqlArraySenders = rs.getArray(0); // First column
+			java.sql.Array sqlArrayReceivers = rs.getArray(1);
+			java.sql.Array sqlArrayMessages = rs.getArray(2);
+			
+			String[] arraySenders = (String[])sqlArraySenders.getArray();
+			String[] arrayReceivers = (String[])sqlArrayReceivers.getArray();
+			String[] arrayMessages = (String[])sqlArrayMessages.getArray();
+			
+			for (int i=0; i<arraySenders.length ;i++) {
+				senders.add(arraySenders[i]);
+				receivers.add(arrayReceivers[i]);
+				messages.add(arrayMessages[i]);
+			}
+			
+			
 			
 			rs.close(); 
 			System.out.println("[RemoteDB] Message fetched");
