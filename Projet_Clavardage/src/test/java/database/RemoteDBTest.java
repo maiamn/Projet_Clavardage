@@ -140,6 +140,7 @@ public class RemoteDBTest {
 	///////////////////////////////////// FUNCTION getMessage ////////////////////////////////////	
 	@Test
 	public void testGetMessage() {
+		// STILL NEED TO IMPLEMENT
 		assertTrue(true) ; 
 	}
 	
