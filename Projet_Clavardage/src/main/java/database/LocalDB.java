@@ -112,13 +112,15 @@ public class LocalDB {
 		try {
 			// Execute the statement 
 			ResultSet rs = this.statement.executeQuery(query) ; 
-			username = rs.getString(0) ;
+			if (rs.next()) {
+				 username = rs.getString(1);
+			}
 			rs.close(); 
 		} 
 		catch (SQLException e) {
 			System.out.println(e);
 		}
-		System.out.println("[LocalDB] Their username is: " + username);
+		//System.out.println("[LocalDB] Their username is: " + username);
 		return username ;	
 	}
 	
@@ -130,8 +132,11 @@ public class LocalDB {
 		try {
 			// Execute the statement 
 			ResultSet rs = this.statement.executeQuery(query) ; 
-			IPString = rs.getString(0) ;
-			IP = InetAddress.getByName(IPString) ; 
+			
+			if (rs.next()) {
+				 IPString = rs.getString(1);
+				 IP = InetAddress.getByName(IPString) ; 
+			}
 			rs.close(); 
 		} 
 		catch (Exception e) {

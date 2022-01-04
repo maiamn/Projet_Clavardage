@@ -87,7 +87,7 @@ public class Manager {
 			for (int i = 0 ; i < 5; i++) {
 					newUserConnected("testCelia"+i, InetAddress.getLocalHost());
 			}
-			System.out.println("The username is: " + getUsername(InetAddress.getLocalHost())) ;
+			//System.out.println("The username is: " + getUsername(InetAddress.getLocalHost())) ;
 			System.out.println("The IP is: " + getIP("testCelia0")) ;
 		}
 		
