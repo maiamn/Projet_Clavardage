@@ -135,7 +135,8 @@ public class LocalDB {
 			
 			if (rs.next()) {
 				 IPString = rs.getString(1);
-				 IP = InetAddress.getByName(IPString) ; 
+				 String[] IPsplit = IPString.split("/") ;
+				 IP = InetAddress.getByName(IPsplit[1]) ; 
 			}
 			rs.close(); 
 		} 
@@ -143,7 +144,6 @@ public class LocalDB {
 			System.out.println(e);
 		}
 		
-		System.out.println("[LocalDB] Their username is: " + IP);
 		return IP ; 
 	}
 	
