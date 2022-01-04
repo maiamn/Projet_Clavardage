@@ -115,8 +115,6 @@ public class RemoteDB {
 				messages.add(arrayMessages[i]);
 			}
 			
-			
-			
 			rs.close(); 
 			System.out.println("[RemoteDB] Message fetched");
 		} 

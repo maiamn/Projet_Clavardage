@@ -62,7 +62,7 @@ public class NetworkManager {
 	
 	// Fonction principale de deconnexion 
 	public void disconnection() {
-		System.out.println("disconnection()");
+		System.out.println("[NetworkManager] Calling disconnection()");
 		serverUDP.setConnected(false) ;
 		serverTCP.setConnected(false) ;
 	}

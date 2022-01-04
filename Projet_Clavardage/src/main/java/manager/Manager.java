@@ -12,6 +12,7 @@ public class Manager {
 	protected static String username = null;
 	private static NetworkManager networkManager = new NetworkManager();
 	private static LocalDB localDB = new LocalDB() ;
+	private static RemoteDB remoteDB = new RemoteDB();
 	
 	//Maximum length of usernames
 	private static int maxLength = 30 ;
@@ -68,11 +69,25 @@ public class Manager {
 		
 	}
 	
+	
+	public static void disconnection() {
+		localDB.dropDatabase();
+		localDB.closeConnection();
+		remoteDB.dropDatabase();
+		remoteDB.closeConnection();
+		networkManager.disconnection();
+	}
+	
+	
 	public static void usernameRequest(String pseudo, String host) {
 		if (pseudo == Manager.username) {
 			networkManager.sendUnavailableUsername(host);
 		}
 	}
+	
+	//////////////////////////////////////////////////////////////////////
+	////////////////////////////LOCAL DATABASE////////////////////////////
+	//////////////////////////////////////////////////////////////////////
 	
 	public static void newUserConnected(String username, InetAddress IP) {
 		localDB.addUser(username, IP);
@@ -94,10 +109,20 @@ public class Manager {
 		return localDB.getIP(name);
 	}
 	
-	public static void disconnection() {
-		localDB.dropDatabase();
-		localDB.closeConnection();
+	
+	//////////////////////////////////////////////////////////////////////
+	////////////////////////////REMOTE DATABASE///////////////////////////
+	//////////////////////////////////////////////////////////////////////
+	
+	public static void addMessageToHistory(String sender, String receiver, String msg, String dateTime) {
+		remoteDB.addMessage(sender, receiver, msg, dateTime) ;
 	}
+	
+	
+	//////////////////////////////////////////////////////////////////////
+	////////////////////////////LOCAL DATABASE////////////////////////////
+	//////////////////////////////////////////////////////////////////////
+	
 	
 	public static void main (String [] args) {
 		connection();
