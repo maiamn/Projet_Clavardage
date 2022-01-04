@@ -79,11 +79,11 @@ public class RemoteDB {
 	
 	
 	// Get information in the database
-	public String getMessage(String person1, String person2) {
+	public ArrayList<ArrayList<String>> getMessage(String person1, String person2) {
 		System.out.println("[RemoteDB] Calling getMessage...");
 		
 		// Result 
-		Conversation result = new Conversation(null, null, null, null) ;
+		//Conversation result = new Conversation(null, null, null, null) ;
 		
 		// Query to order DB by descending date and select messages 
 		String query = "SELECT * FROM History "
@@ -94,37 +94,39 @@ public class RemoteDB {
 		ArrayList<String> senders = new ArrayList<String>();
 		ArrayList<String> receivers = new ArrayList<String>();
 		ArrayList<String> messages = new ArrayList<String>();
+		ArrayList<String> dates = new ArrayList<String>();
 		
 		
 		try {
 			// Execute the statement 
-			ResultSet rs = this.statement.executeQuery(query) ; 
+			ResultSet rs = this.statement.executeQuery(query) ;
 			
-			// Move sql.array content to ArrayList
-			java.sql.Array sqlArraySenders = rs.getArray(0); // First column
-			java.sql.Array sqlArrayReceivers = rs.getArray(1);
-			java.sql.Array sqlArrayMessages = rs.getArray(2);
-			
-			String[] arraySenders = (String[])sqlArraySenders.getArray();
-			String[] arrayReceivers = (String[])sqlArrayReceivers.getArray();
-			String[] arrayMessages = (String[])sqlArrayMessages.getArray();
-			
-			for (int i=0; i<arraySenders.length ;i++) {
-				senders.add(arraySenders[i]);
-				receivers.add(arrayReceivers[i]);
-				messages.add(arrayMessages[i]);
+			while(rs.next()) {
+				//getArray not supported by mysql
+				// Move sql.array content to ArrayList
+				senders.add( rs.getString(1) );// First column
+				receivers.add(rs.getString(2));
+				messages.add(rs.getString(3));
+				dates.add(rs.getString(4));
 			}
-			
 			rs.close(); 
 			System.out.println("[RemoteDB] Message fetched");
+			
+			
 		} 
 		
-		catch (SQLException e) {
+		catch ( Exception e) {
 			System.out.println(e);
 		}
 		
+		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>(4);
 		
-		return "STILL NEED TO IMPLEMENT" ;	
+		result.add(senders);
+		result.add(receivers);
+		result.add(messages);
+		result.add(dates);
+		
+		return  result;	
 	}
 	
 	
