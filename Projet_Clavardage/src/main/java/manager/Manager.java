@@ -1,6 +1,5 @@
 package manager;
 
-import java.util.Scanner;
 import java.net.InetAddress;
 import database.* ;
 import network.* ;

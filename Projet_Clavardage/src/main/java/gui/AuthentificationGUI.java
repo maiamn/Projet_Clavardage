@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class authentificationGUI implements ActionListener {
+public class AuthentificationGUI implements ActionListener {
     JFrame authentificationFrame;
     JPanel authentificationPanel;
     JTextField username;
@@ -14,7 +14,7 @@ public class authentificationGUI implements ActionListener {
     int widthComponents ; 
     int heightComponents ; 
 
-    public authentificationGUI() {
+    public AuthentificationGUI() {
         //Create and set up the window.
         authentificationFrame = new JFrame("Welcome to chat app!");
         authentificationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,7 +82,7 @@ public class authentificationGUI implements ActionListener {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        authentificationGUI authentification = new authentificationGUI();
+        AuthentificationGUI authentification = new AuthentificationGUI();
     }
 
     public static void main(String[] args) {
