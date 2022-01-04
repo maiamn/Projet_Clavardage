@@ -102,29 +102,35 @@ public class RemoteDB {
 	}
 	
 	
+
 	// Drop database 
 	public void dropDatabase() {
+		System.out.println("[RemoteDB] Dropping the database...");
 		String query = "DROP TABLE History ;" ;
 		
 		try {
 			// Execute the statement 
-			ResultSet rs = this.statement.executeQuery(query) ; 
-			rs.close(); 
-		} catch (SQLException e) {
+			this.statement.executeUpdate(query) ;
+			System.out.println("[RemoteDB] Database dropped");
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 	
-	
+		
 	// Close the connection of database 
 	public void closeConnection() {
+		System.out.println("[RemoteDB] Closing connection...");
 		try {
 			this.connection.close() ;
-		} catch (SQLException e) {
+			System.out.println("[RemoteDB] Connection closed");
+		} 
+		catch (SQLException e) {
 			System.out.println(e) ; 
 		}
-		
 	}	
+	
 	
 
 	public static void main(String[] args) {
