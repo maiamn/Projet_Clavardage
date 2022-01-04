@@ -120,7 +120,8 @@ public class LocalDB {
 		catch (SQLException e) {
 			System.out.println(e);
 		}
-		//System.out.println("[LocalDB] Their username is: " + username);
+
+		System.out.println("[LocalDB] username fetched");
 		return username ;	
 	}
 	
@@ -144,6 +145,7 @@ public class LocalDB {
 			System.out.println(e);
 		}
 		
+		System.out.println("[LocalDB] IP fetched");
 		return IP ; 
 	}
 	

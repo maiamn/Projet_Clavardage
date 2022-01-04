@@ -43,7 +43,6 @@ public class RemoteDB {
 
 	
 			// Execute the statement 
-			
 			String query = "CREATE TABLE IF NOT EXISTS History " +
 	                   "(Sender VARCHAR(255) not NULL, " +
 	                   " Receiver VARCHAR(255) not NULL, " +
@@ -63,13 +62,15 @@ public class RemoteDB {
 	
 	// Add a message to the database
 	public void addMessage(String sender, String receiver, String msg, String dateTime) {
+		System.out.println("[RemoteDB] Calling addMessage...");
 		String query = "INSERT INTO History (Sender, Receiver, Message, Date) VALUES ('" + sender + "', '" + receiver + "', '" + msg + "', '" + dateTime + "') ;" ; 
 		
 		try {
 			// Execute the statement 
-			ResultSet rs = this.statement.executeQuery(query) ; 
-			rs.close(); 
-		} catch (SQLException e) {
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[RemoteDB] Message added");
+		} 
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 		
@@ -78,6 +79,7 @@ public class RemoteDB {
 	
 	// Get information in the database
 	public String getMessage(String person1, String person2) {
+		System.out.println("[RemoteDB] Calling getMessage...");
 		
 		// Result 
 		Conversation result = new Conversation(null, null, null, null) ;
@@ -93,7 +95,10 @@ public class RemoteDB {
 			ResultSet rs = this.statement.executeQuery(query) ; 
 			
 			rs.close(); 
-		} catch (SQLException e) {
+			System.out.println("[RemoteDB] Message fetched");
+		} 
+		
+		catch (SQLException e) {
 			System.out.println(e);
 		}
 		
