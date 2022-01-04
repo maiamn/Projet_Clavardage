@@ -3,9 +3,14 @@ package database;
 import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.net.InetAddress;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet ; 
 import org.junit.Test;
 import database.LocalDB.* ;
-import network.NetworkManager;
 import network.NetworkManager.MessageType;
 
 public class LocalDBTest {
@@ -18,6 +23,16 @@ public class LocalDBTest {
 	/* **************************************************************************************** */
 	// GLOBAL VARIABLES 	
 	
+	// Database
+	protected static LocalDB db = new LocalDB() ; 
+	protected static Connection connection ; 
+	protected static String addrDb ;
+	protected static String login ;
+	protected static String password ;
+	
+	// Person 
+	protected static String [] usernames = new String [10] ; 
+	protected static String [] IPAdresses = new String [10] ; 
 	/* **************************************************************************************** */
 
 	
@@ -107,6 +122,28 @@ public class LocalDBTest {
 	
 	@BeforeClass 
 	public static void initAll() throws IOException {
+		
+		// Connection to database
+		addrDb = "jdbc:mysql://localhost:3306/localdatabase?";
+		login = "root" ;
+		password = "root" ;
+		try {
+			db.connection = DriverManager.getConnection(db.addrDb, db.login, db.password);
+		} catch (SQLException e)
+        {
+            fail(e.toString());
+        }
+		
+		
+		// Users and IPAdresses 
+		for (int i=0; i<usernames.length ; i++) {
+			usernames[i]="username"+i ;
+			IPAdresses[i]="192.168.1."+i ; 
+			
+		}
+		
+		
+
 	
 	/* **************************************************************************************** */
 	//////////////////////// Init of variables useful for tests of assUser ///////////////////////
