@@ -30,22 +30,19 @@ public class Manager {
 	//////////////////////////////////////////////////////////////////////
 	//////////////////////////////CONNECTION//////////////////////////////
 	//////////////////////////////////////////////////////////////////////
-	public static void connection() {
-		String potentialUsername = null ;
-		
+	public static void connection(String potentialUsername) {
 		//while the username choosen is not available, enter a new one
-		Scanner scanner = null;
 		while(username==null) {
 			try {
-				//scan the username entered by the user
-				scanner = new Scanner(System.in) ;
-				System.out.println("Please enter a username:");
-				
-				potentialUsername = scanner.next(); 
 			
 				//Verify that the length of the username is not too important
 				if (potentialUsername.length() > maxLength) {
 					System.out.println("This username is too long. Please try another one.");
+				} 
+				
+				// Verify that the username is not null
+				else if (potentialUsername.length()<1) {
+					System.out.println("The username must not be empty. Please try another one.");
 				}
 				
 				//Verify that username does not contain special characters
@@ -65,7 +62,6 @@ public class Manager {
 				System.out.println(e);
 			}
 		}
-		scanner.close();
 		
 		//once the username has been accepted, bc username
 		networkManager.notifyConnected(username);
@@ -127,13 +123,13 @@ public class Manager {
 	}
 	
 	
-	//////////////////////////////////////////////////////////////////////
-	////////////////////////////LOCAL DATABASE////////////////////////////
-	//////////////////////////////////////////////////////////////////////
+
+	
+	
 	
 	
 	public static void main (String [] args) {
-		connection();
+		connection("test");
 		disconnection();
 	}
 
