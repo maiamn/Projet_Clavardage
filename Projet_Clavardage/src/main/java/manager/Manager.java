@@ -4,6 +4,8 @@ import java.util.Scanner;
 import java.net.InetAddress;
 import database.* ;
 import network.* ;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Manager {
 	
@@ -13,6 +15,15 @@ public class Manager {
 	
 	//Maximum length of usernames
 	private static int maxLength = 30 ;
+	
+	
+	//Function that checks if a string contains special characters
+	public static boolean containsSpecialCharacter(String s) {
+	     Pattern p = Pattern.compile("[^A-Za-z0-9]");
+	     Matcher m = p.matcher(s);
+	     return m.find();
+	}
+	
 	
 	public static void connection() {
 		String potentialUsername = null ;
@@ -31,6 +42,13 @@ public class Manager {
 				if (potentialUsername.length() > maxLength) {
 					System.out.println("This username is too long. Please try another one.");
 				}
+				
+				//Verify that username does not contain special characters
+				else if (containsSpecialCharacter(potentialUsername)) {
+					System.out.println("The username should not contain special characters. Please try another one.");
+				}
+				
+				
 				//Then verify that it is available
 				else if (networkManager.usernameAvailable(potentialUsername)) {
 					username = potentialUsername ;
