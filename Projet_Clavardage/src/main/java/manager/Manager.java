@@ -35,8 +35,9 @@ public class Manager {
 		res = res && (username.length() > 1) ; 
 		if (res) {
 			return res ; 
-		} else {
-			throw new IncorrectUsernameException("Invalid length of username \n The length of the password must be between 0 and 30 characters \n") ;
+		} 
+		else {
+			throw new IncorrectUsernameException("Invalid length of username. \n The length of the username must be between 1 and 30 characters. \n") ;
 		}
 	}
 	
@@ -45,8 +46,9 @@ public class Manager {
 		res = res && containsSpecialCharacter(username) ;
 		if (res) {
 			return res ;
-		} else {
-			throw new IncorrectUsernameException("Username cannot contain special characters") ; 
+		} 
+		else {
+			throw new IncorrectUsernameException("Username cannot contain special characters.") ; 
 		}
 	}
 	
@@ -56,52 +58,25 @@ public class Manager {
 			res = res && validLengthUsername(username) ; 
 			res = res && validCharUsername(username) ; 
 			res = res && networkManager.usernameAvailable(username) ; 
-		} catch (IncorrectUsernameException e) {
+		} 
+		catch (IncorrectUsernameException e) {
 			System.out.println(e) ; 
 		}
 		return res ; 
 	}
 	
+	public static String getUsername() {
+		return username;
+	}
 	
 	//////////////////////////////////////////////////////////////////////
 	//////////////////////////////CONNECTION//////////////////////////////
 	//////////////////////////////////////////////////////////////////////
-	public static void connection(String potentialUsername) {
-		//while the username choosen is not available, enter a new one
-		while(username==null) {
-			try {
-			
-				//Verify that the length of the username is not too important
-				if (potentialUsername.length() > maxLength) {
-					System.out.println("This username is too long. Please try another one.");
-				} 
-				
-				// Verify that the username is not null
-				else if (potentialUsername.length()<1) {
-					System.out.println("The username must not be empty. Please try another one.");
-				}
-				
-				//Verify that username does not contain special characters
-				else if (containsSpecialCharacter(potentialUsername)) {
-					System.out.println("The username should not contain special characters. Please try another one.");
-				}
-				
-				//Then verify that it is available
-				else if (networkManager.usernameAvailable(potentialUsername)) {
-					username = potentialUsername ;
-				}
-				else {
-					System.out.println("This username is already used. Please try another one.");
-				}
-			}
-			catch (Exception e) {
-				System.out.println(e);
-			}
+	public static void connection(String username) {
+		if (validUsername(username)) {
+			//once the username has been accepted, bc username
+			networkManager.notifyConnected(username);
 		}
-		
-		//once the username has been accepted, bc username
-		networkManager.notifyConnected(username);
-		
 	}
 	
 	
@@ -118,9 +93,9 @@ public class Manager {
 	}
 	
 	
-	public static void usernameRequest(String pseudo, String host) {
+	public static void usernameRequest(String pseudo, InetAddress IP) {
 		if (pseudo == Manager.username) {
-			networkManager.sendUnavailableUsername(host);
+			networkManager.sendUnavailableUsername(IP);
 		}
 	}
 	
