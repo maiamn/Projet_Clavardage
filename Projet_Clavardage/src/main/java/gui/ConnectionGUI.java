@@ -4,20 +4,22 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class AuthentificationGUI implements ActionListener {
+public class ConnectionGUI implements ActionListener {
+	static String username ;
     JFrame authentificationFrame;
     JPanel authentificationPanel;
-    JTextField username;
     JLabel welcome;
-    JButton submit;
-    JLabel errorMessage ; 
+    JButton connect;
     
     int widthComponents ; 
     int heightComponents ; 
 
-    public AuthentificationGUI() {
+    public ConnectionGUI(String choosenUsername) {
+    	// Set username 
+    	username = choosenUsername ; 
+    	
         //Create and set up the window.
-        authentificationFrame = new JFrame("Welcome to chat app!");
+        authentificationFrame = new JFrame("Welcome to chat app, " + username + "!");
         authentificationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         authentificationFrame.pack();
@@ -31,13 +33,13 @@ public class AuthentificationGUI implements ActionListener {
         authentificationFrame.setLocationRelativeTo(null); 
 
         //Create and set up the panel.
-        authentificationPanel = new JPanel(new GridLayout(4, 1, 10, 10));
+        authentificationPanel = new JPanel(new GridLayout(2, 1, 10, 10));
 
         //Add the widgets.
         addWidgets();
         
         //Set the default button.
-        authentificationFrame.getRootPane().setDefaultButton(submit);
+        authentificationFrame.getRootPane().setDefaultButton(connect);
 
         //Add the panel to the window.
         authentificationFrame.getContentPane().add(authentificationPanel, BorderLayout.CENTER);
@@ -51,49 +53,27 @@ public class AuthentificationGUI implements ActionListener {
      */
     private void addWidgets() {
         //Create widgets.
-        welcome = new JLabel("Welcome! What's your name?", SwingConstants.CENTER);
-        username = new JTextField(10);
-        submit = new JButton("Submit");
-        errorMessage = new JLabel("Your username is uncorrect\n", SwingConstants.CENTER) ; 
+        welcome = new JLabel(username + " is a correct username! \n You can connect yourself to chat app!", SwingConstants.CENTER);
+        connect = new JButton("Connection");
 
         //Listen to events from the Convert button.
-        submit.addActionListener(this);
+        connect.addActionListener(this);
 
         // Set size 
         welcome.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-        username.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-        submit.setPreferredSize(new Dimension(40, 40));
-        errorMessage.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-
+        connect.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
         
         //Add the widgets to the container.
         authentificationPanel.add(welcome);
-        authentificationPanel.add(username);
-        authentificationPanel.add(submit);
-        authentificationPanel.add(errorMessage);
-        errorMessage.setVisible(false);
+        authentificationPanel.add(connect); 
 
         welcome.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        submit.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+        connect.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
     }
 
-    public void actionPerformed(ActionEvent event) {
-    	boolean nextStep = false ; 
-    	while(!nextStep) {
-    		// Get the username choosen by the user
-    		String name = username.getText() ; 
-    		// Check if the username is valid 
-    		boolean correct = GUIManager.checkUsername(name) ; 
-    		System.out.println(correct); 
-    		if(!correct) {
-    	        errorMessage.setVisible(true);
-    		} 
-    		else {
-    			GUIManager.switchToConnection(name) ; 
-    	        authentificationFrame.setVisible(false);
-    			nextStep = true ;
-    		}
-    	}
+    public void actionPerformed(ActionEvent event) { 
+        authentificationFrame.setVisible(false);
+    	GUIManager.switchToHomePage(username) ; 
     }
 
 
@@ -101,7 +81,7 @@ public class AuthentificationGUI implements ActionListener {
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        AuthentificationGUI authentification = new AuthentificationGUI();
+        ConnectionGUI connection = new ConnectionGUI(username);
     }
 
     public static void main(String[] args) {
