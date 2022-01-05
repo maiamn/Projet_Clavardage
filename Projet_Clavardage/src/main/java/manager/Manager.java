@@ -140,6 +140,7 @@ public class Manager {
 	
 	public static void main (String [] args) {
 		connection("test");
+		System.out.println(networkManager.getMyIP().toString());
 		disconnection();
 	}
 

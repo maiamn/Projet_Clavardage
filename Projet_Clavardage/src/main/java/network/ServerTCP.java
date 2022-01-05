@@ -8,7 +8,8 @@ public class ServerTCP extends Thread {
 	// Attributs 
 	boolean isAvailable = true;	
 	boolean connected = true ; 
-	InetAddress myIP;
+	InetAddress myIP = null ;
+	
 	
 	// Getters 
 	public boolean getAvailable() {
@@ -21,6 +22,12 @@ public class ServerTCP extends Thread {
 	}
 	
 	public InetAddress getMyIP() {
+		try {
+			this.myIP = InetAddress.getByAddress(new byte[] {(byte)192, (byte)168, (byte)0, (byte)1});
+		}
+		catch (Exception e) {
+			System.out.println(e);
+		}
 		return this.myIP;
 	}
 	
