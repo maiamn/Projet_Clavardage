@@ -11,7 +11,8 @@ public class GUIManager {
 	static ConnectedUsersGUI connectedUsers ; 
 	static SendMessageGUI sendMessage ; 
 	static HistoryGUI history ; 
-	static DisconnectionGUI disconnection ; 
+	static ChangeUsernameGUI changeUsername ; 
+	static DisconnectionGUI disconnection ;
 	
 	//Constructor
 	public GUIManager() {
@@ -64,8 +65,8 @@ public class GUIManager {
 	}
 	
 	// SWITCH TO CONNECTED USER PAGE
-	public static void switchToConnectedUsers() {
-		connectedUsers = new ConnectedUsersGUI() ; 
+	public static void switchToConnectedUsers(String username) {
+		connectedUsers = new ConnectedUsersGUI(username) ; 
 	}
 	
 	// SWITCH TO SEND MESSAGE PAGE 
@@ -76,6 +77,11 @@ public class GUIManager {
 	// SWITCH TO HISTORY PAGE
 	public static void switchToHistory() {
 		history = new HistoryGUI() ; 
+	}
+	
+	// SWITCH TO CHANGE USERNAME
+	public static void switchToChangeUsername(String username) {
+		changeUsername = new ChangeUsernameGUI(username) ; 
 	}
 	
 	// SWITCH TO DISCONNECTION PAGE

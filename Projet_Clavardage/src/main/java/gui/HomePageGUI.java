@@ -71,7 +71,7 @@ public class HomePageGUI {
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				homePageFrame.setVisible(false);
-        				GUIManager.switchToConnectedUsers() ; 
+        				GUIManager.switchToConnectedUsers(username) ; 
                   }
                 }
               );
@@ -82,7 +82,7 @@ public class HomePageGUI {
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				homePageFrame.setVisible(false);
-        				System.out.println("Change username") ; 
+        				GUIManager.switchToChangeUsername(username) ; 
                   }
                 }
               );

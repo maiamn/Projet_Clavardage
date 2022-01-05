@@ -89,6 +89,7 @@ public class AuthentificationGUI implements ActionListener {
 			errorMessage.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 			submit.removeActionListener(this) ; 
 	        retry = new JButton("Choose a new username") ; 
+	        authentificationFrame.getRootPane().setDefaultButton(retry);
 	        retry.addActionListener(
 	        		new ActionListener() {
 	        			public void actionPerformed(ActionEvent e) {

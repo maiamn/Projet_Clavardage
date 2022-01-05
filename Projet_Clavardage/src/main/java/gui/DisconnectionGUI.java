@@ -72,6 +72,7 @@ public class DisconnectionGUI{
         back.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
+        		        disconnectionFrame.setVisible(false);
         				GUIManager.switchToHomePage(username) ; 
                   }
                 }
@@ -108,7 +109,7 @@ public class DisconnectionGUI{
         //Make sure we have nice window decorations.
         JFrame.setDefaultLookAndFeelDecorated(true);
 
-        AuthentificationGUI authentification = new AuthentificationGUI();
+        DisconnectionGUI disconnection = new DisconnectionGUI(username);
     }
 
     public static void main(String[] args) {
