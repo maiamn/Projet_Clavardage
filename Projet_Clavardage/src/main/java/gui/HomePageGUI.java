@@ -11,12 +11,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 public class HomePageGUI {
 	static String username ;
-    JFrame authentificationFrame;
-    JPanel authentificationPanel;
+    JFrame homePageFrame;
+    JPanel homePagePanel;
     JLabel todo;
     JButton connectedUsers ;
     JButton changeUsername ; 
@@ -31,30 +30,30 @@ public class HomePageGUI {
     	this.username = choosenUsername ; 
     	
         //Create and set up the window.
-        authentificationFrame = new JFrame("Welcome to chat app, " + username + "!");
-        authentificationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        homePageFrame = new JFrame("Welcome to chat app, " + username + "!");
+        homePageFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        authentificationFrame.pack();
+        homePageFrame.pack();
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ; 
         int widthWindow = screenSize.width*1 ;
         int heightWindow = screenSize.height*1 ;
         this.widthComponents = widthWindow*1/4 ; 
         this.heightComponents = heightWindow*1/4 ; 
-        authentificationFrame.setSize(widthWindow, heightWindow);
-        authentificationFrame.setLocationRelativeTo(null); 
+        homePageFrame.setSize(widthWindow, heightWindow);
+        homePageFrame.setLocationRelativeTo(null); 
 
         //Create and set up the panel.
-        authentificationPanel = new JPanel(new GridLayout(5, 1, 10, 10));
+        homePagePanel = new JPanel(new GridLayout(5, 1, 10, 10));
 
         //Add the widgets.
         addWidgets();
 
         //Add the panel to the window.
-        authentificationFrame.getContentPane().add(authentificationPanel, BorderLayout.CENTER);
+        homePageFrame.getContentPane().add(homePagePanel, BorderLayout.CENTER);
 
         //Display the window.
-        authentificationFrame.setVisible(true);
+        homePageFrame.setVisible(true);
     }
 
     /**
@@ -71,7 +70,7 @@ public class HomePageGUI {
         connectedUsers.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
-        				authentificationFrame.setVisible(false);
+        				homePageFrame.setVisible(false);
         				GUIManager.switchToConnectedUsers() ; 
                   }
                 }
@@ -82,7 +81,7 @@ public class HomePageGUI {
         changeUsername.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
-        				authentificationFrame.setVisible(false);
+        				homePageFrame.setVisible(false);
         				System.out.println("Change username") ; 
                   }
                 }
@@ -93,7 +92,7 @@ public class HomePageGUI {
         sendMessage.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
-        				authentificationFrame.setVisible(false);
+        				homePageFrame.setVisible(false);
         				GUIManager.switchToSendMessage() ; 
                   }
                 }
@@ -104,8 +103,8 @@ public class HomePageGUI {
         disconnection.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
-        				authentificationFrame.setVisible(false);
-        				GUIManager.switchToDisconnection() ; 
+        				homePageFrame.setVisible(false);
+        				GUIManager.switchToDisconnection(username) ; 
                   }
                 }
               );
@@ -119,20 +118,15 @@ public class HomePageGUI {
         disconnection.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
         
         //Add the widgets to the container.
-        authentificationPanel.add(connectedUsers); 
-        authentificationPanel.add(changeUsername); 
-        authentificationPanel.add(sendMessage) ; 
-        authentificationPanel.add(disconnection) ; 
+        homePagePanel.add(connectedUsers); 
+        homePagePanel.add(changeUsername); 
+        homePagePanel.add(sendMessage) ; 
+        homePagePanel.add(disconnection) ; 
 
         connectedUsers.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         changeUsername.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         sendMessage.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         disconnection.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-    }
-
-    public void actionPerformed(ActionEvent event) {  
-        System.out.println("Button");
-
     }
 
 

@@ -11,6 +11,7 @@ public class AuthentificationGUI implements ActionListener {
     JLabel welcome;
     JButton submit;
     JLabel errorMessage ; 
+    JButton retry ; 
     
     int widthComponents ; 
     int heightComponents ; 
@@ -31,7 +32,7 @@ public class AuthentificationGUI implements ActionListener {
         authentificationFrame.setLocationRelativeTo(null); 
 
         //Create and set up the panel.
-        authentificationPanel = new JPanel(new GridLayout(4, 1, 10, 10));
+        authentificationPanel = new JPanel(new GridLayout(5, 1, 10, 10));
 
         //Add the widgets.
         addWidgets();
@@ -54,7 +55,6 @@ public class AuthentificationGUI implements ActionListener {
         welcome = new JLabel("Welcome! What's your name?", SwingConstants.CENTER);
         username = new JTextField(10);
         submit = new JButton("Submit");
-        errorMessage = new JLabel("Your username is uncorrect\n", SwingConstants.CENTER) ; 
 
         //Listen to events from the Convert button.
         submit.addActionListener(this);
@@ -63,37 +63,48 @@ public class AuthentificationGUI implements ActionListener {
         welcome.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
         username.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
         submit.setPreferredSize(new Dimension(40, 40));
-        errorMessage.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
 
         
         //Add the widgets to the container.
         authentificationPanel.add(welcome);
         authentificationPanel.add(username);
         authentificationPanel.add(submit);
-        authentificationPanel.add(errorMessage);
-        errorMessage.setVisible(false);
-
+        
+        
         welcome.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         submit.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
     }
 
     public void actionPerformed(ActionEvent event) {
-    	boolean nextStep = false ; 
-    	while(!nextStep) {
-    		// Get the username choosen by the user
-    		String name = username.getText() ; 
-    		// Check if the username is valid 
-    		boolean correct = GUIManager.checkUsername(name) ; 
-    		System.out.println(correct); 
-    		if(!correct) {
-    	        errorMessage.setVisible(true);
-    		} 
-    		else {
-    			GUIManager.switchToConnection(name) ; 
-    	        authentificationFrame.setVisible(false);
-    			nextStep = true ;
-    		}
-    	}
+		// Get the username choosen by the user
+		String name = username.getText() ; 
+		// Check if the username is valid 
+		boolean correct = GUIManager.checkUsername(name) ; 
+		if(!correct) {
+			errorMessage = new JLabel("<html>Your username is uncorrect! "
+					+ "<br> Check if there is no special character and that it contains between 1 and 30 characters!"
+					+ "<br> If it's not the case, it means that it is already used so choose another one!</html>", SwingConstants.CENTER) ; 
+	        errorMessage.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
+			authentificationPanel.add(errorMessage);
+			errorMessage.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+			submit.removeActionListener(this) ; 
+	        retry = new JButton("Choose a new username") ; 
+	        retry.addActionListener(
+	        		new ActionListener() {
+	        			public void actionPerformed(ActionEvent e) {
+	        				authentificationFrame.setVisible(false) ; 
+	        				GUIManager.switchToAuthentification() ; 
+	                  }
+	                }
+	              );
+	        retry.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
+			authentificationPanel.add(retry);
+			retry.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		} 
+		else {
+			GUIManager.switchToConnection(name) ; 
+	        authentificationFrame.setVisible(false);
+		}
     }
 
 

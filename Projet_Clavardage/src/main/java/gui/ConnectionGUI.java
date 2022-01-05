@@ -6,8 +6,8 @@ import javax.swing.*;
 
 public class ConnectionGUI implements ActionListener {
 	static String username ;
-    JFrame authentificationFrame;
-    JPanel authentificationPanel;
+    JFrame connectionFrame;
+    JPanel connectionPanel;
     JLabel welcome;
     JButton connect;
     
@@ -19,33 +19,33 @@ public class ConnectionGUI implements ActionListener {
     	username = choosenUsername ; 
     	
         //Create and set up the window.
-        authentificationFrame = new JFrame("Welcome to chat app, " + username + "!");
-        authentificationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        connectionFrame = new JFrame("Welcome to chat app, " + username + "!");
+        connectionFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        authentificationFrame.pack();
+        connectionFrame.pack();
         
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ; 
         int widthWindow = screenSize.width*1/2 ;
         int heightWindow = screenSize.height*1/2 ;
         this.widthComponents = widthWindow*1/4 ; 
         this.heightComponents = heightWindow*1/4 ; 
-        authentificationFrame.setSize(widthWindow, heightWindow);
-        authentificationFrame.setLocationRelativeTo(null); 
+        connectionFrame.setSize(widthWindow, heightWindow);
+        connectionFrame.setLocationRelativeTo(null); 
 
         //Create and set up the panel.
-        authentificationPanel = new JPanel(new GridLayout(2, 1, 10, 10));
+        connectionPanel = new JPanel(new GridLayout(2, 1, 10, 10));
 
         //Add the widgets.
         addWidgets();
         
         //Set the default button.
-        authentificationFrame.getRootPane().setDefaultButton(connect);
+        connectionFrame.getRootPane().setDefaultButton(connect);
 
         //Add the panel to the window.
-        authentificationFrame.getContentPane().add(authentificationPanel, BorderLayout.CENTER);
+        connectionFrame.getContentPane().add(connectionPanel, BorderLayout.CENTER);
 
         //Display the window.
-        authentificationFrame.setVisible(true);
+        connectionFrame.setVisible(true);
     }
 
     /**
@@ -64,15 +64,16 @@ public class ConnectionGUI implements ActionListener {
         connect.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
         
         //Add the widgets to the container.
-        authentificationPanel.add(welcome);
-        authentificationPanel.add(connect); 
+        connectionPanel.add(welcome);
+        connectionPanel.add(connect); 
 
         welcome.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
         connect.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
     }
 
-    public void actionPerformed(ActionEvent event) { 
-        authentificationFrame.setVisible(false);
+    public void actionPerformed(ActionEvent event) {
+    	GUIManager.connection(username);
+        connectionFrame.setVisible(false);
     	GUIManager.switchToHomePage(username) ; 
     }
 
