@@ -19,10 +19,10 @@ public class Manager {
 	
 	
 	//Function that checks if a string contains special characters
-	public static boolean containsSpecialCharacter(String s) {
+	public static boolean noSpecialCharacter(String s) {
 	     Pattern p = Pattern.compile("[^A-Za-z0-9]");
 	     Matcher m = p.matcher(s);
-	     return m.find();
+	     return !m.find();
 	}
 	
 	
@@ -43,7 +43,7 @@ public class Manager {
 	
 	public static boolean validCharUsername(String username) throws IncorrectUsernameException {
 		boolean res = true ; 
-		res = res && containsSpecialCharacter(username) ;
+		res = res && noSpecialCharacter(username) ;
 		if (res) {
 			return res ;
 		} 
@@ -95,7 +95,7 @@ public class Manager {
 	
 	public static void usernameRequest(String pseudo, InetAddress IP) {
 		if (pseudo == Manager.username) {
-			networkManager.sendUnavailableUsername(IP);
+			// networkManager.sendUnavailableUsername(IP);
 		}
 	}
 	
