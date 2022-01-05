@@ -2,19 +2,25 @@ package network;
 
 import manager.Manager;
 import java.net.InetAddress ;
+import java.net.UnknownHostException;
 
 public class NetworkManager {
 	
 	// Attributes 
 	ServerTCP serverTCP ; 
 	ServerUDP serverUDP ;
-	static InetAddress myIP;
+	static InetAddress myIP ;
 	
 	// Constructor 
 	public NetworkManager() {
+		System.out.println("Constructeur du NetworkManager");
 		this.serverTCP = new ServerTCP() ; 
 		this.serverUDP = new ServerUDP(5001, 50000) ;
-		myIP = this.serverTCP.getMyIP();
+		try {
+			myIP = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()) ;
+		} catch (UnknownHostException e) {
+			System.out.println(e);
+		}
 	}
 	
 	public InetAddress getMyIP() {
@@ -36,7 +42,7 @@ public class NetworkManager {
 	
 	
 	// Message formatting
-	public static String messageFormatter(MessageType type,String username ,String content) {
+	public static String messageFormatter(MessageType type,String username, String content) {
 		return (type + "|" + username+ "|" + content);
 	}
 	

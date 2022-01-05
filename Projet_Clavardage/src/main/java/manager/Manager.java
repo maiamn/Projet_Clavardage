@@ -29,24 +29,39 @@ public class Manager {
 	//////////////////////////////////////////////////////////////////////
 	/////////////////////////// VALID USERNAME ///////////////////////////
 	//////////////////////////////////////////////////////////////////////
-	public static boolean validLengthUsername(String username) {
+	public static boolean validLengthUsername(String username) throws IncorrectUsernameException {
 		boolean res = true ; 
 		res = res && (username.length() < maxLength) ; 
 		res = res && (username.length() > 1) ; 
-		return res ;
+		if (res) {
+			return res ; 
+		} 
+		else {
+			throw new IncorrectUsernameException("Invalid length of username. \n The length of the username must be between 1 and 30 characters. \n") ;
+		}
 	}
 	
-	public static boolean validCharUsername(String username) {
+	public static boolean validCharUsername(String username) throws IncorrectUsernameException {
 		boolean res = true ; 
 		res = res && noSpecialCharacter(username) ;
-		return res ;
+		if (res) {
+			return res ;
+		} 
+		else {
+			throw new IncorrectUsernameException("Username cannot contain special characters.") ; 
+		}
 	}
 	
 	public static boolean validUsername(String username) {
 		boolean res = true ; 
-		res = res && validLengthUsername(username) ; 
-		res = res && validCharUsername(username) ; 
-		res = res && networkManager.usernameAvailable(username) ; 
+		try {
+			res = res && validLengthUsername(username) ; 
+			res = res && validCharUsername(username) ; 
+			res = res && networkManager.usernameAvailable(username) ; 
+		} 
+		catch (IncorrectUsernameException e) {
+			System.out.println(e) ; 
+		}
 		return res ; 
 	}
 	
