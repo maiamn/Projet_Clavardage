@@ -1,5 +1,6 @@
 package network;
 
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -7,6 +8,7 @@ public class ServerTCP extends Thread {
 	// Attributs 
 	boolean isAvailable = true;	
 	boolean connected = true ; 
+	InetAddress myIP;
 	
 	// Getters 
 	public boolean getAvailable() {
@@ -18,6 +20,10 @@ public class ServerTCP extends Thread {
 		this.connected = state ; 
 	}
 	
+	public InetAddress getMyIP() {
+		return this.myIP;
+	}
+	
 	
 	public void main (String [] args) {
 		int port = 5000;
@@ -26,6 +32,7 @@ public class ServerTCP extends Thread {
 		
 		try {
 			serverSocket = new ServerSocket(port);
+			this.myIP = serverSocket.getInetAddress();
 			
 			//on utilise un while pour permettre plusieurs connexions 
 			while(connected) {

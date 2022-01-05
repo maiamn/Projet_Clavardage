@@ -34,12 +34,12 @@ public class ClientTCP {
 		}
 	}
 	
-	public static void sendMessage(String formatedMsg, String host) {
+	public static void sendMessage(String formatedMsg, InetAddress destinationIP) {
 		int port = 5000;
 		PrintWriter output;
 		try {
 			
-			Socket clientSocket = new Socket(host, port);
+			Socket clientSocket = new Socket(destinationIP, port);
 			output = new PrintWriter(clientSocket.getOutputStream());
 			
 			// Ajouter client socket en attribut si on veut le garder ouvert longtemps

@@ -89,13 +89,13 @@ public class Manager {
 		localDB.closeConnection();
 		remoteDB.dropDatabase();
 		remoteDB.closeConnection();
-		networkManager.disconnection();
+		networkManager.disconnection(username);
 	}
 	
 	
 	public static void usernameRequest(String pseudo, InetAddress IP) {
 		if (pseudo == Manager.username) {
-			// networkManager.sendUnavailableUsername(IP);
+			networkManager.sendUnavailableUsername(IP);
 		}
 	}
 	
@@ -134,10 +134,9 @@ public class Manager {
 	}
 	
 	
-
-	
-	
-	
+	//////////////////////////////////////////////////////////////////////
+	//////////////////////////////////MAIN////////////////////////////////
+	//////////////////////////////////////////////////////////////////////
 	
 	public static void main (String [] args) {
 		connection("test");

@@ -1,6 +1,7 @@
 package network;
 
 import java.io.*;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -34,14 +35,30 @@ public class MessageProcessingTCP implements Runnable {
 	public void dataFilter(String msg) {
 		String[] token = msg.split("|");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
+		String host = token[1];
+		String content = token[2];
+		
 		// TCP server only receives username availabilty related messages and normal messages
 		switch(type) {
+		
 		case USERNAME_BRDCST :
 			this.isAvailable = false;
 			break;
+			
+		case GET_USERNAMES:
+			try {
+				InetAddress IP = InetAddress.getByName(host); 
+				NetworkManager.newUserConnected(content, IP);	
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+			break;
+			
 		case MESSAGE :
 			this.message = token[1];
 			break;
+			
 		default:
 			// raise exception?
 			break;

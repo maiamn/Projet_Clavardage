@@ -3,11 +3,10 @@ package network;
 import java.net.DatagramSocket ;
 import java.net.InetAddress;
 import java.net.DatagramPacket ;
-import manager.*;
 //import table interface
 
 public class ServerUDP {
-	// Attributs 
+	// Attributes 
 	int port;
 	int length;
 	boolean connected ; 
@@ -25,11 +24,12 @@ public class ServerUDP {
 	}
 	
 	
+	//Reception of a new message 
 	public void dataProcessing(String data) {
 		String[] token = data.split("|");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
-		String host = token[2];
 		String username = token[1];
+		String content = token[2];
 		
 		
 		switch (type) {
@@ -37,21 +37,38 @@ public class ServerUDP {
 		case USERNAME_BRDCST:
 			// traitement pour broacast de demande de co avec reponse 
 			// Envoi de reponse par TCP de disponibilite
-			Manager.usernameRequest(username, host);
+			try {
+				InetAddress IP = InetAddress.getByName(content); 
+				NetworkManager.usernameRequest(username,IP);				
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
 			break;
 			
 		case USERNAME_CONNECTED:
 			try {
-				InetAddress IP = InetAddress.getByName(host); 
-				Manager.newUserConnected(username,IP);
+				InetAddress IP = InetAddress.getByName(content); 
+				NetworkManager.newUserConnected(username,IP);				
 			}
 			catch(Exception e) {
+				System.out.println(e);
 			}
 			break;
 			
 		case USERNAME_DISCONNECT:
 			// Traitement pour deconnexion de utilisateur
-			Manager.userDisconnected(username);
+			NetworkManager.userDisconnected(username);
+			break;
+			
+		case GET_USERNAMES:
+			try {
+				InetAddress IP = InetAddress.getByName(content); 
+				NetworkManager.sendUsername(IP);	
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
 			break;
 		
 		default:
