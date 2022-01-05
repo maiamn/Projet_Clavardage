@@ -31,12 +31,10 @@ public class ServerUDP {
 		String username = token[1];
 		String content = token[2];
 		
-		
 		switch (type) {
 		
 		case USERNAME_BRDCST:
-			// traitement pour broacast de demande de co avec reponse 
-			// Envoi de reponse par TCP de disponibilite
+			//someone asks if a username is available 
 			try {
 				InetAddress IP = InetAddress.getByName(content); 
 				NetworkManager.usernameRequest(username,IP);				
@@ -47,6 +45,7 @@ public class ServerUDP {
 			break;
 			
 		case USERNAME_CONNECTED:
+			//a new user is connected
 			try {
 				InetAddress IP = InetAddress.getByName(content); 
 				NetworkManager.newUserConnected(username,IP);				
@@ -57,18 +56,13 @@ public class ServerUDP {
 			break;
 			
 		case USERNAME_DISCONNECT:
-			// Traitement pour deconnexion de utilisateur
+			//a user is disconnected
 			NetworkManager.userDisconnected(username);
 			break;
 			
 		case GET_USERNAMES:
-			try {
-				InetAddress IP = InetAddress.getByName(content); 
-				NetworkManager.sendUsername(IP);	
-			}
-			catch(Exception e) {
-				System.out.println(e);
-			}
+			//a user asks for our username
+			NetworkManager.sendUsername(username);	
 			break;
 		
 		default:

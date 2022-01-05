@@ -136,8 +136,7 @@ public class LocalDB {
 			
 			if (rs.next()) {
 				 IPString = rs.getString(1);
-				 String[] IPsplit = IPString.split("/") ;
-				 IP = InetAddress.getByName(IPsplit[1]) ; 
+				 IP = InetAddress.getByName(IPString) ; 
 			}
 			rs.close(); 
 		} 

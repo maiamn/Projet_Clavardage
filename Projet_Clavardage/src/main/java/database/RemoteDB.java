@@ -77,7 +77,7 @@ public class RemoteDB {
 	}
 	
 	
-	// Get information in the database
+	// Get messages history (50 last messages) from the database
 	public ArrayList<ArrayList<String>> getMessage(String person1, String person2) {
 		System.out.println("[RemoteDB] Calling getMessage...");
 		
@@ -88,7 +88,7 @@ public class RemoteDB {
 		String query = "SELECT * FROM History "
 				+ "WHERE (Sender = '" + person1 + "' AND Receiver = '" + person2 + "') "
 				+ "OR (Sender = '" + person2 + "' AND Receiver = '" + person1 + "') "
-				+ "ORDER BY Date DESC " ; 
+				+ "ORDER BY Date DESC LIMIT 50" ; 
 		
 		ArrayList<String> senders = new ArrayList<String>();
 		ArrayList<String> receivers = new ArrayList<String>();

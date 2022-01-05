@@ -1,8 +1,10 @@
 package network;
 
 import manager.Manager;
-import java.net.InetAddress ;
+import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class NetworkManager {
 	
@@ -101,6 +103,14 @@ public class NetworkManager {
 		String msg = messageFormatter(MessageType.USERNAME_DISCONNECT, username, myIP.toString()) ;
 		ClientUDP.broadcast(msg);
 	}
+	
+	
+	//Broadcast asking everyone for their username
+	public void askUsernames(String myusername) {
+		System.out.println("Calling askUsernames()");
+		String msg = messageFormatter(MessageType.GET_USERNAMES, myusername, "") ;
+		ClientUDP.broadcast(msg);
+	}
 
 	
 	//////////////////////////////////////////////////////////////////////
@@ -134,10 +144,23 @@ public class NetworkManager {
 	
 	
 	//If someone asks our username, we answer with our username and our IP
-	public static void sendUsername(InetAddress destinationIP) {
+	public static void sendUsername(String destinationUsername) {
 		System.out.println("Calling sendUsername");
 		String msg = messageFormatter(MessageType.GET_USERNAMES, Manager.getUsername(), myIP.toString()) ;
+		InetAddress destinationIP = Manager.getIP(destinationUsername);
 		ClientTCP.sendMessage(msg, destinationIP);	
+	}
+	
+	
+	//When we receive a message, we add it to the history
+	public static void notifyNewMessage(String message, String user) {
+		LocalDateTime date = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String formattedDate = date.format(format);
+		
+		Manager.addMessageToHistory(Manager.getIP(user).toString(), myIP.toString(), message, formattedDate);
+		
+		System.out.println(user + " at " + formattedDate + ": " + message);
 	}
 	
 	

@@ -31,49 +31,52 @@ public class MessageProcessingTCP implements Runnable {
 		return this.message;
 	}
 	
-	// Filtrage des donnees selon le format de message 
+	// Message processing depending on message format
 	public void dataFilter(String msg) {
 		String[] token = msg.split("|");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
-		String host = token[1];
+		String username = token[1];
 		String content = token[2];
 		
 		// TCP server only receives username availabilty related messages and normal messages
 		switch(type) {
 		
-		case USERNAME_BRDCST :
+		case USERNAME_BRDCST:
+			//the username we want to use is already taken 
 			this.isAvailable = false;
 			break;
 			
 		case GET_USERNAMES:
+			//we received a response when we asked someone for their username
 			try {
-				InetAddress IP = InetAddress.getByName(host); 
-				NetworkManager.newUserConnected(content, IP);	
+				InetAddress IP = InetAddress.getByName(content); 
+				NetworkManager.newUserConnected(username, IP);
 			}
 			catch(Exception e) {
 				System.out.println(e);
 			}
 			break;
 			
-		case MESSAGE :
-			this.message = token[1];
+		case MESSAGE:
+			//we received a new message, we notify networkmanager
+			NetworkManager.notifyNewMessage(content, username);
 			break;
 			
 		default:
-			// raise exception?
 			break;
 		}
 	}
 	
-	// Interdire le pseudo au serveur TCP
+
+	//Forbid the use of a username because it is not available 
 	public void forbidUsername() {
-		// Prevenir le serveur que le pseudo n'est pas disponible
+		//Notify TCP server that this username is already used
 		this.serverTCP.isAvailable = false ;
-		// Reset le booleen isAvailable de MessageProcessingTCP 
+		//Reset our isAvailable boolean 
 		this.isAvailable = true ; 
 	}
 	
-	// Traitement du message quand le pseudo est autorise
+	
 	public void processMessage() {
 		System.out.println(this.message) ; 
 	}
@@ -88,7 +91,7 @@ public class MessageProcessingTCP implements Runnable {
 			
 			dataFilter(msg) ; 
 			
-			// Traitement du message selon la disponibilite du pseudo
+			//Message processing depending on the availability
 			if (!this.isAvailable) {
 				forbidUsername() ; 
 			} else {
