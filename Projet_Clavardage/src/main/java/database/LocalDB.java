@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet ; 
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
 public class LocalDB {
 	
@@ -146,6 +147,30 @@ public class LocalDB {
 		
 		System.out.println("[LocalDB] IP fetched");
 		return IP ; 
+	}
+	
+	
+	// Get all usernames of the database 
+	public ArrayList<String> getAllUsernames() {
+		System.out.println("[LocalDB] Getting all usernames of the database...");
+		String query = "SELECT UsernameToIP.Username FROM UsernameToIP ;";	
+		ArrayList<String> results = new ArrayList<String>() ; 
+		
+		try {
+			// Execute the statement 
+			ResultSet rs = this.statement.executeQuery(query) ;
+			
+			while(rs.next()) {
+				results.add(rs.getString(1));
+			}
+			rs.close(); 
+		} 
+		catch ( Exception e) {
+			System.out.println(e);
+		}
+		
+		System.out.println("[LocalDB] Usernames fetched");
+		return results ; 
 	}
 	
 	// Drop database 

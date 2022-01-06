@@ -38,6 +38,7 @@ public class LocalDBTest {
 	// Person 
 	protected static int nbUsers = 100 ; 
 	protected static ArrayList<String> usernames = new ArrayList<String>() ; 
+	protected static ArrayList<String> getUsernames = new ArrayList<String>() ; 
 	protected static ArrayList<InetAddress> IPAddresses = new ArrayList<InetAddress>() ; 	
 	// Random number 
 	Random rand = new Random() ;
@@ -226,6 +227,14 @@ public class LocalDBTest {
 				System.out.println(e) ; 
 			}
 		}
+	} 
+	
+
+	///////////////////////////////// FUNCTION getAllUsernames /////////////////////////////////	
+	@Test
+	public void testGetAllUsernames() {
+		getUsernames = db.getAllUsernames() ; 
+		assertEquals(usernames, getUsernames) ; 
 	} 
 
 	
