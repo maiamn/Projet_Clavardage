@@ -25,6 +25,7 @@ public class DisconnectionGUI {
 		
 		// Top part to write the warning sentence
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
+		warning.setFont(new Font("Monospace", Font.BOLD, 16));
 		topPanel.add(warning);
 		
 		// Center part to choose what to do

@@ -35,6 +35,7 @@ public class SendMessageGUI {
 		
 		// Top part to write the welcome sentence
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
+		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
 		topPanel.add(welcome);
 		
 		// Center part to check if a user is online
@@ -55,7 +56,7 @@ public class SendMessageGUI {
         		  			JOptionPane.showMessageDialog(sendMessageFrame, errorMessage);
         		  		} 
         		  		else {
-        		  			GUIManager.switchToHomePage(username) ; 
+        		  			GUIManager.switchToChat(username, name) ; 
         		  			sendMessageFrame.setVisible(false);
         		  		}
                   }
@@ -113,6 +114,8 @@ public class SendMessageGUI {
 		
 		// Set default close operation
 		sendMessageFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE) ;
+		// Set default button
+        sendMessageFrame.getRootPane().setDefaultButton(isReachable);
         // Set appearance
 		sendMessageFrame.pack() ; 
 		sendMessageFrame.setLocationRelativeTo(null) ; 

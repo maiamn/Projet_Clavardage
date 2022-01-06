@@ -25,6 +25,7 @@ public class AuthentificationGUI {
 		authentificationFrame = new JFrame("~ MessengIR ~ Please enter a username to log in!") ;
 		// Top part to write the welcome sentence
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
+		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
 		topPanel.add(welcome);
 		
 		// Left part to write constraints 

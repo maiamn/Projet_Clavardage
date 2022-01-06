@@ -25,6 +25,7 @@ public class ConnectionGUI {
 		
 		// Top part to write the welcome sentence
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
+		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
 		topPanel.add(welcome);
 		
 		// Center part to choose what to do

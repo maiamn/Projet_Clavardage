@@ -127,8 +127,8 @@ public class GUIManager {
 	}
 	
 	// SWITCH TO HISTORY PAGE
-	public static void switchToChat() {
-		chat = new ChatGUI() ; 
+	public static void switchToChat(String sender, String receiver) {
+		chat = new ChatGUI(sender, receiver) ; 
 	}
 	
 	// SWITCH TO CHANGE USERNAME
