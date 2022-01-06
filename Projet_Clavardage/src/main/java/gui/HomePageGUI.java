@@ -23,7 +23,7 @@ public class HomePageGUI {
 		username = choosenUsername ; 
 		
 		// Main Frame
-		homePageFrame = new JFrame("~ MessengIR ~") ;
+		homePageFrame = new JFrame("~ MessengIR ~ Welcome to home page!") ;
 		
 		// Top part to write the welcome sentence
 		welcome = new JLabel("What do you want to do on MessengIR, " + username + "?") ; 

@@ -22,7 +22,7 @@ public class AuthentificationGUI {
 	
 	public AuthentificationGUI() {
 		// Main Frame
-		authentificationFrame = new JFrame("Please enter a username to log in!") ;
+		authentificationFrame = new JFrame("~ MessengIR ~ Please enter a username to log in!") ;
 		// Top part to write the welcome sentence
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
 		topPanel.add(welcome);
