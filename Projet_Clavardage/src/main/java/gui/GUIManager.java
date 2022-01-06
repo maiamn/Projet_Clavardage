@@ -42,7 +42,38 @@ public class GUIManager {
 	///////////////////////////////////////// CONNECTED USERS ////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	public static ArrayList<String> getAllConnectedUsers() {
-		return Manager.getAllUsernames() ; 
+		ArrayList<String> usernames = new ArrayList<String>();
+		usernames.add("user1") ; 
+		usernames.add("user2") ; 
+		usernames.add("user3") ; 
+		usernames.add("user4") ; 
+		usernames.add("user5") ; 
+		usernames.add("user6") ; 
+		usernames.add("user7") ; 
+		usernames.add("user1") ; 
+		usernames.add("user2") ; 
+		usernames.add("user3") ; 
+		usernames.add("user4") ; 
+		usernames.add("user5") ; 
+		usernames.add("user6") ; 
+		usernames.add("user7") ; 
+		usernames.add("user1") ; 
+		usernames.add("user2") ; 
+		usernames.add("user3") ; 
+		usernames.add("user4") ; 
+		usernames.add("user5") ; 
+		usernames.add("user6") ; 
+		usernames.add("user7") ; 
+		usernames.add("user1") ; 
+		usernames.add("user2") ; 
+		usernames.add("user3") ; 
+		usernames.add("user4") ; 
+		usernames.add("user5") ; 
+		usernames.add("user6") ; 
+		usernames.add("user7") ; 
+		usernames.add("user1") ;
+		//return Manager.getAllUsernames() ; 
+		return usernames ; 
 	}
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////// DISCONNECTION //////////////////////////////////////////
