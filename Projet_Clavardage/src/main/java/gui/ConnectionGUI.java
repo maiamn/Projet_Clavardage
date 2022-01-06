@@ -14,7 +14,7 @@ public class ConnectionGUI {
 	private final JButton connect = new JButton("Connect") ;
 	private final JButton back = new JButton("Choose another unsername") ;
 	
-	public String username ; 
+	public static String username ; 
 	
 	public ConnectionGUI(String choosenUsername) {
 		// Define username 
@@ -86,7 +86,7 @@ public class ConnectionGUI {
 		                e.printStackTrace();
 		            }
 
-		            new AuthentificationGUI();
+		            new ConnectionGUI(username);
 			 }
 		 }) ;
 	}
