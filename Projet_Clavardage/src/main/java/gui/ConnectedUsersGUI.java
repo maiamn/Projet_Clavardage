@@ -12,6 +12,7 @@ public class ConnectedUsersGUI {
 	private JPanel centerPanel; 
 	private JPanel bottomPanel ; 
 	private JButton back = new JButton("Back to home page") ; 
+	private JButton send = new JButton("Send a message") ; 
 	
 	private final JLabel welcome ;
 	
@@ -51,7 +52,7 @@ public class ConnectedUsersGUI {
 	    centerPanel.add(scrollPane, BorderLayout.CENTER);
 	    
 		
-		// Bottom part to go back to home page 
+		// Bottom part to go back to home page or to send a message
         back.setPreferredSize(new Dimension(150,30));
         back.setMinimumSize(new Dimension(150,30));
         back.setMaximumSize(new Dimension(150,30));
@@ -64,12 +65,25 @@ public class ConnectedUsersGUI {
                 }
               );
         
-		bottomPanel = new JPanel(new BorderLayout()) ; 
-		bottomPanel.add(back) ; 
-
+        send.setPreferredSize(new Dimension(150,30));
+        send.setMinimumSize(new Dimension(150,30));
+        send.setMaximumSize(new Dimension(150,30));
+        send.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				connectedUsersFrame.setVisible(false);
+        				GUIManager.switchToSendMessage() ; 
+                  }
+                }
+              );
+        
+		Box options = Box.createVerticalBox() ; 
+		options.add(send) ; 
+		options.add(back);
+		bottomPanel = new JPanel() ; 
+		bottomPanel.add(options) ; 
 
 		// Main Frame 
-        //authentificationFrame.setSize(widthWindow, heightWindow);
 		connectedUsersFrame.setLayout(new BorderLayout());
 		// add panels to frame
 		connectedUsersFrame.add(topPanel, BorderLayout.PAGE_START) ; 
@@ -103,64 +117,4 @@ public class ConnectedUsersGUI {
 		 }) ;
 	}
 }
-//package gui;
-//
-//import javax.swing.JFrame;
-//import javax.swing.JPanel;
-//import javax.swing.JScrollPane;
-//import javax.swing.JTable;
-//import java.awt.BorderLayout;
-//import java.awt.Dimension;
-//import java.awt.Toolkit;
-//
-//public class ConnectedUsersGUI {
-//	public static String username ; 
-//	JFrame connectedUsersFrame ; 
-//	JPanel connectedUsersPanel ; 
-//	JScrollPane scrollPane ; 
-//	
-//	final Object row[][] = {{"1","test1"}, {"2","test2"}, {"3","test3"}, {"4","test4"}};
-//	final Object header[] = {"ID", "Usernames"};
-//	final JTable table ;
-//	
-//	public ConnectedUsersGUI(String choosenUsername) {
-//		// Define the actual username
-//		username = choosenUsername ; 
-//		
-//		// Create and set up the window 
-//		connectedUsersFrame = new JFrame(username + ", you can talk with all these people!") ; 
-//		connectedUsersFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		connectedUsersFrame.pack() ; 
-//		
-//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ; 
-//        int widthWindow = screenSize.width*1 ;
-//        int heightWindow = screenSize.height*1 ;
-//        connectedUsersFrame.setSize(widthWindow, heightWindow);
-//        connectedUsersFrame.setLocationRelativeTo(null); 
-//        
-//		connectedUsersFrame.setVisible(true) ; 
-//		
-//		table = new JTable(row, header);
-//	    scrollPane = new JScrollPane(table);
-//	    connectedUsersFrame.add(scrollPane, BorderLayout.CENTER);
-//		
-//	}
-//	
-//    private static void createAndShowGUI() {
-//        //Make sure we have nice window decorations.
-//        JFrame.setDefaultLookAndFeelDecorated(true);
-//
-//        ConnectedUsersGUI connectedUsers = new ConnectedUsersGUI(username);
-//    }
-//
-//    public static void main(String[] args) {
-//        //Schedule a job for the event-dispatching thread:
-//        //creating and showing this application's GUI.
-//        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-//            public void run() {
-//                createAndShowGUI();
-//            }
-//        });
-//    }
-//
-//}
+
