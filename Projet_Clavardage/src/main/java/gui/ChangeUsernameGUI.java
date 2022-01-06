@@ -4,179 +4,127 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class ChangeUsernameGUI implements ActionListener {
+public class ChangeUsernameGUI {
+	private JFrame changeUsernameFrame ; 
 	
-	static String username ; 
+	private JPanel topPanel; 
+	private JPanel leftCenterPanel ;
+	private JPanel rightCenterPanel ; 
+	private JPanel bottomPanel ; 
 	
-    JFrame changeUsernameFrame;
-    JPanel changeUsernamePanel;
-    
-    // Elements for actual username
-    JLabel actualUsername ; 
-    
-    // Explanations
-    JLabel welcome ; 
-    
-    // Elements for new username
-    JPanel newUsernamePanel ; 
-    JTextField newChoosenUsername;
-    JButton submit ; 
-    
-    // Error of username
-    JPanel errorPanel ;
-    JLabel errorMessage ; 
-    JButton retry ; 
-       
-    
-    int widthComponents ; 
-    int heightComponents ; 
+	private final JLabel welcome = new JLabel("Here you can change your username!") ; 
+	private final JLabel actual = new JLabel ("Your actual username is:") ; 
+	private final JLabel actualUsername ; 
+	private final JLabel next = new JLabel ("You can choose your new username here:") ; 
+	private final JTextField newUsername = new JTextField(30) ; 
+	private final JButton submit = new JButton("Submit") ; 
+	private final JButton back = new JButton ("Back to home page") ;
 
-    public ChangeUsernameGUI(String actualUsername) {
+	private JLabel errorMessage ; 
+	
+	public static String username ; 
+	
+	public ChangeUsernameGUI(String choosenUsername) {
+		// Define username 
+		username = choosenUsername ; 
+		
+		// Main Frame
+		changeUsernameFrame = new JFrame("~ MessengIR ~ You want to change your username!") ;
+		
+		// Top part to write the welcome sentence
+		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
+		topPanel.add(welcome);
+		
+		// Left part to write the actual username 
+		Box actualVersion = Box.createVerticalBox() ;
+		actualVersion.add(actual) ; 
+		actualUsername = new JLabel(username) ; 
+		actualVersion.add(actualUsername);
+		leftCenterPanel = new JPanel() ; 
+		leftCenterPanel.add(actualVersion) ; 
+		leftCenterPanel.setBorder(BorderFactory.createTitledBorder("Actual username"));
+		
+		
+		// Button to submit a new username 
+        submit.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				// Get the username choosen by the user
+        		  		String name = newUsername.getText() ; 
+        		  		// Check if the username is valid 
+        		  		boolean correct = GUIManager.checkUsername(name) ; 
+        		  		if(!correct) {
+        		  			errorMessage = new JLabel("<html>Your username is uncorrect! "
+        		  					+ "<br> Check if there is no special character and that it contains between 1 and 30 characters!"
+        		  					+ "<br> If it's not the case, it means that it is already used so choose another one!</html>", SwingConstants.CENTER) ; 
+        		  			// Pop up window
+        		  			JOptionPane.showMessageDialog(changeUsernameFrame, errorMessage);
+        		  		} 
+        		  		else {
+        		  			GUIManager.switchToConnection(name) ; 
+        		  			changeUsernameFrame.setVisible(false);
+        		  		}
+                  }
+                }
+              );
+        
+		// Right part to enter username
+		Box newVersion = Box.createVerticalBox() ; 
+		newVersion.add(next) ; 
+		newVersion.add(newUsername) ; 
+		newVersion.add(submit) ; 
+		rightCenterPanel = new JPanel() ; 
+		rightCenterPanel.add(newVersion) ; 
+		rightCenterPanel.setBorder(BorderFactory.createTitledBorder("Choose new username"));
+
+        // Bottom part to go back to home page
+        back.setPreferredSize(new Dimension(150,30));
+        back.setMinimumSize(new Dimension(150,30));
+        back.setMaximumSize(new Dimension(150,30));
+        back.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				changeUsernameFrame.setVisible(false);
+        				GUIManager.switchToHomePage(username) ; 
+                  }
+                }
+              );
+		bottomPanel = new JPanel(new BorderLayout()) ; 
+		bottomPanel.add(back) ; 
+		
+		// Main Frame 
+        //authentificationFrame.setSize(widthWindow, heightWindow);
+		changeUsernameFrame.setLayout(new BorderLayout());
+		// add panels to frame
+		changeUsernameFrame.add(topPanel, BorderLayout.PAGE_START) ; 
+		changeUsernameFrame.add(leftCenterPanel, BorderLayout.LINE_START) ; 
+		changeUsernameFrame.add(rightCenterPanel, BorderLayout.LINE_END) ; 
+		changeUsernameFrame.add(bottomPanel, BorderLayout.PAGE_END) ; 
+		
+		// Set default close operation
+		changeUsernameFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE) ;
+        // Set appearance
+		changeUsernameFrame.pack() ; 
+		changeUsernameFrame.setLocationRelativeTo(null) ; 
+		changeUsernameFrame.setVisible(true) ; 
+		changeUsernameFrame.setExtendedState(JFrame.NORMAL) ; 
+
+	}
+	
+
     	
-    	this.username = actualUsername ; 
-    	
-        //Create and set up the window.
-        changeUsernameFrame = new JFrame("You want to change your username.");
-        changeUsernameFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        changeUsernameFrame.pack();
-        
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize() ; 
-        int widthWindow = screenSize.width*1/2 ;
-        int heightWindow = screenSize.height*1/2 ;
-        this.widthComponents = widthWindow*1/4 ; 
-        this.heightComponents = heightWindow*1/4 ; 
-        changeUsernameFrame.setSize(widthWindow, heightWindow);
-        changeUsernameFrame.setLocationRelativeTo(null); 
+	public static void main(String[] args) {
+		 javax.swing.SwingUtilities.invokeLater(new Runnable() { 
+			 public void run() {
+		            try {
+		                UIManager.setLookAndFeel(
+		                        UIManager.getSystemLookAndFeelClassName());
+		            } catch (Exception e) {
+		                e.printStackTrace();
+		            }
 
-        //Create and set up the panel.
-        changeUsernamePanel = new JPanel(new GridLayout(5, 1, 10, 10));
-
-        //Add the widgets.
-        addWidgets();
-
-        //Add the panel to the window.
-        changeUsernameFrame.getContentPane().add(changeUsernamePanel, BorderLayout.CENTER);
-
-        //Display the window.
-        changeUsernameFrame.setVisible(true);
-    }
-
-    /**
-     * Create and add the widgets.
-     */
-    private void addWidgets() {
-    	
-    	//////////////////////// FIRST PANEL ////////////////////////
-        actualUsername = new JLabel ("Your actual username is: " + username, SwingConstants.CENTER) ; 
-        
-    	
-    	/////////////////////// SECOND PANEL ////////////////////////
-    	welcome = new JLabel("Choose your new username here!", SwingConstants.CENTER) ;
-        
-        
-    	//////////////////////// THIRD PANEL ////////////////////////
-        newUsernamePanel = new JPanel();
-        newUsernamePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        
-        newChoosenUsername = new JTextField(10) ; 
-        submit = new JButton("Submit");
-        changeUsernameFrame.getRootPane().setDefaultButton(submit);
-        //Listen to events from the button.
-        submit.addActionListener(this);
-        
-        // Set size 
-        newChoosenUsername.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-        submit.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-        
-        // Add buttons to panel 
-        newUsernamePanel.add(newChoosenUsername);
-        newUsernamePanel.add(submit);
-        
-        // Set border
-        newChoosenUsername.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        submit.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-
-    	
-    	//////////////////////// MAIN PANEL ////////////////////////
-
-        // Set size 
-        actualUsername.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-        welcome.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-        newUsernamePanel.setPreferredSize(new Dimension(40, 40));
-        
-        //Add the widgets to the container.
-        changeUsernamePanel.add(actualUsername);
-        changeUsernamePanel.add(welcome);
-        changeUsernamePanel.add(newUsernamePanel);
-        
-        
-        actualUsername.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        welcome.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-        newUsernamePanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-
-    }
-
-    public void actionPerformed(ActionEvent event) {
-		// Get the username choosen by the user
-		String newUsername = newChoosenUsername.getText() ; 
-		// Check if the username is valid 
-		boolean correct = GUIManager.checkUsername(newUsername) ; 
-		if(!correct) {
-			errorPanel = new JPanel() ; 
-			// Define error message & add it to error panel
-			errorMessage = new JLabel("<html>Your username is uncorrect! "
-					+ "<br> Check if there is no special character and that it contains between 1 and 30 characters!"
-					+ "<br> If it's not the case, it means that it is already used so choose another one!</html>", SwingConstants.CENTER) ; 
-	        errorMessage.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-			errorPanel.add(errorMessage);
-			errorMessage.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-			
-			// Define button to try again
-	        retry = new JButton("Choose a new username") ; 
-	        changeUsernameFrame.getRootPane().setDefaultButton(retry);
-	        // Remove action from submit button
-	        submit.removeActionListener(this) ; 
-	        
-	        retry.addActionListener(
-	        		new ActionListener() {
-	        			public void actionPerformed(ActionEvent e) {
-	        				changeUsernameFrame.setVisible(false) ; 
-	        				GUIManager.switchToChangeUsername(username) ; 
-	                  }
-	                }
-	              );
-	        retry.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-			errorPanel.add(retry);
-			retry.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-			
-			// Add error panel to general panel
-			errorPanel.setPreferredSize(new Dimension(this.widthComponents, this.heightComponents));
-			changeUsernamePanel.add(errorPanel) ; 
-			errorPanel.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
-
-		} 
-		else {
-			GUIManager.switchToConnection(newUsername) ; 
-	        changeUsernameFrame.setVisible(false);
-		}
-    }
-
-
-    private static void createAndShowGUI() {
-        //Make sure we have nice window decorations.
-        JFrame.setDefaultLookAndFeelDecorated(true);
-
-        ChangeUsernameGUI changeUsername = new ChangeUsernameGUI(username);
-    }
-
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
-    }
+		            new ChangeUsernameGUI(username);
+			 }
+		 }) ;
+	}
 }
