@@ -66,7 +66,7 @@ public class HomePageGUI {
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				homePageFrame.setVisible(false);
-        				GUIManager.switchToSendMessage() ; 
+        				GUIManager.switchToSendMessage(username) ; 
                   }
                 }
               );

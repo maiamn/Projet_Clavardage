@@ -79,7 +79,7 @@ public class GUIManager {
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	//////////////////////////////////////// SEND A MESSAGE //////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
-	public boolean userReachable(ArrayList<String> connectedUsers, String userToReach) {
+	public static boolean userReachable(ArrayList<String> connectedUsers, String userToReach) {
 		return connectedUsers.contains(userToReach) ; 
 	}
 	
@@ -122,8 +122,8 @@ public class GUIManager {
 	}
 	
 	// SWITCH TO SEND MESSAGE PAGE 
-	public static void switchToSendMessage() {
-		sendMessage = new SendMessageGUI() ; 
+	public static void switchToSendMessage(String username) {
+		sendMessage = new SendMessageGUI(username) ; 
 	}
 	
 	// SWITCH TO HISTORY PAGE

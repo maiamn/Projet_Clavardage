@@ -72,7 +72,7 @@ public class ConnectedUsersGUI {
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				connectedUsersFrame.setVisible(false);
-        				GUIManager.switchToSendMessage() ; 
+        				GUIManager.switchToSendMessage(username) ; 
                   }
                 }
               );
