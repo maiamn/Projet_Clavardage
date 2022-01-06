@@ -121,6 +121,10 @@ public class Manager {
 		return localDB.getIP(name);
 	}
 	
+	public static ArrayList<String> getAllUsernames() {
+		return localDB.getAllUsernames() ; 
+	}
+	
 	
 	//////////////////////////////////////////////////////////////////////
 	////////////////////////////REMOTE DATABASE///////////////////////////
