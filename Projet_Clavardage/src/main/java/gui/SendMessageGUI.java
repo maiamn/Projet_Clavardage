@@ -37,7 +37,7 @@ public class SendMessageGUI {
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
 		topPanel.add(welcome);
 		
-		// Left part to check if a user is online
+		// Center part to check if a user is online
 		
 		// Button to check a username 
         isReachable.addActionListener(

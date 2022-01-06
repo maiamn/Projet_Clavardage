@@ -11,7 +11,7 @@ public class GUIManager {
 	static HomePageGUI homepage ; 
 	static ConnectedUsersGUI connectedUsers ; 
 	static SendMessageGUI sendMessage ; 
-	static HistoryGUI history ; 
+	static ChatGUI chat ; 
 	static ChangeUsernameGUI changeUsername ; 
 	static DisconnectionGUI disconnection ;
 	
@@ -127,8 +127,8 @@ public class GUIManager {
 	}
 	
 	// SWITCH TO HISTORY PAGE
-	public static void switchToHistory() {
-		history = new HistoryGUI() ; 
+	public static void switchToChat() {
+		chat = new ChatGUI() ; 
 	}
 	
 	// SWITCH TO CHANGE USERNAME
