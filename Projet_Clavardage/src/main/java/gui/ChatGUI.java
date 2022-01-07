@@ -14,12 +14,16 @@ public class ChatGUI {
 	private JLabel welcome ; 
 	private JButton back = new JButton("Back to home page") ; 
 	
+	public static String sender ; 
+	public static String receiver ; 
+	
 	// Table with history
+	protected int nbMessages = GUIManager.getMessages(sender, receiver).length ; 
 	protected Object senders[] ;
 	protected Object receivers[] ; 
 	protected Object dates[] ; 
 	protected Object messages[] ; 
-	protected Object history[][] ; 
+	protected Object history[][] = new Object [nbMessages][4] ; 
 	protected Object header[] = {"Sender", "Receiver", "Date", "Message"} ;
 	final JTable historyTable ; 
 	JScrollPane scrollPane ; 
@@ -28,8 +32,7 @@ public class ChatGUI {
 	private JTextField messageArea = new JTextField(50) ; 
 	private JButton send = new JButton("Send message") ; 
 	
-	public static String sender ; 
-	public static String receiver ; 
+	
 	
 	public ChatGUI(String senderUsername, String receiverUsername) {
 		// Define sender and receiver of conversation
