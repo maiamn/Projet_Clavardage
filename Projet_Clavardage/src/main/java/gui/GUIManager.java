@@ -14,6 +14,7 @@ public class GUIManager {
 	static ChatGUI chat ; 
 	static ChangeUsernameGUI changeUsername ; 
 	static DisconnectionGUI disconnection ;
+	static Manager manager = new Manager() ; 
 	
 	//Constructor
 	public GUIManager() {
