@@ -45,7 +45,7 @@ public class RemoteDBTest {
 	Random rand = new Random() ; 
 	
 	// Result getMessage
-	protected static ArrayList<ArrayList<String>> resultGet = new ArrayList<ArrayList<String>>() ; 
+	protected static Conversation resultGet = new Conversation(null, null, null, null) ; 
 	
 	/* **************************************************************************************** */
 	
@@ -151,57 +151,57 @@ public class RemoteDBTest {
 			int j=i+1 ; 
 			
 			// Get the messages between user i and user j 
-			resultGet = db.getMessage(usernames.get(i), usernames.get(j)) ;
+			resultGet = db.getMessages(usernames.get(i), usernames.get(j)) ;
 			
 			// Check if the number of result is correct in all arraylist of result 
-			assertEquals(2, resultGet.get(0).size()) ; 
-			assertEquals(2, resultGet.get(1).size()) ; 
-			assertEquals(2, resultGet.get(2).size()) ; 
-			assertEquals(2, resultGet.get(3).size()) ;
+			assertEquals(2, resultGet.getSenders().length) ;  
+			assertEquals(2, resultGet.getReceivers().length) ; 
+			assertEquals(2, resultGet.getDates().length) ; 
+			assertEquals(2, resultGet.getMessages().length) ;
 			
 			// First message -> user i to user j 
-			if (resultGet.get(0).get(0)==usernames.get(i)) {
+			if (resultGet.getSenders()[0]==usernames.get(i)) {
 				
 				// Check the sender
-				assertEquals(usernames.get(i), resultGet.get(0).get(0)) ; 
-				assertEquals(usernames.get(j), resultGet.get(0).get(1)) ; 
+				assertEquals(usernames.get(i), resultGet.getSenders()[0]) ; 
+				assertEquals(usernames.get(j), resultGet.getSenders()[1]) ; 
 				
 				// Check the receiver 
-				assertEquals(usernames.get(j), resultGet.get(1).get(0)) ; 
-				assertEquals(usernames.get(i), resultGet.get(1).get(1)) ; 
+				assertEquals(usernames.get(j), resultGet.getReceivers()[0]) ; 
+				assertEquals(usernames.get(i), resultGet.getReceivers()[1]) ; 
 				
 				// Check the message
 				String message0 = formattingMessage(usernames.get(i), usernames.get(j)) ;
 				String message1 = formattingMessage(usernames.get(j), usernames.get(i)) ; 
 				
-				assertEquals(message0, resultGet.get(2).get(0)) ; 
-				assertEquals(message1, resultGet.get(2).get(1)) ; 
+				assertEquals(message0, resultGet.getMessages()[0]) ; 
+				assertEquals(message1, resultGet.getMessages()[1]) ; 
 				
 				// Check the date 
-				assertEquals(date, resultGet.get(3).get(0)) ; 
-				assertEquals(date, resultGet.get(3).get(1)) ; 
+				assertEquals(date, resultGet.getDates()[0]) ; 
+				assertEquals(date, resultGet.getDates()[1]) ; 
 			} 
 			
 			// Second message -> user j to user i 
-			else if (resultGet.get(0).get(0)==usernames.get(j)) {
+			else if (resultGet.getSenders()[0]==usernames.get(j)) {
 				// Check the sender
-				assertEquals(usernames.get(j), resultGet.get(0).get(0)) ; 
-				assertEquals(usernames.get(i), resultGet.get(0).get(1)) ; 
+				assertEquals(usernames.get(j), resultGet.getSenders()[0]) ; 
+				assertEquals(usernames.get(i), resultGet.getSenders()[1]) ; 
 				
 				// Check the receiver 
-				assertEquals(usernames.get(i), resultGet.get(1).get(0)) ; 
-				assertEquals(usernames.get(j), resultGet.get(1).get(1)) ; 
+				assertEquals(usernames.get(i), resultGet.getReceivers()[0]) ; 
+				assertEquals(usernames.get(j), resultGet.getReceivers()[1]) ; 
 				
 				// Check the message
 				String message0 = formattingMessage(usernames.get(j), usernames.get(i)) ;
 				String message1 = formattingMessage(usernames.get(i), usernames.get(j)) ; 
 				
-				assertEquals(message0, resultGet.get(2).get(0)) ; 
-				assertEquals(message1, resultGet.get(2).get(1)) ; 
+				assertEquals(message0, resultGet.getMessages()[0]) ; 
+				assertEquals(message1, resultGet.getMessages()[1]) ; 
 				
 				// Check the date 
-				assertEquals(date, resultGet.get(3).get(0)) ; 
-				assertEquals(date, resultGet.get(3).get(1)) ; 
+				assertEquals(date, resultGet.getDates()[0]) ; 
+				assertEquals(date, resultGet.getDates()[1]) ; 
 			} 	
 			
 			count++ ; 
