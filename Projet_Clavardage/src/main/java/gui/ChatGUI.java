@@ -8,20 +8,22 @@ public class ChatGUI {
 	private JFrame chatFrame ; 
 	
 	private JPanel topPanel ; 
-	//private JPanel centerPanel ; 
+	private JPanel centerPanel ; 
 	private JPanel bottomPanel ; 
 	
 	private JLabel welcome ; 
 	private JButton back = new JButton("Back to home page") ; 
 	
 	// Table with history
-//	protected Object senders[] = new Object[10] ; 
-//	protected Object receivers[] = new Object[10] ; 
-//	protected Object dates[] = new Object[10] ;
-//	protected Object messages[] = new Object[10] ; 
-//	protected Object history[][] = new Object[10][4] ; 
-//	final JTable historyTable ; 
-//	JScrollPane scrollPane ; 
+	protected int nbMessages = GUIManager.getMessages().length ; 
+	protected Object senders[] = GUIManager.getSenders(); 
+	protected Object receivers[] = GUIManager.getReceivers(); 
+	protected Object dates[] = GUIManager.getDates(); 
+	protected Object messages[] = GUIManager.getMessages(); 
+	protected Object history[][] = new Object[nbMessages][4] ; 
+	protected Object header[] = {"Sender", "Receiver", "Date", "Message"} ;
+	final JTable historyTable ; 
+	JScrollPane scrollPane ; 
 	
 	// Field to send a message 
 	private JTextField messageArea = new JTextField(50) ; 
@@ -47,7 +49,25 @@ public class ChatGUI {
         
         
         // Middle part to display history of conversation
+        // Construct table 
+        for (int i=0; i<nbMessages; i++) {
+        	history[i][0] = senders[i] ; 
+        	history[i][1] = receivers[i] ; 
+        	history[i][2] = dates[i] ; 
+        	history[i][3] = messages[i] ; 
+        }
         
+        // Visualize history
+        historyTable = new JTable(history, header) ; 
+        historyTable.getColumn("Sender").setPreferredWidth(30);
+        historyTable.getColumn("Receiver").setPreferredWidth(30);
+        historyTable.getColumn("Date").setPreferredWidth(30);
+        historyTable.getColumn("Message").setPreferredWidth(100);
+        scrollPane = new JScrollPane(historyTable) ; 
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
+        centerPanel.add(scrollPane, BorderLayout.CENTER) ; 
         
         // Bottom part to display an area to enter the message to send and the button
 		// Button to go back to home page
@@ -85,7 +105,7 @@ public class ChatGUI {
         chatFrame.setLayout(new BorderLayout());
         // Add panels to the frame 
         chatFrame.add(topPanel, BorderLayout.PAGE_START) ; 
-        //chatFrame.add(centerPanel, BorderLayout.CENTER) ; 
+        chatFrame.add(centerPanel, BorderLayout.CENTER) ; 
         chatFrame.add(bottomPanel, BorderLayout.PAGE_END) ; 
         
         // Set default close operation
