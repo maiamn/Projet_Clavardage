@@ -2,9 +2,15 @@ package network;
 
 import manager.Manager;
 import java.net.InetAddress;
+import java.net.InterfaceAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.List;
 
 public class NetworkManager {
 	
@@ -19,8 +25,23 @@ public class NetworkManager {
 		this.serverTCP = new ServerTCP() ; 
 		this.serverUDP = new ServerUDP(5001, 50000) ;
 		try {
-			myIP = InetAddress.getByName(InetAddress.getLocalHost().getHostAddress()) ;
-		} catch (UnknownHostException e) {
+			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
+		    while (en.hasMoreElements()) {
+		      NetworkInterface ni = en.nextElement();
+
+		      List<InterfaceAddress> list = ni.getInterfaceAddresses();
+		      Iterator<InterfaceAddress> it = list.iterator();
+
+		      while (it.hasNext()) {
+		        InterfaceAddress ia = it.next();
+		        if (ia.getBroadcast()!=null && myIP == null) {
+		        	myIP = ia.getAddress() ;
+		        }
+		      }		
+		    }
+		}
+		
+		    catch (Exception e) {
 			System.out.println(e);
 		}
 	}
@@ -55,7 +76,7 @@ public class NetworkManager {
 	
 	// Classic message sending function
 	public void sendMessage(String msg, InetAddress destinationIP) {
-		System.out.println("Sending message...");
+		System.out.println("[ClientTCP] " + msg);
 		// Classic message between users : type 1 ??
 		String formatedMsg = messageFormatter(MessageType.MESSAGE, Manager.getUsername(), msg);
 		// Sends message and closes socket

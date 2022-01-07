@@ -16,6 +16,7 @@ public class ClientUDP {
 	
 	// Fonction de broadcast 
 	public static void broadcast (String msg) {
+		System.out.println("[ClientUDP]"+ msg);
 		
 		int port = 5000;
 		

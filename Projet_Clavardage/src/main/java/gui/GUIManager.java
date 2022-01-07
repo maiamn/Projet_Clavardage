@@ -43,38 +43,39 @@ public class GUIManager {
 	///////////////////////////////////////// CONNECTED USERS ////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	public static ArrayList<String> getAllConnectedUsers() {
-		ArrayList<String> usernames = new ArrayList<String>();
-		usernames.add("user1") ; 
-		usernames.add("user2") ; 
-		usernames.add("user3") ; 
-		usernames.add("user4") ; 
-		usernames.add("user5") ; 
-		usernames.add("user6") ; 
-		usernames.add("user7") ; 
-		usernames.add("user8") ; 
-		usernames.add("user9") ; 
-		usernames.add("user10") ; 
-		usernames.add("user11") ; 
-		usernames.add("user12") ; 
-		usernames.add("user13") ; 
-		usernames.add("user14") ; 
-		usernames.add("user15") ; 
-		usernames.add("user16") ; 
-		usernames.add("user17") ; 
-		usernames.add("user18") ; 
-		usernames.add("user19") ; 
-		usernames.add("user20") ; 
-		usernames.add("user21") ; 
-		usernames.add("user22") ; 
-		usernames.add("user23") ; 
-		usernames.add("user24") ; 
-		usernames.add("user25") ; 
-		usernames.add("user26") ; 
-		usernames.add("user27") ; 
-		usernames.add("user28") ; 
-		usernames.add("user29") ;
-		//return Manager.getAllUsernames() ; 
-		return usernames ; 
+//		ArrayList<String> usernames = new ArrayList<String>();
+//		usernames.add("user1") ; 
+//		usernames.add("user2") ; 
+//		usernames.add("user3") ; 
+//		usernames.add("user4") ; 
+//		usernames.add("user5") ; 
+//		usernames.add("user6") ; 
+//		usernames.add("user7") ; 
+//		usernames.add("user8") ; 
+//		usernames.add("user9") ; 
+//		usernames.add("user10") ; 
+//		usernames.add("user11") ; 
+//		usernames.add("user12") ; 
+//		usernames.add("user13") ; 
+//		usernames.add("user14") ; 
+//		usernames.add("user15") ; 
+//		usernames.add("user16") ; 
+//		usernames.add("user17") ; 
+//		usernames.add("user18") ; 
+//		usernames.add("user19") ; 
+//		usernames.add("user20") ; 
+//		usernames.add("user21") ; 
+//		usernames.add("user22") ; 
+//		usernames.add("user23") ; 
+//		usernames.add("user24") ; 
+//		usernames.add("user25") ; 
+//		usernames.add("user26") ; 
+//		usernames.add("user27") ; 
+//		usernames.add("user28") ; 
+//		usernames.add("user29") ;
+//		return usernames ; 
+		return Manager.getAllUsernames() ; 
+		
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////
