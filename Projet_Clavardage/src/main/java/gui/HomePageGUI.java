@@ -27,8 +27,9 @@ public class HomePageGUI {
 		
 		// Top part to write the welcome sentence
 		welcome = new JLabel("What do you want to do on MessengIR, " + username + "?") ; 
-		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
+		welcome.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
+		topPanel.setBackground(new Color(161,236,236));
 		topPanel.add(welcome);
 		
 		// Center part to choose what to do

@@ -14,8 +14,16 @@ public class ChatGUI {
 	private JLabel welcome ; 
 	private JButton back = new JButton("Back to home page") ; 
 	
-	//final JTable history ; 
+	// Table with history
+//	protected Object senders[] = new Object[10] ; 
+//	protected Object receivers[] = new Object[10] ; 
+//	protected Object dates[] = new Object[10] ;
+//	protected Object messages[] = new Object[10] ; 
+//	protected Object history[][] = new Object[10][4] ; 
+//	final JTable historyTable ; 
+//	JScrollPane scrollPane ; 
 	
+	// Field to send a message 
 	private JTextField messageArea = new JTextField(50) ; 
 	private JButton send = new JButton("Send message") ; 
 	
@@ -32,8 +40,9 @@ public class ChatGUI {
 		
 		// Top part to write an introduction sentence and add a button to go back to home page
 		welcome = new JLabel(sender + ", you are talking with " + receiver, SwingConstants.CENTER) ; 
-		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
+		welcome.setFont(new Font("Century Gothic", Font.BOLD, 16));
         topPanel = new JPanel() ; 
+        topPanel.setBackground(new Color(161,236,236));
         topPanel.add(welcome) ; 
         
         
@@ -60,7 +69,9 @@ public class ChatGUI {
         send.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
-        				chatFrame.setVisible(false);
+        				String message = messageArea.getText() ; 
+        				GUIManager.sendMessage(receiver, message) ; 
+        				GUIManager.switchToChat(sender, receiver);
         			}
         		});
         Box bottom = Box.createHorizontalBox() ; 

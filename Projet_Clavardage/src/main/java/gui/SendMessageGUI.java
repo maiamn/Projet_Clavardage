@@ -35,7 +35,8 @@ public class SendMessageGUI {
 		
 		// Top part to write the welcome sentence
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
-		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
+		topPanel.setBackground(new Color(161,236,236));
+		welcome.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		topPanel.add(welcome);
 		
 		// Center part to check if a user is online

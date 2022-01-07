@@ -35,7 +35,8 @@ public class ConnectedUsersGUI {
 		// Top part to write the welcome sentence
 		welcome = new JLabel("Who do you want to talk with?") ; 
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
-		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
+		topPanel.setBackground(new Color(161,236,236));
+		welcome.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		topPanel.add(welcome);
 		
 		// Get all usernames

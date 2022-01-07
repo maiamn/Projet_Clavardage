@@ -83,7 +83,7 @@ public class GUIManager {
 		return connectedUsers.contains(userToReach) ; 
 	}
 	
-	public void sendMessage(String destinationUsername, String message) {
+	public static void sendMessage(String destinationUsername, String message) {
 		Manager.sendMessage(destinationUsername, message);
 	}
 	

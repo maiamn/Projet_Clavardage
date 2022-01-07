@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.Color ; 
 
 public class AuthentificationGUI {
 	private JFrame authentificationFrame ; 
@@ -23,9 +24,11 @@ public class AuthentificationGUI {
 	public AuthentificationGUI() {
 		// Main Frame
 		authentificationFrame = new JFrame("~ MessengIR ~ Please enter a username to log in!") ;
+		
 		// Top part to write the welcome sentence
 		topPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
-		welcome.setFont(new Font("Monospace", Font.BOLD, 16));
+		topPanel.setBackground(new Color(161,236,236));
+		welcome.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		topPanel.add(welcome);
 		
 		// Left part to write constraints 
@@ -69,6 +72,7 @@ public class AuthentificationGUI {
 		// Main Frame 
         //authentificationFrame.setSize(widthWindow, heightWindow);
 		authentificationFrame.setLayout(new BorderLayout());
+		
 		// add panels to frame
 		authentificationFrame.add(topPanel, BorderLayout.PAGE_START) ; 
 		authentificationFrame.add(leftCenterPanel, BorderLayout.LINE_START) ; 
