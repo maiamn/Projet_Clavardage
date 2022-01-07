@@ -16,6 +16,9 @@ public class RemoteDB {
 	String login = "tp_servlet_008" ;
 	String password = "ees7Lozu" ;
 	
+	// <!> //
+	Conversation history ; 
+	
 	// Constructor 
 	public RemoteDB() {
 		System.out.println("[RemoteDB] Calling RemoteDB constructor");
@@ -78,11 +81,10 @@ public class RemoteDB {
 	
 	
 	// Get messages history (50 last messages) from the database
-	public ArrayList<ArrayList<String>> getMessage(String person1, String person2) {
-		System.out.println("[RemoteDB] Calling getMessage...");
-		
-		// Result 
-		//Conversation result = new Conversation(null, null, null, null) ;
+	public Conversation getMessages(String person1, String person2) {
+		System.out.println("[RemoteDB} Calling getMessage...") ; 
+		// Init conversation
+		Conversation result = new Conversation(null, null, null, null) ;
 		
 		// Query to order DB by descending date and select messages 
 		String query = "SELECT * FROM History "
@@ -94,7 +96,6 @@ public class RemoteDB {
 		ArrayList<String> receivers = new ArrayList<String>();
 		ArrayList<String> messages = new ArrayList<String>();
 		ArrayList<String> dates = new ArrayList<String>();
-		
 		
 		try {
 			// Execute the statement 
@@ -111,24 +112,33 @@ public class RemoteDB {
 			rs.close(); 
 			System.out.println("[RemoteDB] Message fetched");
 			
-			
-		} 
-		
-		catch ( Exception e) {
-			System.out.println(e);
+		} catch (Exception e) {
+			System.out.println(e) ; 
 		}
 		
-		ArrayList<ArrayList<String>> result = new ArrayList<ArrayList<String>>(4);
+		// Define String[] instead of ArrayList 
+		String[] sendersArray = new String[senders.size()];
+		String[] receiversArray = new String[receivers.size()] ; 
+		String[] datesArray = new String[dates.size()] ; 
+		String[] messagesArray = new String[messages.size()] ;
 		
-		result.add(senders);
-		result.add(receivers);
-		result.add(messages);
-		result.add(dates);
+		for (int k=0; k<senders.size(); k++) {
+			sendersArray[k]=senders.get(k) ; 
+			receiversArray[k] = receivers.get(k) ; 
+			datesArray[k] = dates.get(k) ; 
+			messagesArray[k] = messages.get(k) ; 
+		}
 		
-		return  result;	
+		// Define the result
+		result.setSenders(sendersArray);
+		result.setReceivers(receiversArray);
+		result.setDates(datesArray);
+		result.setMessages(messagesArray);
+		
+		// Return result
+		return result ;
 	}
-	
-	
+		
 
 	// Drop database 
 	public void dropDatabase() {

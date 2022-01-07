@@ -137,8 +137,8 @@ public class Manager {
 	
 	
 	// Get history
-	public static ArrayList<ArrayList<String>> getHistory(String person1, String person2) {
-		return remoteDB.getMessage(person1, person2);
+	public static Conversation getHistory(String person1, String person2) {
+		return remoteDB.getMessages(person1, person2);
 	}
 	
 	

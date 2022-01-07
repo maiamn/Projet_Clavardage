@@ -15,12 +15,11 @@ public class ChatGUI {
 	private JButton back = new JButton("Back to home page") ; 
 	
 	// Table with history
-	protected int nbMessages = GUIManager.getMessages().length ; 
-	protected Object senders[] = GUIManager.getSenders(); 
-	protected Object receivers[] = GUIManager.getReceivers(); 
-	protected Object dates[] = GUIManager.getDates(); 
-	protected Object messages[] = GUIManager.getMessages(); 
-	protected Object history[][] = new Object[nbMessages][4] ; 
+	protected Object senders[] ;
+	protected Object receivers[] ; 
+	protected Object dates[] ; 
+	protected Object messages[] ; 
+	protected Object history[][] ; 
 	protected Object header[] = {"Sender", "Receiver", "Date", "Message"} ;
 	final JTable historyTable ; 
 	JScrollPane scrollPane ; 
@@ -35,7 +34,13 @@ public class ChatGUI {
 	public ChatGUI(String senderUsername, String receiverUsername) {
 		// Define sender and receiver of conversation
 		sender = senderUsername ; 
-		receiver = receiverUsername ; 
+		receiver = receiverUsername ;
+		
+		// Define element of table 
+		senders = GUIManager.getSenders(sender, receiver) ; 
+		receivers = GUIManager.getReceivers(sender, receiver) ; 
+		dates = GUIManager.getDates(sender, receiver) ; 
+		messages = GUIManager.getMessages(sender, receiver) ; 		
 		
 		// Main Frame
 		chatFrame = new JFrame("~ MessengIR ~ CONVERSATION") ; 
@@ -50,7 +55,7 @@ public class ChatGUI {
         
         // Middle part to display history of conversation
         // Construct table 
-        for (int i=0; i<nbMessages; i++) {
+        for (int i=0; i<senders.length; i++) {
         	history[i][0] = senders[i] ; 
         	history[i][1] = receivers[i] ; 
         	history[i][2] = dates[i] ; 
