@@ -33,6 +33,7 @@ public class MessageProcessingTCP implements Runnable {
 	
 	// Message processing depending on message format
 	public void dataFilter(String msg) {
+		System.out.println("[ServeurTCP]"+ msg);
 		String[] token = msg.split("|");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
 		String username = token[1];

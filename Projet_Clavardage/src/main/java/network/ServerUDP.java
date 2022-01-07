@@ -26,6 +26,7 @@ public class ServerUDP {
 	
 	//Reception of a new message 
 	public void dataProcessing(String data) {
+		System.out.println("[ServeurUDP]"+ data);
 		String[] token = data.split("|");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
 		String username = token[1];
