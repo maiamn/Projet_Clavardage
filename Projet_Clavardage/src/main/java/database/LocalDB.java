@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class LocalDB {
 	
-	//TO-DO: il faudra creer un serveur sur chaque machine sur laquelle on deploie le systeme? Donc installer MySQL?
 	
 	// Attributes 
 	Connection connection ; 
@@ -23,10 +22,12 @@ public class LocalDB {
 	public LocalDB() {
 		System.out.println("[LocalDB] Calling LocalDB constructor");
 		
+		
 		// Load the driver class file 
 		try {
 			System.out.println("[LocalDB] Loading the driver class file");
-			Class.forName("com.mysql.cj.jdbc.Driver") ; 
+			//Class.forName("com.mysql.cj.jdbc.Driver") ; 
+			Class.forName("org.sqlite.JDBC") ; 
 		} 
 		catch (ClassNotFoundException e) {
 			System.out.println("Error while loading the driver class file" + e) ; 
@@ -35,7 +36,8 @@ public class LocalDB {
 		try {
 			// Make a database connection
 			System.out.println("[LocalDB] Database connection...");
-			this.connection = DriverManager.getConnection(this.addrDb, this.login, this.password);
+			//this.connection = DriverManager.getConnection(this.addrDb, this.login, this.password);
+			this.connection = DriverManager.getConnection("jdbc:sqlite:test.db");
 			System.out.println("[LocalDB] Database connected");
 			
 			// Create a statement object
