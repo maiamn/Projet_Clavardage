@@ -24,8 +24,8 @@ public class ChatGUI {
 	protected Object receivers[] ; 
 	protected Object dates[] ; 
 	protected Object messages[] ; 
-	protected Object history[][] = new Object [nbMessages][4] ; 
-	protected Object header[] = {"Sender", "Receiver", "Date", "Message"} ;
+	protected Object history[][] = new Object [nbMessages][1] ; 
+	protected Object header[] = {"History"} ;
 	final JTable historyTable ; 
 	JScrollPane scrollPane ; 
 	
@@ -35,10 +35,10 @@ public class ChatGUI {
 	
 	
 	
-	public ChatGUI(String senderUsername, String receiverUsername) {
+	public ChatGUI(String you, String dest) {
 		// Define sender and receiver of conversation
-		sender = senderUsername ; 
-		receiver = receiverUsername ;
+		sender = you ; 
+		receiver = dest ;
 		
 		// Define element of table 
 		senders = GUIManager.getSenders(sender, receiver) ; 
@@ -60,10 +60,16 @@ public class ChatGUI {
         // Middle part to display history of conversation
         // Construct table 
         for (int i=0; i<senders.length; i++) {
-        	history[i][0] = senders[i] ; 
-        	history[i][1] = receivers[i] ; 
-        	history[i][2] = dates[i] ; 
-        	history[i][3] = messages[i] ; 
+        	if (senders[i].equals(receiver)) {
+        		history[i][0] = "[You] (" + dates[i] + ") : " + messages[i] ; 
+        	} else if (senders[i].equals(sender)) {
+        		history[i][0] = "[" + receivers[i] + "] (" + dates[i] + ") : " + messages[i] ; 
+        	}
+        	
+//        	history[i][0] = senders[i] ; 
+//        	history[i][1] = receivers[i] ; 
+//        	history[i][2] = dates[i] ; 
+//        	history[i][3] = messages[i] ; 
         }
         
         // Visualize history
@@ -71,9 +77,9 @@ public class ChatGUI {
         	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component comp = super.prepareRenderer(renderer, row, column);
                 Color sender1 = new Color(161, 236, 236);
-                Color sender2 = new Color(255, 255, 255);
+                Color sender2 = new Color(230, 254, 255);
                 if(!comp.getBackground().equals(getSelectionBackground())) {
-                   Color c = (history[row][0].equals(receiver) ? sender1 : sender2);
+                   Color c = (senders[row].equals(receiver) ? sender1 : sender2);
                    comp.setBackground(c);
                    c = null;
                 }
@@ -81,10 +87,10 @@ public class ChatGUI {
         	}
         } ;
 
-        historyTable.getColumn("Sender").setPreferredWidth(30);
-        historyTable.getColumn("Receiver").setPreferredWidth(30);
-        historyTable.getColumn("Date").setPreferredWidth(30);
-        historyTable.getColumn("Message").setPreferredWidth(100);
+//        historyTable.getColumn("Sender").setPreferredWidth(30);
+//        historyTable.getColumn("Receiver").setPreferredWidth(30);
+//        historyTable.getColumn("Date").setPreferredWidth(30);
+//        historyTable.getColumn("Message").setPreferredWidth(100);
         scrollPane = new JScrollPane(historyTable) ; 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
