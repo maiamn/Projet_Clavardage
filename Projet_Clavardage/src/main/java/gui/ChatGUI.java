@@ -65,11 +65,6 @@ public class ChatGUI {
         	} else if (senders[i].equals(sender)) {
         		history[i][0] = "[" + receivers[i] + "] (" + dates[i] + ") : " + messages[i] ; 
         	}
-        	
-//        	history[i][0] = senders[i] ; 
-//        	history[i][1] = receivers[i] ; 
-//        	history[i][2] = dates[i] ; 
-//        	history[i][3] = messages[i] ; 
         }
         
         // Visualize history
@@ -86,11 +81,6 @@ public class ChatGUI {
                 return comp;
         	}
         } ;
-
-//        historyTable.getColumn("Sender").setPreferredWidth(30);
-//        historyTable.getColumn("Receiver").setPreferredWidth(30);
-//        historyTable.getColumn("Date").setPreferredWidth(30);
-//        historyTable.getColumn("Message").setPreferredWidth(100);
         scrollPane = new JScrollPane(historyTable) ; 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
