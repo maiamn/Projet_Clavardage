@@ -50,6 +50,17 @@ public class NetworkManager {
 		return myIP ;
 	}
 	
+	
+	//////////////////////////////////////////////////////////////////////
+	///////////////////////////// RUN SERVERS ////////////////////////////
+	//////////////////////////////////////////////////////////////////////
+	public void runServers() {
+		System.out.println("[NetworkManager] running servers");
+		new Thread(this.serverTCP).start();
+		new Thread(this.serverUDP).start();
+	}
+
+	
 	//////////////////////////////////////////////////////////////////////
 	///////////////////////////MESSAGES FORMAT////////////////////////////
 	//////////////////////////////////////////////////////////////////////
@@ -196,6 +207,12 @@ public class NetworkManager {
 		serverUDP.setConnected(false) ;
 		serverTCP.setConnected(false) ;
 	}
-				
+			
+	
+	public static void main (String [] args) {
+		new Thread(new ServerUDP(5001, 50000)).start();
+		ClientUDP.broadcast("broadcast de celia");
+	}
+	
 	
 }

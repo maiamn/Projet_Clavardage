@@ -5,7 +5,7 @@ import java.net.InetAddress;
 import java.net.DatagramPacket ;
 //import table interface
 
-public class ServerUDP {
+public class ServerUDP extends Thread{
 	// Attributes 
 	int port;
 	int length;
@@ -13,6 +13,7 @@ public class ServerUDP {
 	
 	// Constructor
 	public ServerUDP(int port, int length) {
+		System.out.println("[ServerUDP] Calling constructor");
 		this.port = port;
 		this.length = length;
 		this.connected = true ; 
@@ -76,6 +77,7 @@ public class ServerUDP {
 	
 	// Communication directe avec table
 	public void run() {
+		System.out.println("[ServerUDP] running");
 		try {
 			DatagramSocket socket = new DatagramSocket(port);
 			DatagramPacket packet = null;
@@ -86,7 +88,7 @@ public class ServerUDP {
 				socket.receive(packet);
 				String data = new String(packet.getData(), 0, packet.getLength());
 				
-				System.out.println("Client : " + data);
+				dataProcessing(data);
 				
 				//clear buffer
 				buffer = new byte[length];
