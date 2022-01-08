@@ -3,6 +3,7 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.table.TableCellRenderer;
 
 public class ChatGUI {
 	private JFrame chatFrame ; 
@@ -66,7 +67,20 @@ public class ChatGUI {
         }
         
         // Visualize history
-        historyTable = new JTable(history, header) ; 
+        historyTable = new JTable(history, header) {
+        	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component comp = super.prepareRenderer(renderer, row, column);
+                Color sender1 = new Color(161, 236, 236);
+                Color sender2 = new Color(255, 255, 255);
+                if(!comp.getBackground().equals(getSelectionBackground())) {
+                   Color c = (history[row][0].equals(receiver) ? sender1 : sender2);
+                   comp.setBackground(c);
+                   c = null;
+                }
+                return comp;
+        	}
+        } ;
+
         historyTable.getColumn("Sender").setPreferredWidth(30);
         historyTable.getColumn("Receiver").setPreferredWidth(30);
         historyTable.getColumn("Date").setPreferredWidth(30);
@@ -76,7 +90,7 @@ public class ChatGUI {
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER)) ; 
         centerPanel.add(scrollPane, BorderLayout.CENTER) ; 
-        
+         
         // Bottom part to display an area to enter the message to send and the button
 		// Button to go back to home page
         back.setPreferredSize(new Dimension(150,30));

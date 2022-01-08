@@ -93,25 +93,38 @@ public class GUIManager {
 	///////////////////////////////////////////// CHAT ///////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	public static String[] getSenders(String sender, String receiver) {
-		String [] senders = {"user1", "user2", "user2", "user1"} ; 
+		String [] senders = {"user1", "user2", "user2", "user1", "user1", "user2", "user1", "user2", "user1", "user2", "user1", "user1", "user1", "user1"} ; 
 		return senders ;
 //		return Manager.getHistory(sender, receiver).getSenders() ;
 	}
 	
 	public static String[] getReceivers(String sender, String receiver) {
-		String [] receivers = {"user2", "user1", "user1", "user2"} ; 
+		String [] receivers = {"user2", "user1", "user1", "user2", "user2", "user1", "user2", "user1", "user2", "user1", "user2", "user2", "user2", "user2"} ; 
 		return receivers ;
 //		return Manager.getHistory(sender, receiver).getReceivers() ; 
 	}
 	
 	public static String[] getDates(String sender, String receiver) {
-		String [] dates = {"date1", "date2", "date3", "date4"} ;
+		String [] dates = {"date1", "date2", "date3", "date4", "date5", "date6", "date7", "date8", "date9", "date10", "date11", "date12", "date13", "date14"} ;
 		return dates ;
 //		return Manager.getHistory(sender, receiver).getDates() ; 
 	}
 	
 	public static String[] getMessages(String sender, String receiver) {
-		String [] messages = {"Hi!", "Hello!", "How are you?", "Fine and you?"} ; 
+		String [] messages = {"message1", 
+							  "message2", 
+							  "message3", 
+							  "message4", 
+							  "message5", 
+							  "message6", 
+							  "message7", 
+							  "message8", 
+							  "message9", 
+							  "message10", 
+							  "message11", 
+							  "message12", 
+							  "message13", 
+							  "message14"} ;
 		return messages ;
 //		return Manager.getHistory(sender, receiver).getMessages() ; 
 	}
