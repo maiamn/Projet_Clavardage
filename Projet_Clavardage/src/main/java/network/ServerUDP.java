@@ -28,14 +28,25 @@ public class ServerUDP extends Thread{
 	//Reception of a new message 
 	public void dataProcessing(String data) {
 		System.out.println("[ServeurUDP]"+ data);
-		String[] token = data.split("|");
+		String[] token = data.split("/-/");
+		System.out.println("type:" + token[0]);
+		System.out.println("username:" + token[1]);
+		System.out.println("content:" + token[2]);
+		for (String word : token) {
+            System.out.println(word);
+        }
+		
+		
+		
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
 		String username = token[1];
+
 		String content = token[2];
 		
 		switch (type) {
 		
 		case USERNAME_BRDCST:
+			System.out.println("[ServeurUDP] USERNAME_BRDCST");
 			//someone asks if a username is available 
 			try {
 				InetAddress IP = InetAddress.getByName(content); 
@@ -47,6 +58,7 @@ public class ServerUDP extends Thread{
 			break;
 			
 		case USERNAME_CONNECTED:
+			System.out.println("[ServeurUDP] USERNAME_CONNECTED");
 			//a new user is connected
 			try {
 				InetAddress IP = InetAddress.getByName(content); 
@@ -58,6 +70,7 @@ public class ServerUDP extends Thread{
 			break;
 			
 		case USERNAME_DISCONNECT:
+			System.out.println("[ServeurUDP] USERNAME_DISCONNECT");
 			//a user is disconnected
 			NetworkManager.userDisconnected(username);
 			break;
@@ -68,6 +81,7 @@ public class ServerUDP extends Thread{
 			break;
 		
 		default:
+			System.out.println("[ServeurUDP] Type de message non reconnu");
 			break;
 			
 		}

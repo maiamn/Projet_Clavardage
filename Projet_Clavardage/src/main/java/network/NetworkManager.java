@@ -77,7 +77,7 @@ public class NetworkManager {
 	
 	// Message formatting
 	public static String messageFormatter(MessageType type,String username, String content) {
-		return (type + "|" + username+ "|" + content);
+		return (type + "/-/" + username+ "/-/" + content);
 	}
 	
 	
@@ -211,7 +211,6 @@ public class NetworkManager {
 	
 	public static void main (String [] args) {
 		new Thread(new ServerUDP(5001, 50000)).start();
-		ClientUDP.broadcast("broadcast de celia");
 	}
 	
 	
