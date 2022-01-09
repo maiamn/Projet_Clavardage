@@ -97,7 +97,7 @@ public class LocalDBTest {
 	public void resetAfterTests() throws IOException {
 		////////////////////////////////////// Drop database /////////////////////////////////////
 		try {
-			db.statement.executeUpdate("TRUNCATE TABLE UsernameToIP") ; 
+			db.statement.executeUpdate("DELETE FROM UsernameToIP") ; 
 		} catch (SQLException e) {
 				System.out.println(e);
 		}
