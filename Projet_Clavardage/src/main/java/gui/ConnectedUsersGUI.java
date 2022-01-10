@@ -44,7 +44,7 @@ public class ConnectedUsersGUI {
         
 		// Construct Table of usernames and buttons
 		for (int k=0; k<nbUsers; k++) {
-			usersTable[k][0] = new String(allUsers.get(k)) ; 
+			usersTable[k][0] = new String(allUsers.get(k)) ;
 		}
 		
 		// Center part to visualize all connected users 

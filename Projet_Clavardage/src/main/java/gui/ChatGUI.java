@@ -69,7 +69,8 @@ public class ChatGUI {
         
         // Visualize history
         historyTable = new JTable(history, header) {
-        	public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+			private static final long serialVersionUID = 1L;
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component comp = super.prepareRenderer(renderer, row, column);
                 Color sender1 = new Color(161, 236, 236);
                 Color sender2 = new Color(230, 254, 255);
