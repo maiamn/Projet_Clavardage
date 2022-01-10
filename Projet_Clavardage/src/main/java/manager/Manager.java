@@ -35,7 +35,7 @@ public class Manager {
 	public static boolean validLengthUsername(String username) {
 		boolean res = true ; 
 		res = res && (username.length() < maxLength) ; 
-		res = res && (username.length() > 1) ; 
+		res = res && (username.length() > 0) ; 
 		return res ; 
 	}
 	
