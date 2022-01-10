@@ -31,11 +31,7 @@ public class ServerUDP extends Thread{
 		String[] token = data.split("/-/");
 //		System.out.println("type:" + token[0]);
 //		System.out.println("username:" + token[1]);
-//		System.out.println("content:" + token[2]);
-		for (String word : token) {
-            System.out.println(word);
-        }
-		
+//		System.out.println("content:" + token[2]);		
 		
 		
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());

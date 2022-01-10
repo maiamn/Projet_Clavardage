@@ -97,7 +97,7 @@ public class Manager {
 	
 	//when we are asked for the availability of a username, we answer only if it is the one we already use
 	public static void usernameRequest(String pseudo, InetAddress IP) {
-		if (pseudo == Manager.username) {
+		if (pseudo.equals(username)) {
 			networkManager.sendUnavailableUsername(IP);
 		}
 	}
