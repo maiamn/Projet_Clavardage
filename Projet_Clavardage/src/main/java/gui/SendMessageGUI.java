@@ -57,9 +57,15 @@ public class SendMessageGUI {
         		  			JOptionPane.showMessageDialog(sendMessageFrame, errorMessage);
         		  		} 
         		  		else {
-        		  			System.out.println("GUI : sender = " + username + " receiver = " + name);
-        		  			GUIManager.switchToChat(username, name) ; 
-        		  			sendMessageFrame.setVisible(false);
+        		  			if (name.equals(username)) {
+            		  			errorMessage = new JLabel("<html>You cannot talk to yourself! </html>", SwingConstants.CENTER) ; 
+            		  			// Pop up window
+            		  			JOptionPane.showMessageDialog(sendMessageFrame, errorMessage);
+        		  			} else {
+	        		  			System.out.println("GUI : sender = " + username + " receiver = " + name);
+	        		  			GUIManager.switchToChat(username, name) ; 
+	        		  			sendMessageFrame.setVisible(false);
+        		  			}
         		  		}
                   }
                 }
