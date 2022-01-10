@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class DisconnectionGUI {
+	// Attributes 
 	private JFrame disconnectionFrame ; 
 	
 	private JPanel topPanel; 
@@ -16,6 +17,7 @@ public class DisconnectionGUI {
 	
 	public static String username ; 
 	
+	// Constructor 
 	public DisconnectionGUI(String choosenUsername) {
 		// Define username 
 		username = choosenUsername ; 

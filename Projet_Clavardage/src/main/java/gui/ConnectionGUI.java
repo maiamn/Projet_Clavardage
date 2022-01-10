@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class ConnectionGUI {
+	// Attributes 
 	private JFrame connectionFrame ; 
 	
 	private JPanel topPanel; 
@@ -16,6 +17,8 @@ public class ConnectionGUI {
 	
 	public static String username ; 
 	
+	
+	// Constructor 
 	public ConnectionGUI(String choosenUsername) {
 		// Define username 
 		username = choosenUsername ; 

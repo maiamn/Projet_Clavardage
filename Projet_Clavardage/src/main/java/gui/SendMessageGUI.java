@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.util.ArrayList; 
 
 public class SendMessageGUI {
+	// Attributes 
 	private JFrame sendMessageFrame ; 
 	
 	private JPanel topPanel; 
@@ -26,6 +27,8 @@ public class SendMessageGUI {
 	
 	public static String username ;
 	
+	
+	// Constructor 
 	public SendMessageGUI(String choosenUsername) {
 		// Define username 
 		username = choosenUsername ; 

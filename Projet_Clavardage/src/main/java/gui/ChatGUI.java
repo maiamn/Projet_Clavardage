@@ -6,6 +6,7 @@ import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 
 public class ChatGUI {
+	// Attributes 
 	private JFrame chatFrame ; 
 	
 	private JPanel topPanel ; 
@@ -19,12 +20,11 @@ public class ChatGUI {
 	public static String receiver ; 
 	
 	// Table with history
-	//protected int nbMessages = GUIManager.getMessages(sender, receiver).length ; 
 	protected Object senders[] ;
 	protected Object receivers[] ; 
 	protected Object dates[] ; 
 	protected Object messages[] ; 
-	protected Object history[][] = new Object [50][1] ; 
+	protected Object history[][] = new Object [50][1] ; // We load only the 50 last messages 
 	protected Object header[] = {"History"} ;
 	final JTable historyTable ; 
 	JScrollPane scrollPane ; 
@@ -61,18 +61,18 @@ public class ChatGUI {
         
         
         // Middle part to display history of conversation
-        // Construct table 
         // IP of sender 
 		String IPSender = GUIManager.getIP(sender).toString();
 		if (IPSender.charAt(0) == ('/')) {
 			IPSender = IPSender.substring(1);
 		}
-		
+		// IP of receiver 
 		String IPReceiver = GUIManager.getIP(receiver).toString();
 		if (IPReceiver.charAt(0) == ('/')) {
 			IPReceiver = IPReceiver.substring(1);
 		}
 		
+		// Construct table
         for (int i=0; i<senders.length; i++) {
         	if (senders[i].equals(IPReceiver)) {
         		history[i][0] = "[" + receiver + "] (" + dates[i] + ") : " + messages[i] ; 
@@ -93,6 +93,7 @@ public class ChatGUI {
                 return value == null ? null : value.toString();
             }
             
+            // Color of line different according of the sender 
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component comp = super.prepareRenderer(renderer, row, column);
                 Color sender1 = new Color(161, 236, 236);
@@ -108,7 +109,7 @@ public class ChatGUI {
                 return comp;
         	}
         } ;
-        historyTable.setDefaultRenderer(String.class, new LineWrapCellRenderer()) ; 
+        
         scrollPane = new JScrollPane(historyTable) ; 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -154,8 +155,8 @@ public class ChatGUI {
         		});
         Box bottom = Box.createHorizontalBox() ; 
         bottom.add(messageArea) ; 
-        bottom.add(refresh) ; 
         bottom.add(send); 
+        bottom.add(refresh) ; 
         bottom.add(back) ; 
         bottomPanel = new JPanel() ; 
         bottomPanel.add(bottom) ; 

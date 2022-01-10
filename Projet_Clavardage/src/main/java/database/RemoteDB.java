@@ -8,8 +8,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 
-import com.mysql.cj.jdbc.CallableStatement;
-
 public class RemoteDB {
 	
 	// Attributes 
@@ -18,8 +16,6 @@ public class RemoteDB {
 	String addrDb = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_008?";
 	String login = "tp_servlet_008" ;
 	String password = "ees7Lozu" ;
-
-	// <!> //
 	Conversation history ; 
 	
 	// Constructor 
@@ -68,16 +64,6 @@ public class RemoteDB {
 	
 	// Add a message to the database
 	public void addMessage(String sender, String receiver, String msg, String dateTime) {
-//		System.out.println("[RemoteDB] Calling addMessage...");
-//		String query = "INSERT INTO History (Sender, Receiver, Message, Date) VALUES ('" + sender + "', '" + receiver + "', '" + msg + "', '" + dateTime + "') ;" ; 
-//		try {
-//			// Execute the statement 
-//			this.statement.executeUpdate(query) ; 
-//			System.out.println("[RemoteDB] Message added");
-//		} 
-//		catch (SQLException e) {
-//			System.out.println(e);
-//		}
 		String updatedQuery = "INSERT INTO History (Sender, Receiver, Message, Date) values (?, ?, ?, ?);";
 		try {
 			PreparedStatement pstmt = this.connection.prepareStatement(updatedQuery); 
@@ -90,8 +76,7 @@ public class RemoteDB {
 		} 
 		catch (SQLException e1) {
 			e1.printStackTrace();
-		}
-		
+		}	
 	}
 	
 	
@@ -117,7 +102,7 @@ public class RemoteDB {
 			ResultSet rs = this.statement.executeQuery(query) ;
 			
 			while(rs.next()) {
-				//getArray not supported by mysql
+				// getArray not supported by mysql
 				// Move sql.array content to ArrayList
 				senders.add( rs.getString(1) );
 				receivers.add(rs.getString(2));

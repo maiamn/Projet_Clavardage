@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class HomePageGUI {
+	// Attributes
 	private JFrame homePageFrame ; 
 	
 	private JPanel topPanel; 
@@ -18,6 +19,8 @@ public class HomePageGUI {
 	
 	public static String username ; 
 	
+	
+	// Constructor 
 	public HomePageGUI(String choosenUsername) {
 		// Define username 
 		username = choosenUsername ; 
@@ -60,7 +63,6 @@ public class HomePageGUI {
               );
         
         // Send Message
-        
         sendMessage.setPreferredSize(new Dimension(200,50));
         sendMessage.setMinimumSize(new Dimension(200,50));
         sendMessage.setMaximumSize(new Dimension(200,50));

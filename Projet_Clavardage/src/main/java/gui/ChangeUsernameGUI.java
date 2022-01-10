@@ -5,6 +5,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class ChangeUsernameGUI {
+	// Attributes 
 	private JFrame changeUsernameFrame ; 
 	
 	private JPanel topPanel; 
@@ -24,6 +25,8 @@ public class ChangeUsernameGUI {
 	
 	public static String username ; 
 	
+	
+	// Constructor 
 	public ChangeUsernameGUI(String choosenUsername) {
 		// Define username 
 		username = choosenUsername ; 
@@ -71,7 +74,7 @@ public class ChangeUsernameGUI {
                 }
               );
         
-		// Right part to enter username
+		// Right part to enter the new username
 		Box newVersion = Box.createVerticalBox() ; 
 		newVersion.add(next) ; 
 		newVersion.add(newUsername) ; 

@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.Color ; 
 
 public class AuthentificationGUI {
+	// Attributes 
 	private JFrame authentificationFrame ; 
 	
 	private JPanel topPanel; 
@@ -21,6 +22,8 @@ public class AuthentificationGUI {
 	
 	private JLabel errorMessage ; 
 	
+	
+	// Constructor 
 	public AuthentificationGUI() {
 		// Main Frame
 		authentificationFrame = new JFrame("~ MessengIR ~ Please enter a username to log in!") ;

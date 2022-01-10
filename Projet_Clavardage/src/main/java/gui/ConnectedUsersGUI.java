@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.util.ArrayList; 
 
 public class ConnectedUsersGUI {
+	// Attributes 
 	private JFrame connectedUsersFrame ; 
 	
 	private JPanel topPanel; 
@@ -25,6 +26,7 @@ public class ConnectedUsersGUI {
 	
 	public static String username ; 
 	
+	// Constructor 
 	public ConnectedUsersGUI(String choosenUsername) {
 		// Define username 
 		username = choosenUsername ; 
@@ -87,7 +89,7 @@ public class ConnectedUsersGUI {
 
 		// Main Frame 
 		connectedUsersFrame.setLayout(new BorderLayout());
-		// add panels to frame
+		// Add panels to frame
 		connectedUsersFrame.add(topPanel, BorderLayout.PAGE_START) ; 
 		connectedUsersFrame.add(centerPanel, BorderLayout.CENTER) ;
 		connectedUsersFrame.add(bottomPanel, BorderLayout.PAGE_END) ; 
