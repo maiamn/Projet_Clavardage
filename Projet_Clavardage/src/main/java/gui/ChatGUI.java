@@ -31,6 +31,7 @@ public class ChatGUI {
 	
 	// Field to send a message 
 	private JTextField messageArea = new JTextField(50) ; 
+	private JButton refresh = new JButton("Refresh") ;
 	private JButton send = new JButton("Send message") ; 
 	
 	
@@ -140,8 +141,20 @@ public class ChatGUI {
         				GUIManager.switchToChat(sender, receiver);
         			}
         		});
+        // Button to send the message 
+        refresh.setPreferredSize(new Dimension(150,30));
+        refresh.setMinimumSize(new Dimension(150,30));
+        refresh.setMaximumSize(new Dimension(150, 30));
+        refresh.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				chatFrame.setVisible(false) ; 
+        				GUIManager.switchToChat(sender, receiver);
+        			}
+        		});
         Box bottom = Box.createHorizontalBox() ; 
         bottom.add(messageArea) ; 
+        bottom.add(refresh) ; 
         bottom.add(send); 
         bottom.add(back) ; 
         bottomPanel = new JPanel() ; 
@@ -149,7 +162,6 @@ public class ChatGUI {
         
         // Main frame 
         chatFrame.setLayout(new BorderLayout());
-        chatFrame.getRootPane().setDefaultButton(send);
         // Add panels to the frame 
         chatFrame.add(topPanel, BorderLayout.PAGE_START) ; 
         chatFrame.add(centerPanel, BorderLayout.CENTER) ; 
