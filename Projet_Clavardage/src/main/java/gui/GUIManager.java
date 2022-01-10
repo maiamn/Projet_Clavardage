@@ -42,38 +42,38 @@ public class GUIManager {
 	///////////////////////////////////////// CONNECTED USERS ////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	public static ArrayList<String> getAllConnectedUsers() {
-		ArrayList<String> usernames = new ArrayList<String>();
-		usernames.add("user1") ; 
-		usernames.add("user2") ; 
-		usernames.add("user3") ; 
-		usernames.add("user4") ; 
-		usernames.add("user5") ; 
-		usernames.add("user6") ; 
-		usernames.add("user7") ; 
-		usernames.add("user8") ; 
-		usernames.add("user9") ; 
-		usernames.add("user10") ; 
-		usernames.add("user11") ; 
-		usernames.add("user12") ; 
-		usernames.add("user13") ; 
-		usernames.add("user14") ; 
-		usernames.add("user15") ; 
-		usernames.add("user16") ; 
-		usernames.add("user17") ; 
-		usernames.add("user18") ; 
-		usernames.add("user19") ; 
-		usernames.add("user20") ; 
-		usernames.add("user21") ; 
-		usernames.add("user22") ; 
-		usernames.add("user23") ; 
-		usernames.add("user24") ; 
-		usernames.add("user25") ; 
-		usernames.add("user26") ; 
-		usernames.add("user27") ; 
-		usernames.add("user28") ; 
-		usernames.add("user29") ;
-		return usernames ; 
-		//return Manager.getAllUsernames() ; 
+//		ArrayList<String> usernames = new ArrayList<String>();
+//		usernames.add("user1") ; 
+//		usernames.add("user2") ; 
+//		usernames.add("user3") ; 
+//		usernames.add("user4") ; 
+//		usernames.add("user5") ; 
+//		usernames.add("user6") ; 
+//		usernames.add("user7") ; 
+//		usernames.add("user8") ; 
+//		usernames.add("user9") ; 
+//		usernames.add("user10") ; 
+//		usernames.add("user11") ; 
+//		usernames.add("user12") ; 
+//		usernames.add("user13") ; 
+//		usernames.add("user14") ; 
+//		usernames.add("user15") ; 
+//		usernames.add("user16") ; 
+//		usernames.add("user17") ; 
+//		usernames.add("user18") ; 
+//		usernames.add("user19") ; 
+//		usernames.add("user20") ; 
+//		usernames.add("user21") ; 
+//		usernames.add("user22") ; 
+//		usernames.add("user23") ; 
+//		usernames.add("user24") ; 
+//		usernames.add("user25") ; 
+//		usernames.add("user26") ; 
+//		usernames.add("user27") ; 
+//		usernames.add("user28") ; 
+//		usernames.add("user29") ;
+//		return usernames ; 
+		return Manager.getAllUsernames() ; 
 		
 	}
 	
@@ -93,40 +93,40 @@ public class GUIManager {
 	///////////////////////////////////////////// CHAT ///////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	public static String[] getSenders(String sender, String receiver) {
-		String [] senders = {"user1", "user2", "user2", "user1", "user1", "user2", "user1", "user2", "user1", "user2", "user1", "user1", "user1", "user1"} ; 
-		return senders ;
-//		return Manager.getHistory(sender, receiver).getSenders() ;
+//		String [] senders = {"user1", "user2", "user2", "user1", "user1", "user2", "user1", "user2", "user1", "user2", "user1", "user1", "user1", "user1"} ; 
+//		return senders ;
+		return Manager.getHistory(sender, receiver).getSenders() ;
 	}
 	
 	public static String[] getReceivers(String sender, String receiver) {
-		String [] receivers = {"user2", "user1", "user1", "user2", "user2", "user1", "user2", "user1", "user2", "user1", "user2", "user2", "user2", "user2"} ; 
-		return receivers ;
-//		return Manager.getHistory(sender, receiver).getReceivers() ; 
+//		String [] receivers = {"user2", "user1", "user1", "user2", "user2", "user1", "user2", "user1", "user2", "user1", "user2", "user2", "user2", "user2"} ; 
+//		return receivers ;
+		return Manager.getHistory(sender, receiver).getReceivers() ; 
 	}
 	
 	public static String[] getDates(String sender, String receiver) {
-		String [] dates = {"date1", "date2", "date3", "date4", "date5", "date6", "date7", "date8", "date9", "date10", "date11", "date12", "date13", "date14"} ;
-		return dates ;
-//		return Manager.getHistory(sender, receiver).getDates() ; 
+//		String [] dates = {"date1", "date2", "date3", "date4", "date5", "date6", "date7", "date8", "date9", "date10", "date11", "date12", "date13", "date14"} ;
+//		return dates ;
+		return Manager.getHistory(sender, receiver).getDates() ; 
 	}
 	
 	public static String[] getMessages(String sender, String receiver) {
-		String [] messages = {"message1", 
-							  "message2", 
-							  "message3", 
-							  "message4", 
-							  "message5", 
-							  "message6", 
-							  "message7", 
-							  "message8", 
-							  "message9", 
-							  "message10", 
-							  "message11", 
-							  "message12", 
-							  "message13", 
-							  "message14"} ;
-		return messages ;
-//		return Manager.getHistory(sender, receiver).getMessages() ; 
+//		String [] messages = {"message1", 
+//							  "message2", 
+//							  "message3", 
+//							  "message4", 
+//							  "message5", 
+//							  "message6", 
+//							  "message7", 
+//							  "message8", 
+//							  "message9", 
+//							  "message10", 
+//							  "message11", 
+//							  "message12", 
+//							  "message13", 
+//							  "message14"} ;
+//		return messages ;
+		return Manager.getHistory(sender, receiver).getMessages() ; 
 	}
 	
 	
