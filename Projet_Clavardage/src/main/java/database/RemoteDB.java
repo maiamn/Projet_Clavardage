@@ -136,6 +136,10 @@ public class RemoteDB {
 		result.setMessages(messagesArray);
 		
 		// Return result
+		System.out.println("[RemoteDB] Messages:");
+		for (String msg : messagesArray) {
+			System.out.println(msg);
+		}
 		return result ;
 	}
 		

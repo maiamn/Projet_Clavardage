@@ -201,8 +201,12 @@ public class NetworkManager {
 		LocalDateTime date = LocalDateTime.now();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formattedDate = date.format(format);
-
-		Manager.addMessageToHistory(Manager.getIP(user).toString(), myIPString, message, formattedDate);
+		
+		String IPSender = Manager.getIP(user).toString() ;
+		if (IPSender.charAt(0) == ('/')) {
+			IPSender = IPSender.substring(1);
+		}
+		Manager.addMessageToHistory(IPSender, myIPString, message, formattedDate);
 
 		System.out.println(user + " at " + formattedDate + ": " + message);
 	}

@@ -140,8 +140,16 @@ public class Manager {
 	
 	
 	// Get history
-	public static Conversation getHistory(String person1, String person2) {
-		return remoteDB.getMessages(person1, person2);
+	public static Conversation getHistory(String username1, String username2) {
+		String IP1 = getIP(username1).toString();
+		String IP2 = getIP(username2).toString();
+		if (IP1.charAt(0) == ('/')) {
+			IP1 = IP1.substring(1);
+		}
+		if (IP2.charAt(0) == ('/')) {
+			IP2 = IP2.substring(1);
+		}
+		return remoteDB.getMessages(IP1, IP2);
 	}
 	
 	
