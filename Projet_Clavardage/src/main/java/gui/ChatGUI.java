@@ -82,7 +82,17 @@ public class ChatGUI {
         
         // Visualize history
         historyTable = new JTable(history, header) {
-//			private static final long serialVersionUID = 1L;
+        	private static final long serialVersionUID = 1L;
+            public String getToolTipText( MouseEvent e )
+            {
+                int row = rowAtPoint( e.getPoint() );
+                int column = columnAtPoint( e.getPoint() );
+
+                Object value = getValueAt(row, column);
+                return value == null ? null : value.toString();
+            }
+            
+			
 //			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
 //                Component comp = super.prepareRenderer(renderer, row, column);
 //                Color sender1 = new Color(161, 236, 236);
@@ -135,6 +145,7 @@ public class ChatGUI {
         
         // Main frame 
         chatFrame.setLayout(new BorderLayout());
+        chatFrame.getRootPane().setDefaultButton(send);
         // Add panels to the frame 
         chatFrame.add(topPanel, BorderLayout.PAGE_START) ; 
         chatFrame.add(centerPanel, BorderLayout.CENTER) ; 
