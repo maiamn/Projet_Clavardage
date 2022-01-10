@@ -87,7 +87,6 @@ public class Manager {
 	public static void disconnection() {
 		localDB.dropDatabase();
 		localDB.closeConnection();
-		remoteDB.dropDatabase();
 		remoteDB.closeConnection();
 		networkManager.disconnection(username);
 	}
