@@ -35,7 +35,7 @@ public class Manager {
 	public static boolean validLengthUsername(String username) {
 		boolean res = true ; 
 		res = res && (username.length() < maxLength) ; 
-		res = res && (username.length() > 1) ; 
+		res = res && (username.length() > 0) ; 
 		return res ; 
 	}
 	
@@ -72,6 +72,10 @@ public class Manager {
 			//we ask everyone their usernames
 			networkManager.askUsernames(username);
 		}
+	}
+	
+	public static void runServers() {
+		networkManager.runServers();
 	}
 	
 	
@@ -162,7 +166,7 @@ public class Manager {
 	
 	public static void main (String [] args) {
 		connection("test");
-		System.out.println(networkManager.getMyIP().toString());
+		System.out.println(networkManager.getMyIPString());
 		disconnection();
 	}
 

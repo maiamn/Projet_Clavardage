@@ -4,6 +4,7 @@ import manager.Manager;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -16,6 +17,7 @@ public class NetworkManager {
 	ServerTCP serverTCP ; 
 	ServerUDP serverUDP ;
 	static InetAddress myIP ;
+	static String myIPString ;
 
 	// Constructor 
 	public NetworkManager() {
@@ -43,10 +45,19 @@ public class NetworkManager {
 		catch (Exception e) {
 			System.out.println(e);
 		}
+		
+		myIPString = myIP.toString();
+		if (myIPString.charAt(0) == ('/')) {
+			myIPString = myIPString.substring(1);
+		}
 	}
 
 	public InetAddress getMyIP() {
 		return myIP ;
+	}
+	
+	public String getMyIPString() {
+		return myIPString ;
 	}
 
 
@@ -104,7 +115,7 @@ public class NetworkManager {
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
-		String msg = messageFormatter(MessageType.USERNAME_BRDCST, username, myIP.toString());
+		String msg = messageFormatter(MessageType.USERNAME_BRDCST, username, myIPString);
 
 		//ask everyone if the username is available 
 		ClientUDP.broadcast(msg);
@@ -123,15 +134,15 @@ public class NetworkManager {
 
 	//Once we are connected, we send a broadcast with our username and our IP
 	public void notifyConnected(String username) {
-		System.out.println("Calling notifyConnected(username)");
-		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username, myIP.toString()) ;
+		System.out.println("Calling notifyConnected(username) with IP: " + myIPString);
+		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
 
 
 	public void notifyDisconnected(String username) {
 		System.out.println("Calling notifyDisonnected()");
-		String msg = messageFormatter(MessageType.USERNAME_DISCONNECT, username, myIP.toString()) ;
+		String msg = messageFormatter(MessageType.USERNAME_DISCONNECT, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
 
@@ -177,9 +188,11 @@ public class NetworkManager {
 	//If someone asks our username, we answer with our username and our IP
 	public static void sendUsername(String destinationUsername) {
 		System.out.println("Calling sendUsername");
-		String msg = messageFormatter(MessageType.GET_USERNAMES, Manager.getUsername(), myIP.toString()) ;
+		String msg = messageFormatter(MessageType.GET_USERNAMES, Manager.getUsername(), myIPString) ;
 		InetAddress destinationIP = Manager.getIP(destinationUsername);
+		System.out.println("sendUsername : getIP ok");
 		ClientTCP.sendMessage(msg, destinationIP);	
+		System.out.println("senUsername : sendMessage ok");
 	}
 
 
@@ -189,7 +202,7 @@ public class NetworkManager {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 		String formattedDate = date.format(format);
 
-		Manager.addMessageToHistory(Manager.getIP(user).toString(), myIP.toString(), message, formattedDate);
+		Manager.addMessageToHistory(Manager.getIP(user).toString(), myIPString, message, formattedDate);
 
 		System.out.println(user + " at " + formattedDate + ": " + message);
 	}
@@ -210,6 +223,7 @@ public class NetworkManager {
 
 	public static void main (String [] args) {
 		new Thread(new ServerUDP(5001, 50000)).start();
+		//notifyConnected("Celia");
 	}
 
 
