@@ -74,9 +74,9 @@ public class ChatGUI {
 		
         for (int i=0; i<senders.length; i++) {
         	if (senders[i].equals(IPReceiver)) {
-        		history[i][0] = "[You] (" + dates[i] + ") : " + messages[i] ; 
+        		history[i][0] = "[" + receiver + "] (" + dates[i] + ") : " + messages[i] ; 
         	} else if (senders[i].equals(IPSender)) {
-        		history[i][0] = "[" + receivers[i] + "] (" + dates[i] + ") : " + messages[i] ; 
+        		history[i][0] = "[You] (" + dates[i] + ") : " + messages[i] ; 
         	} 
         }
         
@@ -90,20 +90,22 @@ public class ChatGUI {
 
                 Object value = getValueAt(row, column);
                 return value == null ? null : value.toString();
-            }
-            
+            }       
 			
-//			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-//                Component comp = super.prepareRenderer(renderer, row, column);
-//                Color sender1 = new Color(161, 236, 236);
-//                Color sender2 = new Color(230, 254, 255);
-//                if(!comp.getBackground().equals(getSelectionBackground())) {
-//                   Color c = (senders[row].equals(receiver) ? sender1 : sender2);
-//                   comp.setBackground(c);
-//                   c = null;
-//                }
-//                return comp;
-//        	}
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+                Component comp = super.prepareRenderer(renderer, row, column);
+                Color sender1 = new Color(161, 236, 236);
+                Color sender2 = new Color(230, 254, 255);
+                if(!comp.getBackground().equals(getSelectionBackground())) {
+                	if (row<senders.length) {
+                		Color c = (senders[row].equals(receiver) ? sender1 : sender2);
+                		comp.setBackground(c); 
+                		c = null;
+                	}
+	                   
+                }
+                return comp;
+        	}
         } ;
         scrollPane = new JScrollPane(historyTable) ; 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
