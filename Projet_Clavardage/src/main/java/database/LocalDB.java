@@ -14,9 +14,6 @@ public class LocalDB {
 	// Attributes 
 	Connection connection ; 
 	Statement statement ;
-	String addrDb = "jdbc:mysql://localhost:3306/localdatabase?";
-	String login = "root" ;
-	String password = "root" ;
 	
 	// Constructor 
 	public LocalDB() {
@@ -36,7 +33,6 @@ public class LocalDB {
 		try {
 			// Make a database connection
 			System.out.println("[LocalDB] Database connection...");
-			//this.connection = DriverManager.getConnection(this.addrDb, this.login, this.password);
 			this.connection = DriverManager.getConnection("jdbc:sqlite:test.db");
 			System.out.println("[LocalDB] Database connected");
 			
