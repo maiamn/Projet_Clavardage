@@ -134,7 +134,7 @@ public class NetworkManager {
 
 	//Once we are connected, we send a broadcast with our username and our IP
 	public void notifyConnected(String username) {
-		System.out.println("Calling notifyConnected(username)");
+		System.out.println("Calling notifyConnected(username) with IP: " + myIPString);
 		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
@@ -220,14 +220,8 @@ public class NetworkManager {
 
 
 	public static void main (String [] args) {
-		//new Thread(new ServerUDP(5001, 50000)).start();
-		try {
-			InetAddress IP = InetAddress.getByName("10.255.255.1");
-			
-		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
+		new Thread(new ServerUDP(5001, 50000)).start();
+		//notifyConnected("Celia");
 	}
 
 
