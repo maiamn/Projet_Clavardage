@@ -72,6 +72,9 @@ public class ClientUDP {
 		System.out.println("Calling notifyConnected(username)");
 		String msg = NetworkManager.messageFormatter(MessageType.USERNAME_CONNECTED, "celia", "10.255.255.1") ;
 		broadcast(msg);
+		broadcast(msg);
+		broadcast(msg);
+		broadcast(msg);
 	}
 
 }

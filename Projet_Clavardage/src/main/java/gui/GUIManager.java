@@ -184,6 +184,7 @@ public class GUIManager {
 	}
 	
 	public static void main (String [] args) {
+		Manager.runServers();
 		authentification = new AuthentificationGUI() ; 		
 	}
 	
