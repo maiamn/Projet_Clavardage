@@ -5,7 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet ; 
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
+
+import com.mysql.cj.jdbc.CallableStatement;
 
 public class RemoteDB {
 	
@@ -15,7 +18,7 @@ public class RemoteDB {
 	String addrDb = "jdbc:mysql://srv-bdens.insa-toulouse.fr:3306/tp_servlet_008?";
 	String login = "tp_servlet_008" ;
 	String password = "ees7Lozu" ;
-	
+
 	// <!> //
 	Conversation history ; 
 	
@@ -49,7 +52,7 @@ public class RemoteDB {
 			String query = "CREATE TABLE IF NOT EXISTS History " +
 	                   "(Sender VARCHAR(255) not NULL, " +
 	                   " Receiver VARCHAR(255) not NULL, " +
-	                   " Message VARCHAR(255) not NULL, " +
+	                   " Message VARCHAR(50000) not NULL, " +
 	                   " Date VARCHAR(255) not NULL)"; 
 			
 			System.out.println("[RemoteDB] Creating the table...");
@@ -65,16 +68,27 @@ public class RemoteDB {
 	
 	// Add a message to the database
 	public void addMessage(String sender, String receiver, String msg, String dateTime) {
-		System.out.println("[RemoteDB] Calling addMessage...");
-		String query = "INSERT INTO History (Sender, Receiver, Message, Date) VALUES ('" + sender + "', '" + receiver + "', '" + msg + "', '" + dateTime + "') ;" ; 
-		
+//		System.out.println("[RemoteDB] Calling addMessage...");
+//		String query = "INSERT INTO History (Sender, Receiver, Message, Date) VALUES ('" + sender + "', '" + receiver + "', '" + msg + "', '" + dateTime + "') ;" ; 
+//		try {
+//			// Execute the statement 
+//			this.statement.executeUpdate(query) ; 
+//			System.out.println("[RemoteDB] Message added");
+//		} 
+//		catch (SQLException e) {
+//			System.out.println(e);
+//		}
+		String updatedQuery = "INSERT INTO History (Sender, Receiver, Message, Date) values (?, ?, ?, ?);";
 		try {
-			// Execute the statement 
-			this.statement.executeUpdate(query) ; 
-			System.out.println("[RemoteDB] Message added");
+			PreparedStatement pstmt = this.connection.prepareStatement(updatedQuery); 
+			pstmt.setString(1, sender);
+			pstmt.setString(2, receiver);
+			pstmt.setString(3, msg);
+			pstmt.setString(4, dateTime);
+			pstmt.executeUpdate();
 		} 
-		catch (SQLException e) {
-			System.out.println(e);
+		catch (SQLException e1) {
+			e1.printStackTrace();
 		}
 		
 	}
