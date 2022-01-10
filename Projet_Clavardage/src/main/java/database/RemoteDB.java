@@ -86,6 +86,7 @@ public class RemoteDB {
 			pstmt.setString(3, msg);
 			pstmt.setString(4, dateTime);
 			pstmt.executeUpdate();
+			pstmt.close();
 		} 
 		catch (SQLException e1) {
 			e1.printStackTrace();

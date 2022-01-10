@@ -151,6 +151,7 @@ public class Manager {
 		if (IP2.charAt(0) == ('/')) {
 			IP2 = IP2.substring(1);
 		}
+		System.out.println("MANAGER / IP1 : " + IP1 + " IP2 : " + IP2);
 		return remoteDB.getMessages(IP1, IP2);
 	}
 	
