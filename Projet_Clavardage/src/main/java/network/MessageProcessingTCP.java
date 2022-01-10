@@ -45,7 +45,7 @@ public class MessageProcessingTCP implements Runnable {
 		case USERNAME_BRDCST:
 			//the username we want to use is already taken 
 			System.out.println("[ServerTCP] USERNAME_BRDCST");
-			this.isAvailable = false;
+			NetworkManager.notifyUsernameUnavailable();
 			break;
 
 		case GET_USERNAMES:

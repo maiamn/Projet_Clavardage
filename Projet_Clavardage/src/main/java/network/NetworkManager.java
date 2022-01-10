@@ -18,6 +18,7 @@ public class NetworkManager {
 	ServerUDP serverUDP ;
 	static InetAddress myIP ;
 	static String myIPString ;
+	static boolean isAvailable ;
 
 	// Constructor 
 	public NetworkManager() {
@@ -111,7 +112,8 @@ public class NetworkManager {
 
 	// Availability of the username
 	public synchronized boolean usernameAvailable(String username) {
-		System.out.println("Calling usernameAvailable(username)");
+		isAvailable = true ;
+		System.out.println("[NetworkManager] Calling usernameAvailable(username)");
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
@@ -128,7 +130,11 @@ public class NetworkManager {
 
 		//We check if our TCP server has received a message notifying that 
 		//the username is not available or not
-		return serverTCP.getAvailable() ;
+		return isAvailable ;
+	}
+	
+	public static void notifyUsernameUnavailable() {
+		isAvailable = false;
 	}
 
 
