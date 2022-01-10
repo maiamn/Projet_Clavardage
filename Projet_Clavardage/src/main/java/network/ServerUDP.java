@@ -29,9 +29,6 @@ public class ServerUDP extends Thread{
 	public void dataProcessing(String data) {
 		System.out.println("[ServeurUDP]"+ data);
 		String[] token = data.split("/-/");
-//		System.out.println("type:" + token[0]);
-//		System.out.println("username:" + token[1]);
-//		System.out.println("content:" + token[2]);		
 		
 		
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
@@ -79,6 +76,18 @@ public class ServerUDP extends Thread{
 			NetworkManager.sendUsername(username);
 			System.out.println("[ServeurUDP] GET_USERNAMES done");
 			break;
+			
+		case USERNAME_CHANGED:
+			System.out.println("[ServeurUDP] USERNAME_CHANGED") ; 
+			try {
+				content = token[2];
+				InetAddress IP = InetAddress.getByName(content); 
+				NetworkManager.updateUsername(IP, username) ; 
+			}
+			catch(Exception e) {
+				System.out.println(e);
+			}
+			
 		
 		default:
 			System.out.println("[ServeurUDP] Type de message non reconnu");

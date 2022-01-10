@@ -79,6 +79,12 @@ public class Manager {
 		networkManager.runServers();
 	}
 	
+	//////////////////////////////////////////////////////////////////////
+	///////////////////////////CHANGE USERNAME////////////////////////////
+	//////////////////////////////////////////////////////////////////////
+	public static void notifyUsernameChanged(String newUsername) {
+		networkManager.notifyUserameChanged(newUsername);
+	}
 	
 	//////////////////////////////////////////////////////////////////////
 	////////////////////////////DISCONNECTION/////////////////////////////
@@ -113,6 +119,10 @@ public class Manager {
 	//Delete a username from the local table when they disconnect
 	public static void userDisconnected(String username) {
 		localDB.deleteUserByName(username);
+	}
+	
+	public static void userDisconnected(InetAddress IP) {
+		localDB.deleteUserByIP(IP);
 	}
 	
 	//Get a username by their IP

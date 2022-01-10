@@ -63,7 +63,7 @@ public class ChangeUsernameGUI {
         		  			JOptionPane.showMessageDialog(changeUsernameFrame, errorMessage);
         		  		} 
         		  		else {
-        		  			GUIManager.dropTable() ; 
+        		  			GUIManager.updateAllLocalTables(name) ; 
         		  			GUIManager.switchToConnection(name) ; 
         		  			changeUsernameFrame.setVisible(false);
         		  		}

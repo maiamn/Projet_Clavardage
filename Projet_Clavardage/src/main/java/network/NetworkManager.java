@@ -4,7 +4,6 @@ import manager.Manager;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
-import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Enumeration;
@@ -82,6 +81,7 @@ public class NetworkManager {
 		USERNAME_CONNECTED,
 		USERNAME_DISCONNECT,
 		GET_USERNAMES,
+		USERNAME_CHANGED, 
 		MESSAGE
 	}
 
@@ -144,6 +144,11 @@ public class NetworkManager {
 		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
+	
+	public void notifyUserameChanged(String newUsername) {
+		String msg = messageFormatter(MessageType.USERNAME_CHANGED, newUsername, myIPString) ;
+		ClientUDP.broadcast(msg);
+	}
 
 
 	public void notifyDisconnected(String username) {
@@ -184,7 +189,12 @@ public class NetworkManager {
 		Manager.newUserConnected(username, IP);
 	}
 
-
+	// Change of username
+	public static void updateUsername(InetAddress IP, String newUsername) {
+		Manager.userDisconnected(IP);
+		Manager.newUserConnected(newUsername, IP);
+	}
+	
 	//We delete the user from the DB
 	public static void userDisconnected(String username) {
 		Manager.userDisconnected(username);

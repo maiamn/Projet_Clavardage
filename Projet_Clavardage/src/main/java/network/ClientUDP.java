@@ -4,9 +4,6 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.util.*;
-
-import network.NetworkManager.MessageType;
-
 import java.net.InterfaceAddress ; 
 import java.net.NetworkInterface ; 
 
@@ -68,13 +65,7 @@ public class ClientUDP {
 	}
 
 	public static void main (String [] args) {
-		//broadcast("test fonction broadcast") ;
-		System.out.println("Calling notifyConnected(username)");
-		String msg = NetworkManager.messageFormatter(MessageType.USERNAME_CONNECTED, "celia", "10.255.255.1") ;
-		broadcast(msg);
-		broadcast(msg);
-		broadcast(msg);
-		broadcast(msg);
+		
 	}
 
 }
