@@ -90,8 +90,8 @@ public class ChatGUI {
 
                 Object value = getValueAt(row, column);
                 return value == null ? null : value.toString();
-            }       
-			
+            }
+            
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
                 Component comp = super.prepareRenderer(renderer, row, column);
                 Color sender1 = new Color(161, 236, 236);
@@ -107,6 +107,7 @@ public class ChatGUI {
                 return comp;
         	}
         } ;
+        historyTable.setDefaultRenderer(String.class, new LineWrapCellRenderer()) ; 
         scrollPane = new JScrollPane(historyTable) ; 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -135,6 +136,7 @@ public class ChatGUI {
         			public void actionPerformed(ActionEvent e) {
         				String message = messageArea.getText() ; 
         				GUIManager.sendMessage(receiver, message) ; 
+        				chatFrame.setVisible(false) ; 
         				GUIManager.switchToChat(sender, receiver);
         			}
         		});
