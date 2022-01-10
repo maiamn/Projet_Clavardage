@@ -63,6 +63,7 @@ public class ChangeUsernameGUI {
         		  			JOptionPane.showMessageDialog(changeUsernameFrame, errorMessage);
         		  		} 
         		  		else {
+        		  			GUIManager.deletePreviousUsername(username) ; 
         		  			GUIManager.switchToConnection(name) ; 
         		  			changeUsernameFrame.setVisible(false);
         		  		}
