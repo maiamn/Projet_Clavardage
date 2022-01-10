@@ -69,12 +69,10 @@ public class Manager {
 	
 	//notify everyone that we are connected
 	public static void connection(String username) {
-		if (validUsername(username)) {
-			//once the username has been accepted, bc username
-			networkManager.notifyConnected(username);
-			//we ask everyone their usernames
-			networkManager.askUsernames(username);
-		}
+		//once the username has been accepted, bc username
+		networkManager.notifyConnected(username);
+		//we ask everyone their usernames
+		networkManager.askUsernames(username);
 	}
 	
 	public static void runServers() {
