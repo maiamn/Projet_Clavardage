@@ -25,7 +25,7 @@ public class NetworkManager {
 		this.serverTCP = new ServerTCP() ; 
 		this.serverUDP = new ServerUDP(5001, 50000) ;
 
-		//get IP address (!= 127.0.0.1)
+		// Get IP address (!= 127.0.0.1)
 		try {
 			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
 			while (en.hasMoreElements()) {
@@ -99,7 +99,7 @@ public class NetworkManager {
 	// Classic message sending function
 	public void sendMessage(String msg, InetAddress destinationIP) {
 		System.out.println("[ClientTCP] " + msg);
-		// Classic message between users : type 1 ??
+		// Classic message between users 
 		String formatedMsg = messageFormatter(MessageType.MESSAGE, Manager.getUsername(), msg);
 		// Sends message and closes socket
 		ClientTCP.sendMessage(formatedMsg, destinationIP);
@@ -119,17 +119,17 @@ public class NetworkManager {
 		long finish = 0;
 		String msg = messageFormatter(MessageType.USERNAME_BRDCST, username, myIPString);
 
-		//ask everyone if the username is available 
+		// Ask everyone if the username is available 
 		ClientUDP.broadcast(msg);
 
-		//We wait for an answer (users only answer if their username is the same as the one we want)
+		// We wait for an answer (users only answer if their username is the same as the one we want)
 		while(timeElapsed<1000) {
 			finish = System.currentTimeMillis();
 			timeElapsed = finish - start;			
 		}
 
-		//We check if our TCP server has received a message notifying that 
-		//the username is not available or not
+		// We check if our TCP server has received a message notifying that 
+		// The username is available or not
 		return isAvailable ;
 	}
 	
@@ -138,25 +138,25 @@ public class NetworkManager {
 	}
 
 
-	//Once we are connected, we send a broadcast with our username and our IP
+	// Once we are connected, we send a broadcast with our username and our IP
 	public void notifyConnected(String username) {
 		System.out.println("Calling notifyConnected(username) with IP: " + myIPString);
 		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
 	
+	// Notify all users when a username is changed 
 	public void notifyUserameChanged(String newUsername) {
 		String msg = messageFormatter(MessageType.USERNAME_CHANGED, newUsername, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
 
-
+	// Notify all users when a user is disconnected 
 	public void notifyDisconnected(String username) {
 		System.out.println("Calling notifyDisonnected()");
 		String msg = messageFormatter(MessageType.USERNAME_DISCONNECT, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
-
 
 	//Broadcast asking everyone for their username
 	public void askUsernames(String myusername) {
@@ -170,13 +170,13 @@ public class NetworkManager {
 	///////////////////////////////ANSWER/////////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 
-	//Call Manager to know if the username wanted is valid
+	// Call Manager to know if the username wanted is valid
 	public static void usernameRequest(String username, InetAddress destinationIP) {
 		Manager.usernameRequest(username, destinationIP);
 	}
 
 
-	//The username wanted is not available so we notify the user
+	// The username wanted is not available so we notify the user
 	public void sendUnavailableUsername(InetAddress destinationIP) {
 		System.out.println("Calling sendUnavailableUsername(host)");
 		String msg = messageFormatter(MessageType.USERNAME_BRDCST, Manager.getUsername(), "") ;
@@ -184,24 +184,24 @@ public class NetworkManager {
 	}
 
 
-	//We add the user to the DB
+	// We add the user to the DB
 	public static void newUserConnected(String username, InetAddress IP) {
 		Manager.newUserConnected(username, IP);
 	}
 
-	// Change of username
+	// Change of username = disconnection with previous username and connection with the new one 
 	public static void updateUsername(InetAddress IP, String newUsername) {
 		Manager.userDisconnected(IP);
 		Manager.newUserConnected(newUsername, IP);
 	}
 	
-	//We delete the user from the DB
+	// We delete the user from the DB
 	public static void userDisconnected(String username) {
 		Manager.userDisconnected(username);
 	}
 
 
-	//If someone asks our username, we answer with our username and our IP
+	// If someone asks our username, we answer with our username and our IP
 	public static void sendUsername(String destinationUsername) {
 		if (!destinationUsername.equals(Manager.getUsername())) {
 			System.out.println("Calling sendUsername");
@@ -214,7 +214,7 @@ public class NetworkManager {
 	}
 
 
-	//When we receive a message, we add it to the history
+	// When we receive a message, we add it to the history
 	public static void notifyNewMessage(String message, String user) {
 		LocalDateTime date = LocalDateTime.now();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
@@ -245,7 +245,6 @@ public class NetworkManager {
 
 	public static void main (String [] args) {
 		new Thread(new ServerUDP(5001, 50000)).start();
-		//notifyConnected("Celia");
 	}
 
 

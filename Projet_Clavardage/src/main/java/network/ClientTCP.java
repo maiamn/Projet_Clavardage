@@ -4,9 +4,8 @@ import java.net.*;
 import java.util.*;
 import java.io.*;
 
-//Client : un thread par socket, on cr�e plusieurs socket sur le m�me port, 
-//en plus du main thread
-
+// In addition to the main thread, one thread is created for each socket
+// Several socket on the same port 
 
 public class ClientTCP {
 	public static void main (String [] args) {
@@ -41,9 +40,6 @@ public class ClientTCP {
 			
 			Socket clientSocket = new Socket(destinationIP, port);
 			output = new PrintWriter(clientSocket.getOutputStream());
-			
-			// Ajouter client socket en attribut si on veut le garder ouvert longtemps
-			// Avec une fonction pour l'ouverture et une fonction pour la fermeture en plus du send message
 			
 			output.println(formatedMsg);
 			output.flush() ;

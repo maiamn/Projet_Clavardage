@@ -9,24 +9,26 @@ import java.net.NetworkInterface ;
 
 public class ClientUDP {
 
-	// Constructor => not needed 'cause only used methods are static aka can be called without creating the object
-	//public clientUDP() {
-	// ....
-	//}
+	// Constructor => not needed because this class only defines static method 
+	// that is to say that they can be called without creating the object
 
-	// Fonction de broadcast 
+
+	// Broadcast function
 	public static void broadcast (String msg) {
 		System.out.println("[ClientUDP]"+ msg);
-
+		
+		// Forbidden address containing only bytes 0
 		byte[] forbidAddrByte = new byte[]{(byte)0, (byte)0, (byte)0, (byte)0};
-
+		
+		// Used port 
 		int port = 5001;
 
 		try {
 			InetAddress forbidAddr = InetAddress.getByAddress(forbidAddrByte);
 
 			List<InetAddress> broadcasts = new ArrayList<InetAddress>() ; 
-
+			
+			// Get all broadcast addresses 
 			Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces();
 			while (en.hasMoreElements()) {
 				NetworkInterface ni = en.nextElement();

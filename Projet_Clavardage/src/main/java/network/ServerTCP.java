@@ -4,7 +4,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ServerTCP extends Thread {
-	// Attributs 
+	// Attributes 
 	boolean isAvailable = true;	
 	boolean connected = true ; 
 	
@@ -19,15 +19,16 @@ public class ServerTCP extends Thread {
 		this.connected = state ; 
 	}
 	
+	// Run function
 	public void run() {
 		int port = 5000;
-		Socket clientSocket ; //on ne veut pas l'initialiser
+		Socket clientSocket ; // should not be initialized
 		ServerSocket serverSocket ;
 		
 		try {
 			serverSocket = new ServerSocket(port);
 			
-			//on utilise un while pour permettre plusieurs connexions 
+			// Use of a while loop to allow multiple connections
 			while(connected) {
 				System.out.println("Waiting for connection") ;
 				clientSocket = serverSocket.accept();

@@ -43,13 +43,13 @@ public class MessageProcessingTCP implements Runnable {
 		switch(type) {
 
 		case USERNAME_BRDCST:
-			//the username we want to use is already taken 
+			// The username we want to use is already taken 
 			System.out.println("[ServerTCP] USERNAME_BRDCST");
 			NetworkManager.notifyUsernameUnavailable();
 			break;
 
 		case GET_USERNAMES:
-			//we received a response when we asked someone for their username
+			// We received a response when we asked someone for their username
 			System.out.println("[ServerTCP] GET_USERNAMES");
 			try {
 				content = token[2];
@@ -62,7 +62,7 @@ public class MessageProcessingTCP implements Runnable {
 			break;
 
 		case MESSAGE:
-			//we received a new message, we notify networkmanager
+			// we received a new message, we notify networkmanager
 			System.out.println("[ServerTCP] MESSAGE");
 			content = token[2];
 			NetworkManager.notifyNewMessage(content, username);
@@ -75,11 +75,11 @@ public class MessageProcessingTCP implements Runnable {
 	}
 
 
-	//Forbid the use of a username because it is not available 
+	// Forbid the use of a username because it is not available 
 	public void forbidUsername() {
-		//Notify TCP server that this username is already used
+		// Notify TCP server that this username is already used
 		this.serverTCP.isAvailable = false ;
-		//Reset our isAvailable boolean 
+		// Reset our isAvailable boolean 
 		this.isAvailable = true ; 
 	}
 
@@ -98,7 +98,7 @@ public class MessageProcessingTCP implements Runnable {
 
 			dataFilter(msg) ; 
 
-			//Message processing depending on the availability
+			// Message processing depending on the availability
 			if (!this.isAvailable) {
 				forbidUsername() ; 
 			} 

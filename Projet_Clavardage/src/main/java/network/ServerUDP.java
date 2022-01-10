@@ -3,7 +3,6 @@ package network;
 import java.net.DatagramSocket ;
 import java.net.InetAddress;
 import java.net.DatagramPacket ;
-//import table interface
 
 public class ServerUDP extends Thread{
 	// Attributes 
@@ -40,7 +39,7 @@ public class ServerUDP extends Thread{
 		
 		case USERNAME_BRDCST:
 			System.out.println("[ServeurUDP] USERNAME_BRDCST");
-			//someone asks if a username is available 
+			// Someone asks if a username is available 
 			try {
 				content = token[2];
 				InetAddress IP = InetAddress.getByName(content); 
@@ -53,7 +52,7 @@ public class ServerUDP extends Thread{
 			
 		case USERNAME_CONNECTED:
 			System.out.println("[ServeurUDP] USERNAME_CONNECTED");
-			//a new user is connected
+			// A new user is connected
 			try {
 				content = token[2];
 				InetAddress IP = InetAddress.getByName(content); 
@@ -66,12 +65,12 @@ public class ServerUDP extends Thread{
 			
 		case USERNAME_DISCONNECT:
 			System.out.println("[ServeurUDP] USERNAME_DISCONNECT");
-			//a user is disconnected
+			// A user is disconnected
 			NetworkManager.userDisconnected(username);
 			break;
 			
 		case GET_USERNAMES:
-			//a user asks for our username
+			// A user asks for our username
 			System.out.println("[ServeurUDP] GET_USERNAMES");
 			NetworkManager.sendUsername(username);
 			System.out.println("[ServeurUDP] GET_USERNAMES done");
@@ -98,7 +97,7 @@ public class ServerUDP extends Thread{
 	}
 	
 	
-	// Communication directe avec table
+	// Direct communication with table
 	public void run() {
 		System.out.println("[ServerUDP] running");
 		try {
@@ -113,7 +112,7 @@ public class ServerUDP extends Thread{
 				
 				dataProcessing(data);
 				
-				//clear buffer
+				// Clear buffer
 				buffer = new byte[length];
 			}
 			

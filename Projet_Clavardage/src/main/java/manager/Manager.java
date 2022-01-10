@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 public class Manager {
 	
+	// Attributes 
 	protected static String username ;
 	private static NetworkManager networkManager = new NetworkManager();
 	private static LocalDB localDB = new LocalDB() ;
@@ -24,14 +25,14 @@ public class Manager {
 	/////////////////////////// VALID USERNAME ///////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	
-	//Function that checks if a string contains special characters
+	// Function that checks if a string contains special characters
 	public static boolean noSpecialCharacter(String s) {
 	     Pattern p = Pattern.compile("[^A-Za-z0-9]");
 	     Matcher m = p.matcher(s);
 	     return !m.find();
 	}
 	
-	//checks that the length of the username is between 1 and maxLength characters
+	// Function that checks that the length of the username is between 1 and maxLength characters
 	public static boolean validLengthUsername(String usernameWanted) {
 		boolean res = true ; 
 		res = res && (usernameWanted.length() < maxLength) ; 
@@ -39,14 +40,14 @@ public class Manager {
 		return res ; 
 	}
 	
-	//checks that there is no special character
+	// Function that hecks that there is no special character
 	public static boolean validCharUsername(String usernameWanted) {
 		boolean res = true ; 
 		res = res && noSpecialCharacter(usernameWanted) ;
 		return res ; 
 	}
 	
-	//checks that the username is valid: length, special characters, availability
+	// Function that checks that the username is valid: length, special characters, availability
 	public static boolean validUsername(String usernameWanted) {
 		boolean res = true ; 
 		res = res && validLengthUsername(usernameWanted) ; 
@@ -58,7 +59,8 @@ public class Manager {
 		return res ; 
 	}
 	
-	//get attribute username
+	
+	// Get attribute username
 	public static String getUsername() {
 		return username;
 	}
@@ -67,11 +69,11 @@ public class Manager {
 	//////////////////////////////CONNECTION//////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	
-	//notify everyone that we are connected
+	// Notify everyone that we are connected
 	public static void connection(String username) {
-		//once the username has been accepted, bc username
+		// Once the username has been accepted, bc username
 		networkManager.notifyConnected(username);
-		//we ask everyone their usernames
+		// We ask everyone their usernames
 		networkManager.askUsernames(username);
 	}
 	
@@ -90,7 +92,7 @@ public class Manager {
 	////////////////////////////DISCONNECTION/////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	
-	//notify everyone that we are disconnected and drop databases
+	// Notify everyone that we are disconnected and drop databases
 	public static void disconnection() {
 		localDB.dropDatabase();
 		localDB.closeConnection();
@@ -99,7 +101,7 @@ public class Manager {
 	}
 	
 	
-	//when we are asked for the availability of a username, we answer only if it is the one we already use
+	// When we are asked for the availability of a username, we answer only if it is the one we already use
 	public static void usernameRequest(String pseudo, InetAddress IP) {
 		if (pseudo.equals(username)) {
 			networkManager.sendUnavailableUsername(IP);
@@ -111,34 +113,37 @@ public class Manager {
 	////////////////////////////LOCAL DATABASE////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	
-	//Add a user to the local database (correspondence username - IP)
+	// [LocalDB] Add a user to the local database (correspondence username - IP)
 	public static void newUserConnected(String username, InetAddress IP) {
 		localDB.addUser(username, IP);
 	}
 	
-	//Delete a username from the local table when they disconnect
+	// [LocalDB] Delete a username from the local table when they disconnect
 	public static void userDisconnected(String username) {
 		localDB.deleteUserByName(username);
 	}
 	
+	// [LocalDB] Delete a username from the local table when they disconnect
 	public static void userDisconnected(InetAddress IP) {
 		localDB.deleteUserByIP(IP);
 	}
 	
-	//Get a username by their IP
+	// [LocalDB] Get a username by their IP
 	public static String getUsername(InetAddress IP) {
 		return localDB.getUsername(IP);
 	}
 	
-	//get an IP by their username
+	// [LocalDB] Get an IP by their username
 	public static InetAddress getIP(String name) {
 		return localDB.getIP(name);
 	}
 	
+	// [LocalDB] Get all usernames stored in the table
 	public static ArrayList<String> getAllUsernames() {
 		return localDB.getAllUsernames() ; 
 	}
 	
+	// [LocalDB] Drop the local database
 	public static void dropTable() {
 		localDB.dropDatabase();
 	}
@@ -148,13 +153,13 @@ public class Manager {
 	////////////////////////////REMOTE DATABASE///////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	
-	//add a message to history (remote db)
+	// [RemoteDB] Add a message to history 
 	public static void addMessageToHistory(String sender, String receiver, String msg, String dateTime) {
 		remoteDB.addMessage(sender, receiver, msg, dateTime) ;
 	}
 	
 	
-	// Get history
+	// [RemoteDB] Get history
 	public static Conversation getHistory(String username1, String username2) {
 		System.out.println("MANAGER / username1 : " + username1 + " username2 : " + username2);
 		String IP1 = getIP(username1).toString();
@@ -176,7 +181,7 @@ public class Manager {
 	/////////////////////////////SEND MESSAGE/////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	
-	//send a message to a user with their name
+	// Send a message to a user with their name
 	public static void sendMessage(String destinationUsername, String text) {
 		InetAddress destinationIP = getIP(destinationUsername);
 		networkManager.sendMessage(text, destinationIP);
