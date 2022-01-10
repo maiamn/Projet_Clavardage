@@ -12,7 +12,8 @@ public class ConnectedUsersGUI {
 	private JPanel topPanel; 
 	private JPanel centerPanel; 
 	private JPanel bottomPanel ; 
-	private JButton back = new JButton("Back to home page") ; 
+	private JButton back = new JButton("Back to home page") ;
+	private JButton refresh = new JButton("Refresh") ; 
 	private JButton send = new JButton("Send a message") ; 
 	
 	private final JLabel welcome ;
@@ -56,7 +57,7 @@ public class ConnectedUsersGUI {
 	    centerPanel.add(scrollPane, BorderLayout.CENTER);
 	    
 		
-		// Bottom part to go back to home page or to send a message
+		// Bottom part to go back to home page, refresh or to send a message
         back.setPreferredSize(new Dimension(150,30));
         back.setMinimumSize(new Dimension(150,30));
         back.setMaximumSize(new Dimension(150,30));
@@ -65,6 +66,18 @@ public class ConnectedUsersGUI {
         			public void actionPerformed(ActionEvent e) {
         				connectedUsersFrame.setVisible(false);
         				GUIManager.switchToHomePage(username) ; 
+                  }
+                }
+              );
+        
+        refresh.setPreferredSize(new Dimension(150,30));
+        refresh.setMinimumSize(new Dimension(150,30));
+        refresh.setMaximumSize(new Dimension(150,30));
+        refresh.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				connectedUsersFrame.setVisible(false);
+        				GUIManager.switchToConnectedUsers(username) ; 
                   }
                 }
               );
