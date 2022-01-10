@@ -64,7 +64,7 @@ public class ChangeUsernameGUI {
         		  		} 
         		  		else {
         		  			GUIManager.updateAllLocalTables(name) ; 
-        		  			GUIManager.switchToConnection(name) ; 
+        		  			GUIManager.switchToHomePage(name) ; 
         		  			changeUsernameFrame.setVisible(false);
         		  		}
                   }
