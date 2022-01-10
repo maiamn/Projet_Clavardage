@@ -4,7 +4,7 @@ import java.net.*;
 import java.util.*;
 import java.io.*;
 
-//Client : un thread par socket, on crée plusieurs socket sur le même port, 
+//Client : un thread par socket, on crï¿½e plusieurs socket sur le mï¿½me port, 
 //en plus du main thread
 
 

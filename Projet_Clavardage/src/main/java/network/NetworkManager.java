@@ -190,7 +190,9 @@ public class NetworkManager {
 		System.out.println("Calling sendUsername");
 		String msg = messageFormatter(MessageType.GET_USERNAMES, Manager.getUsername(), myIPString) ;
 		InetAddress destinationIP = Manager.getIP(destinationUsername);
+		System.out.println("sendUsername : getIP ok");
 		ClientTCP.sendMessage(msg, destinationIP);	
+		System.out.println("senUsername : sendMessage ok");
 	}
 
 

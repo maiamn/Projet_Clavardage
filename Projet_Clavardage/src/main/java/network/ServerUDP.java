@@ -29,9 +29,9 @@ public class ServerUDP extends Thread{
 	public void dataProcessing(String data) {
 		System.out.println("[ServeurUDP]"+ data);
 		String[] token = data.split("/-/");
-		System.out.println("type:" + token[0]);
-		System.out.println("username:" + token[1]);
-		System.out.println("content:" + token[2]);
+//		System.out.println("type:" + token[0]);
+//		System.out.println("username:" + token[1]);
+//		System.out.println("content:" + token[2]);
 		for (String word : token) {
             System.out.println(word);
         }
@@ -41,7 +41,7 @@ public class ServerUDP extends Thread{
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
 		String username = token[1];
 
-		String content = token[2];
+		String content ;
 		
 		switch (type) {
 		
@@ -49,6 +49,7 @@ public class ServerUDP extends Thread{
 			System.out.println("[ServeurUDP] USERNAME_BRDCST");
 			//someone asks if a username is available 
 			try {
+				content = token[2];
 				InetAddress IP = InetAddress.getByName(content); 
 				NetworkManager.usernameRequest(username,IP);				
 			}
@@ -61,6 +62,7 @@ public class ServerUDP extends Thread{
 			System.out.println("[ServeurUDP] USERNAME_CONNECTED");
 			//a new user is connected
 			try {
+				content = token[2];
 				InetAddress IP = InetAddress.getByName(content); 
 				NetworkManager.newUserConnected(username,IP);				
 			}
@@ -77,7 +79,9 @@ public class ServerUDP extends Thread{
 			
 		case GET_USERNAMES:
 			//a user asks for our username
-			NetworkManager.sendUsername(username);	
+			System.out.println("[ServeurUDP] GET_USERNAMES");
+			NetworkManager.sendUsername(username);
+			System.out.println("[ServeurUDP] GET_USERNAMES done");
 			break;
 		
 		default:

@@ -37,7 +37,7 @@ public class MessageProcessingTCP implements Runnable {
 		String[] token = msg.split("/-/");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
 		String username = token[1];
-		String content = token[2];
+		String content;
 
 		// TCP server only receives username availability related messages and normal messages
 		switch(type) {
@@ -52,6 +52,7 @@ public class MessageProcessingTCP implements Runnable {
 			//we received a response when we asked someone for their username
 			System.out.println("[ServerTCP] GET_USERNAMES");
 			try {
+				content = token[2];
 				InetAddress IP = InetAddress.getByName(content); 
 				NetworkManager.newUserConnected(username, IP);
 			}
@@ -63,6 +64,7 @@ public class MessageProcessingTCP implements Runnable {
 		case MESSAGE:
 			//we received a new message, we notify networkmanager
 			System.out.println("[ServerTCP] MESSAGE");
+			content = token[2];
 			NetworkManager.notifyNewMessage(content, username);
 			break;
 

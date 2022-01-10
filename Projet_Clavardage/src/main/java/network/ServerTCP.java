@@ -19,7 +19,7 @@ public class ServerTCP extends Thread {
 		this.connected = state ; 
 	}
 	
-	public void main (String [] args) {
+	public void run() {
 		int port = 5000;
 		Socket clientSocket ; //on ne veut pas l'initialiser
 		ServerSocket serverSocket ;
@@ -43,6 +43,10 @@ public class ServerTCP extends Thread {
 		}
 		
 		this.isAvailable = true ; 
+		
+	}
+	
+	public static void main (String [] args) {
 		
 	}
 }

@@ -66,7 +66,11 @@ public class LocalDB {
 	// Add a user to the database
 	public void addUser(String username, InetAddress IP) {
 		System.out.println("[LocalDB] Adding a user in the table...");
-		String query = "INSERT INTO UsernameToIP (Username, IP) VALUES ('" + username + "', '" + IP + "') ;" ; 
+		String IPString = IP.toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		String query = "INSERT INTO UsernameToIP (Username, IP) VALUES ('" + username + "', '" + IPString + "') ;" ; 
 		
 		try {
 			// Execute the statement 
@@ -95,7 +99,11 @@ public class LocalDB {
 	
 	public void deleteUserByIP(InetAddress IP) {
 		System.out.println("[LocalDB] Deleting a user using their IP from the table...");
-		String query = "DELETE FROM UsernameToIP WHERE IP='" + IP + "' ;" ;		
+		String IPString = IP.toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		String query = "DELETE FROM UsernameToIP WHERE IP='" + IPString + "' ;" ;		
 		
 		try {
 			// Execute the statement 
@@ -110,7 +118,11 @@ public class LocalDB {
 	// Get information from the database
 	public String getUsername(InetAddress IP) {
 		System.out.println("[LocalDB] Getting a username by their IP address...");
-		String query = "SELECT UsernameToIP.Username FROM UsernameToIP WHERE IP = '" + IP + "' ;";	
+		String IPString = IP.toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		String query = "SELECT UsernameToIP.Username FROM UsernameToIP WHERE IP = '" + IPString + "' ;";	
 		String username = "" ; 
 		try {
 			// Execute the statement 
