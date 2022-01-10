@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 
 public class ChatGUI {
 	// Attributes 
@@ -110,6 +111,11 @@ public class ChatGUI {
         	}
         } ;
         
+        // Wrap Line
+        TableColumnModel tableModel = historyTable.getColumnModel() ; 
+        LineWrapCellRenderer linesWrap = new LineWrapCellRenderer() ; 
+        tableModel.getColumn(0).setCellRenderer(linesWrap) ; 
+       
         scrollPane = new JScrollPane(historyTable) ; 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
