@@ -145,6 +145,7 @@ public class ChatGUI {
         
         // Main frame 
         chatFrame.setLayout(new BorderLayout());
+        chatFrame.getRootPane().setDefaultButton(send);
         // Add panels to the frame 
         chatFrame.add(topPanel, BorderLayout.PAGE_START) ; 
         chatFrame.add(centerPanel, BorderLayout.CENTER) ; 
