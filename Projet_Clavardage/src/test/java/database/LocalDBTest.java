@@ -120,7 +120,11 @@ public class LocalDBTest {
 				// Check usernames
 				assertEquals(usernames.get(i), rs.getString("username")) ; 
 				// Check IPs
-				assertEquals(IPAddresses.get(i).toString(), rs.getString("ip")) ; 
+				String IPString = IPAddresses.get(i).toString();
+				if (IPString.charAt(0) == ('/')) {
+					IPString = IPString.substring(1);
+				}
+				assertEquals(IPString, rs.getString("ip")) ; 
 			}
 			
 		} catch (SQLException e) {
@@ -221,7 +225,11 @@ public class LocalDBTest {
 			try {
 				ResultSet rs=db.statement.executeQuery("SELECT ip FROM UsernameToIP WHERE username='" + usernames.get(i) + "'") ;
 				if (rs.next()) {
-					assertEquals(IPAddresses.get(i).toString(), rs.getString(1)) ; 
+					String IPString = IPAddresses.get(i).toString();
+					if (IPString.charAt(0) == ('/')) {
+						IPString = IPString.substring(1);
+					}
+					assertEquals(IPString, rs.getString(1)) ; 
 				}
 			} catch (SQLException e) {
 				System.out.println(e) ; 
