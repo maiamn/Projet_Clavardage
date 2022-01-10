@@ -187,12 +187,14 @@ public class NetworkManager {
 
 	//If someone asks our username, we answer with our username and our IP
 	public static void sendUsername(String destinationUsername) {
-		System.out.println("Calling sendUsername");
-		String msg = messageFormatter(MessageType.GET_USERNAMES, Manager.getUsername(), myIPString) ;
-		InetAddress destinationIP = Manager.getIP(destinationUsername);
-		System.out.println("sendUsername : getIP ok");
-		ClientTCP.sendMessage(msg, destinationIP);	
-		System.out.println("senUsername : sendMessage ok");
+		if (!destinationUsername.equals(Manager.getUsername())) {
+			System.out.println("Calling sendUsername");
+			String msg = messageFormatter(MessageType.GET_USERNAMES, Manager.getUsername(), myIPString) ;
+			InetAddress destinationIP = Manager.getIP(destinationUsername);
+			System.out.println("sendUsername : getIP ok");
+			ClientTCP.sendMessage(msg, destinationIP);	
+			System.out.println("senUsername : sendMessage ok");
+		}
 	}
 
 

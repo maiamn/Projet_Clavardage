@@ -57,6 +57,7 @@ public class SendMessageGUI {
         		  			JOptionPane.showMessageDialog(sendMessageFrame, errorMessage);
         		  		} 
         		  		else {
+        		  			System.out.println("GUI : sender = " + username + " receiver = " + name);
         		  			GUIManager.switchToChat(username, name) ; 
         		  			sendMessageFrame.setVisible(false);
         		  		}

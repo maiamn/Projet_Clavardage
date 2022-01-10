@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 
 public class Manager {
 	
-	protected static String username = null;
+	protected static String username ;
 	private static NetworkManager networkManager = new NetworkManager();
 	private static LocalDB localDB = new LocalDB() ;
 	private static RemoteDB remoteDB = new RemoteDB();
@@ -32,26 +32,29 @@ public class Manager {
 	}
 	
 	//checks that the length of the username is between 1 and maxLength characters
-	public static boolean validLengthUsername(String username) {
+	public static boolean validLengthUsername(String usernameWanted) {
 		boolean res = true ; 
-		res = res && (username.length() < maxLength) ; 
-		res = res && (username.length() > 0) ; 
+		res = res && (usernameWanted.length() < maxLength) ; 
+		res = res && (usernameWanted.length() > 0) ; 
 		return res ; 
 	}
 	
 	//checks that there is no special character
-	public static boolean validCharUsername(String username) {
+	public static boolean validCharUsername(String usernameWanted) {
 		boolean res = true ; 
-		res = res && noSpecialCharacter(username) ;
+		res = res && noSpecialCharacter(usernameWanted) ;
 		return res ; 
 	}
 	
 	//checks that the username is valid: length, special characters, availability
-	public static boolean validUsername(String username) {
+	public static boolean validUsername(String usernameWanted) {
 		boolean res = true ; 
-		res = res && validLengthUsername(username) ; 
-		res = res && validCharUsername(username) ; 
-		res = res && networkManager.usernameAvailable(username) ; 
+		res = res && validLengthUsername(usernameWanted) ; 
+		res = res && validCharUsername(usernameWanted) ; 
+		res = res && networkManager.usernameAvailable(usernameWanted) ; 
+		if(res) {
+			username = usernameWanted;
+		}
 		return res ; 
 	}
 	
@@ -141,6 +144,7 @@ public class Manager {
 	
 	// Get history
 	public static Conversation getHistory(String username1, String username2) {
+		System.out.println("MANAGER / username1 : " + username1 + " username2 : " + username2);
 		String IP1 = getIP(username1).toString();
 		String IP2 = getIP(username2).toString();
 		if (IP1.charAt(0) == ('/')) {

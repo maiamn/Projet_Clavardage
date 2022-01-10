@@ -19,12 +19,12 @@ public class ChatGUI {
 	public static String receiver ; 
 	
 	// Table with history
-	protected int nbMessages = GUIManager.getMessages(sender, receiver).length ; 
+	//protected int nbMessages = GUIManager.getMessages(sender, receiver).length ; 
 	protected Object senders[] ;
 	protected Object receivers[] ; 
 	protected Object dates[] ; 
 	protected Object messages[] ; 
-	protected Object history[][] = new Object [nbMessages][1] ; 
+	protected Object history[][] = new Object [50][1] ; 
 	protected Object header[] = {"History"} ;
 	final JTable historyTable ; 
 	JScrollPane scrollPane ; 
@@ -39,7 +39,9 @@ public class ChatGUI {
 		// Define sender and receiver of conversation
 		sender = you ; 
 		receiver = dest ;
-		
+		System.out.println("ChatGUI / Init : nb messages = " + 50) ; 
+		System.out.println("ChatGUI / Init : sender = " + sender + " receiver = " + receiver) ; 
+			
 		// Define element of table 
 		senders = GUIManager.getSenders(sender, receiver) ; 
 		receivers = GUIManager.getReceivers(sender, receiver) ; 
@@ -59,28 +61,39 @@ public class ChatGUI {
         
         // Middle part to display history of conversation
         // Construct table 
+        // IP of sender 
+		String IPSender = GUIManager.getIP(sender).toString();
+		if (IPSender.charAt(0) == ('/')) {
+			IPSender = IPSender.substring(1);
+		}
+		
+		String IPReceiver = GUIManager.getIP(receiver).toString();
+		if (IPReceiver.charAt(0) == ('/')) {
+			IPReceiver = IPReceiver.substring(1);
+		}
+		
         for (int i=0; i<senders.length; i++) {
-        	if (senders[i].equals(receiver)) {
+        	if (senders[i].equals(IPReceiver)) {
         		history[i][0] = "[You] (" + dates[i] + ") : " + messages[i] ; 
-        	} else if (senders[i].equals(sender)) {
+        	} else if (senders[i].equals(IPSender)) {
         		history[i][0] = "[" + receivers[i] + "] (" + dates[i] + ") : " + messages[i] ; 
-        	}
+        	} 
         }
         
         // Visualize history
         historyTable = new JTable(history, header) {
-			private static final long serialVersionUID = 1L;
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
-                Component comp = super.prepareRenderer(renderer, row, column);
-                Color sender1 = new Color(161, 236, 236);
-                Color sender2 = new Color(230, 254, 255);
-                if(!comp.getBackground().equals(getSelectionBackground())) {
-                   Color c = (senders[row].equals(receiver) ? sender1 : sender2);
-                   comp.setBackground(c);
-                   c = null;
-                }
-                return comp;
-        	}
+//			private static final long serialVersionUID = 1L;
+//			public Component prepareRenderer(TableCellRenderer renderer, int row, int column) {
+//                Component comp = super.prepareRenderer(renderer, row, column);
+//                Color sender1 = new Color(161, 236, 236);
+//                Color sender2 = new Color(230, 254, 255);
+//                if(!comp.getBackground().equals(getSelectionBackground())) {
+//                   Color c = (senders[row].equals(receiver) ? sender1 : sender2);
+//                   comp.setBackground(c);
+//                   c = null;
+//                }
+//                return comp;
+//        	}
         } ;
         scrollPane = new JScrollPane(historyTable) ; 
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);

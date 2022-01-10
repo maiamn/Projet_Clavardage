@@ -1,6 +1,8 @@
 package gui;
 
 import manager.* ;
+
+import java.net.InetAddress;
 import java.util.ArrayList;
 
 public class GUIManager {
@@ -92,25 +94,35 @@ public class GUIManager {
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////// CHAT ///////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//get an IP by their username
+	public static InetAddress getIP(String name) {
+		return Manager.getIP(name);
+	}
+	
 	public static String[] getSenders(String sender, String receiver) {
+		System.out.println("GUIMAnager / Get Senders : sender = " + sender + " receiver = " + receiver) ; 
 //		String [] senders = {"user1", "user2", "user2", "user1", "user1", "user2", "user1", "user2", "user1", "user2", "user1", "user1", "user1", "user1"} ; 
 //		return senders ;
 		return Manager.getHistory(sender, receiver).getSenders() ;
 	}
 	
 	public static String[] getReceivers(String sender, String receiver) {
+		System.out.println("GUIMAnager / Get Receivers : sender = " + sender + " receiver = " + receiver) ; 
 //		String [] receivers = {"user2", "user1", "user1", "user2", "user2", "user1", "user2", "user1", "user2", "user1", "user2", "user2", "user2", "user2"} ; 
 //		return receivers ;
 		return Manager.getHistory(sender, receiver).getReceivers() ; 
 	}
 	
 	public static String[] getDates(String sender, String receiver) {
+		System.out.println("GUIMAnager / Get Dates : sender = " + sender + " receiver = " + receiver) ; 
 //		String [] dates = {"date1", "date2", "date3", "date4", "date5", "date6", "date7", "date8", "date9", "date10", "date11", "date12", "date13", "date14"} ;
 //		return dates ;
 		return Manager.getHistory(sender, receiver).getDates() ; 
 	}
 	
 	public static String[] getMessages(String sender, String receiver) {
+		System.out.println("GUIMAnager / Get Messages : sender = " + sender + " receiver = " + receiver) ; 
 //		String [] messages = {"message1", 
 //							  "message2", 
 //							  "message3", 
@@ -170,6 +182,7 @@ public class GUIManager {
 	
 	// SWITCH TO HISTORY PAGE
 	public static void switchToChat(String sender, String receiver) {
+		System.out.println("ChatGUI : sender = " + sender + " receiver = " + receiver) ; 
 		chat = new ChatGUI(sender, receiver) ; 
 	}
 	
