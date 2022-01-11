@@ -1,6 +1,8 @@
 package manager;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import database.* ;
 import network.* ;
 
@@ -178,7 +180,20 @@ public class Manager {
 	}
 	
 	public static String[] getInterlocutors(String username) {
-		return remoteDB.getInterlocutors(username) ; 
+		String IP = getIP(username).toString();
+		if (IP.charAt(0) == ('/')) {
+			IP = IP.substring(1);
+		}
+		String[] IPArray = remoteDB.getInterlocutors(IP) ; 
+		String[] usersArray = new String [IPArray.length] ; 
+		for (int i=0; i<IPArray.length; i++) {
+			try {
+				usersArray[i] = getUsername(InetAddress.getByName(IPArray[i])) ;
+			} catch (UnknownHostException e) {
+				System.out.println(e) ; 
+			} 
+		}
+		return usersArray ; 
 	}
 	
 	

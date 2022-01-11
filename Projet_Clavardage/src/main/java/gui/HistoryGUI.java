@@ -128,6 +128,7 @@ public class HistoryGUI {
                   }
                 }
               );
+        bottomPanel = new JPanel() ; 
         bottomPanel.add(back) ; 
         
         // Main frame 

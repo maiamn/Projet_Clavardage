@@ -49,6 +49,10 @@ public class ConversationsGUI {
 		
 		// Get all users with whom the user has already spoken
 		interlocutors = GUIManager.getInterlocutors(username) ;
+		System.out.println("[ConversationsGUI] Interlocutors") ; 
+		for (int i=0; i<interlocutors.length; i++) {
+			System.out.println(interlocutors[i]) ; 
+		}
 		// Drop down menu
 		jComboBox = new JComboBox<String>(interlocutors) ; 
 		// Button to switch to the history with this person 
