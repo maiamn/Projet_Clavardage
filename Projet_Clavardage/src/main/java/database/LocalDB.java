@@ -46,7 +46,8 @@ public class LocalDB {
 			// Execute the statement 			
 			String query = "CREATE TABLE IF NOT EXISTS UsernameToIP " +
 			           "(username VARCHAR(255) not NULL, " +
-			           " ip VARCHAR(255) not NULL)"; 
+			           " ip VARCHAR(255) not NULL PRIMARY KEY," +
+			           " isConnected BOOLEAN not NULL CHECK (isConnected IN (0,1))) ;" ;  
 			
 			System.out.println("[LocalDB] Creating the table...");
 			this.statement.executeUpdate(query) ;
@@ -60,51 +61,54 @@ public class LocalDB {
 	
 	
 	// Add a user to the database
+//	public void addUser(String username, InetAddress IP) {
+//		System.out.println("[LocalDB] Adding a user in the table...");
+//		String IPString = IP.toString();
+//		if (IPString.charAt(0) == ('/')) {
+//			IPString = IPString.substring(1);
+//		}
+//		String query = "INSERT INTO UsernameToIP (Username, IP, isConnected) VALUES ('" + username + "', '" + IPString + "', 1) ;" ; 
+//		
+//		try {
+//			// Execute the statement 
+//			this.statement.executeUpdate(query) ; 
+//			System.out.println("[LocalDB] User added");
+//		} 
+//		catch (SQLException e) {
+//			System.out.println(e);
+//		}
+//	}
+	
+	// Add or update a user in the database 
 	public void addUser(String username, InetAddress IP) {
-		System.out.println("[LocalDB] Adding a user in the table...");
+		System.out.println("[LocalDB] Adding a user or updating the table...");
 		String IPString = IP.toString();
 		if (IPString.charAt(0) == ('/')) {
 			IPString = IPString.substring(1);
 		}
-		String query = "INSERT INTO UsernameToIP (Username, IP) VALUES ('" + username + "', '" + IPString + "') ;" ; 
+		
+		String query = "REPLACE INTO UsernameToIP(Username, IP, isConnected) VALUES ('" + username + "', '" + IPString + "', 1) ;" ;
 		
 		try {
 			// Execute the statement 
 			this.statement.executeUpdate(query) ; 
-			System.out.println("[LocalDB] User added");
+			System.out.println("[LocalDB] Update table");
 		} 
 		catch (SQLException e) {
 			System.out.println(e);
 		}
 	}
 	
-	// Delete a user to the database
-	public void deleteUserByName(String username) {
-		System.out.println("[LocalDB] Deleting a user using their name from the table...");
-		String query = "DELETE FROM UsernameToIP WHERE Username='" + username + "' ;" ;	
+	// Function to reset connection state 
+	public void userDisconnected(String username) {
+		System.out.println("[LocalDB] Toggle connected state of user...");
+		
+		String query = "UPDATE UsernameToIP SET isConnected = 0 WHERE Username = '" + username + "' ;" ; 
 		
 		try {
 			// Execute the statement 
 			this.statement.executeUpdate(query) ; 
-			System.out.println("[LocalDB] User deleted");
-		} 
-		catch (SQLException e) {
-			System.out.println(e);
-		}
-	}
-	
-	public void deleteUserByIP(InetAddress IP) {
-		System.out.println("[LocalDB] Deleting a user using their IP from the table...");
-		String IPString = IP.toString();
-		if (IPString.charAt(0) == ('/')) {
-			IPString = IPString.substring(1);
-		}
-		String query = "DELETE FROM UsernameToIP WHERE IP='" + IPString + "' ;" ;		
-		
-		try {
-			// Execute the statement 
-			this.statement.executeUpdate(query) ; 
-			System.out.println("[LocalDB] User deleted");
+			System.out.println("[LocalDB] State toggle...");
 		} 
 		catch (SQLException e) {
 			System.out.println(e);
@@ -182,6 +186,66 @@ public class LocalDB {
 		System.out.println("[LocalDB] Usernames fetched");
 		return results ; 
 	}
+	
+	
+	// Get all connected usernames of the database 
+		public ArrayList<String> getConnectedUsernames() {
+			System.out.println("[LocalDB] Getting connected usernames of the database...");
+			String query = "SELECT UsernameToIP.Username FROM UsernameToIP WHERE isConnected=1;";	
+			ArrayList<String> results = new ArrayList<String>() ; 
+			
+			try {
+				// Execute the statement 
+				ResultSet rs = this.statement.executeQuery(query) ;
+				
+				while(rs.next()) {
+					results.add(rs.getString(1));
+				}
+				rs.close(); 
+			} 
+			catch ( Exception e) {
+				System.out.println(e);
+			}
+			
+			System.out.println("[LocalDB] Connected usernames fetched");
+			return results ; 
+		}
+	
+		
+	
+	// Delete a user to the database
+	public void deleteUserByName(String username) {
+		System.out.println("[LocalDB] Deleting a user using their name from the table...");
+		String query = "DELETE FROM UsernameToIP WHERE Username='" + username + "' ;" ;	
+		
+		try {
+			// Execute the statement 
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[LocalDB] User deleted");
+		} 
+		catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	public void deleteUserByIP(InetAddress IP) {
+		System.out.println("[LocalDB] Deleting a user using their IP from the table...");
+		String IPString = IP.toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		String query = "DELETE FROM UsernameToIP WHERE IP='" + IPString + "' ;" ;		
+		
+		try {
+			// Execute the statement 
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[LocalDB] User deleted");
+		} 
+		catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
 	
 	// Drop database 
 	public void dropDatabase() {

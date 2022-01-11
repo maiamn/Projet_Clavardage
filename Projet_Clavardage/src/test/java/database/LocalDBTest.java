@@ -125,6 +125,8 @@ public class LocalDBTest {
 					IPString = IPString.substring(1);
 				}
 				assertEquals(IPString, rs.getString("ip")) ; 
+				// Check connected
+				assertTrue(rs.getBoolean("isConnected")) ; 
 			}
 			
 		} catch (SQLException e) {
