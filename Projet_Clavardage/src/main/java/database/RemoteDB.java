@@ -152,8 +152,9 @@ public class RemoteDB {
 		String[] interlocutors ; 
 		
 		// Query to select all interlocutors (only one time with DISTINCT) 
-		String query = "SELECT DISTINCT History.Receiver FROM History "
-				+ "WHERE Sender = '" + person + "' ;" ; 
+		String query = "SELECT DISTINCT History.Sender FROM History WHERE Receiver='" + person + "'" +
+				       " UNION " +
+				       "SELECT DISTINCT History.Receiver FROM History WHERE Sender='" + person + "' ; " ;
 		
 		// Array List to store the result 
 		ArrayList<String> interlocutorsArray = new ArrayList<String>();

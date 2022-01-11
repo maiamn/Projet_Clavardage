@@ -177,7 +177,9 @@ public class Manager {
 		return remoteDB.getMessages(IP1, IP2);
 	}
 	
-	
+	public static String[] getInterlocutors(String username) {
+		return remoteDB.getInterlocutors(username) ; 
+	}
 	
 	
 	//////////////////////////////////////////////////////////////////////
