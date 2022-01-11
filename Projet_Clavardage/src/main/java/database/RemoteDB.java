@@ -143,6 +143,7 @@ public class RemoteDB {
 		return result ;
 	}
 	
+	
 	// Function to get all the interlocutors of one person 
 	public String[] getInterlocutors(String person) {
 		System.out.println("[RemoteDB} Calling getInterlocutors...") ; 

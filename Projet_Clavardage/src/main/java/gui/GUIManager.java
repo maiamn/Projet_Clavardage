@@ -16,6 +16,7 @@ public class GUIManager {
 	static ChatGUI chat ; 
 	static ChangeUsernameGUI changeUsername ; 
 	static DisconnectionGUI disconnection ;
+	static Conversations conversations ; 
 	
 	//Constructor
 	public GUIManager() {
@@ -127,15 +128,20 @@ public class GUIManager {
 		connectedUsers = new ConnectedUsersGUI(username) ; 
 	}
 	
-	// SWITCH TO SEND MESSAGE PAGE 
+	// SWITCH TO HOME PAGE TO SELECT WHO YOU WANT TO TALK WITH
 	public static void switchToSendMessage(String username) {
 		sendMessage = new SendMessageGUI(username) ; 
 	}
 	
-	// SWITCH TO HISTORY PAGE
+	// SWITCH TO SEND MESSAGE PAGE
 	public static void switchToChat(String sender, String receiver) {
 		System.out.println("ChatGUI : sender = " + sender + " receiver = " + receiver) ; 
 		chat = new ChatGUI(sender, receiver) ; 
+	}
+	
+	// SWITH TO CONVERSATIONS PAGE 
+	public static void switchToConversations(String username) {
+		conversations = new Conversations() ; 
 	}
 	
 	// SWITCH TO CHANGE USERNAME

@@ -14,6 +14,7 @@ public class HomePageGUI {
 	private final JLabel welcome ;  
 	private final JButton connectedUsers = new JButton("See connected users") ;
 	private final JButton sendMessage = new JButton("Send a message") ;
+	private final JButton histories = new JButton ("See conversations") ; 
 	private final JButton changeUsername = new JButton("Change my username") ; 
 	private final JButton disconnection = new JButton("Disconnection") ; 
 	
@@ -75,6 +76,19 @@ public class HomePageGUI {
                 }
               );
         
+        // See conversations
+        histories.setPreferredSize(new Dimension(200,50));
+        histories.setMinimumSize(new Dimension(200,50));
+        histories.setMaximumSize(new Dimension(200,50));
+        histories.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				homePageFrame.setVisible(false);
+        				GUIManager.switchToSendMessage(username) ; 
+                  }
+                }
+              );
+        
         // Disconnection
         disconnection.setPreferredSize(new Dimension(200,50));
         disconnection.setMinimumSize(new Dimension(200,50));
@@ -91,6 +105,7 @@ public class HomePageGUI {
 		Box options = Box.createVerticalBox() ; 
 		options.add(connectedUsers) ; 
 		options.add(sendMessage);
+		options.add(histories);
 		options.add(changeUsername) ; 
 		options.add(disconnection) ; 
 		centerPanel = new JPanel() ; 
@@ -115,21 +130,5 @@ public class HomePageGUI {
 		homePageFrame.setExtendedState(JFrame.NORMAL) ; 
 
 	}
-	
 
-    	
-	public static void main(String[] args) {
-		 javax.swing.SwingUtilities.invokeLater(new Runnable() { 
-			 public void run() {
-		            try {
-		                UIManager.setLookAndFeel(
-		                        UIManager.getSystemLookAndFeelClassName());
-		            } catch (Exception e) {
-		                e.printStackTrace();
-		            }
-
-		            new HomePageGUI(username);
-			 }
-		 }) ;
-	}
 }
