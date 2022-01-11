@@ -191,8 +191,7 @@ public class NetworkManager {
 
 	// Change of username = disconnection with previous username and connection with the new one 
 	public static void updateUsername(InetAddress IP, String newUsername) {
-		Manager.userDisconnected(IP);
-		Manager.newUserConnected(newUsername, IP);
+		Manager.updateUsername(IP, newUsername) ;
 	}
 	
 	// We delete the user from the DB

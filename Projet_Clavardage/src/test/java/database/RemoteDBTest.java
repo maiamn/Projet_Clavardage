@@ -209,6 +209,14 @@ public class RemoteDBTest {
 		
 	}
 	
+	
+	////////////////////////////////// FUNCTION getInterlocutors /////////////////////////////////
+	@Test
+	public void testGetInterlocutors() {
+		assertTrue(true) ; 
+		
+	}
+
 
 	//////////////////////////////////// FUNCTION dropDatabase ///////////////////////////////////	
 	@Test

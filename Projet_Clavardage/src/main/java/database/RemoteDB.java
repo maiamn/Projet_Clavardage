@@ -142,6 +142,43 @@ public class RemoteDB {
 		}
 		return result ;
 	}
+	
+	// Function to get all the interlocutors of one person 
+	public String[] getInterlocutors(String person) {
+		System.out.println("[RemoteDB} Calling getInterlocutors...") ; 
+		
+		// Init result
+		String[] interlocutors ; 
+		
+		// Query to select all interlocutors (only one time with DISTINCT) 
+		String query = "SELECT DISTINCT History.Receiver FROM History "
+				+ "WHERE Sender = '" + person + "' ;" ; 
+		
+		// Array List to store the result 
+		ArrayList<String> interlocutorsArray = new ArrayList<String>();
+		
+		try {
+			// Execute the statement 
+			ResultSet rs = this.statement.executeQuery(query) ;
+			while(rs.next()) {
+				interlocutorsArray.add(rs.getString(1));
+			}
+			rs.close(); 
+			System.out.println("[RemoteDB] Interlocutors fetched fetched");
+			
+		} catch (Exception e) {
+			System.out.println(e) ; 
+		}
+		
+		// Define String[] instead of ArrayList 
+		interlocutors = new String[interlocutorsArray.size()];
+		
+		for (int k=0; k<interlocutorsArray.size(); k++) {
+			interlocutors[k]=interlocutorsArray.get(k) ; 
+		}
+		
+		return interlocutors ; 
+	}
 		
 
 	// Drop database 

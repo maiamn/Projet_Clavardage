@@ -88,13 +88,16 @@ public class Manager {
 		networkManager.notifyUserameChanged(newUsername);
 	}
 	
+	public static void updateUsername(InetAddress IP, String newUsername) {
+		localDB.updateUsername(IP, newUsername);
+	}
+	
 	//////////////////////////////////////////////////////////////////////
 	////////////////////////////DISCONNECTION/////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	
 	// Notify everyone that we are disconnected and drop databases
 	public static void disconnection() {
-		localDB.dropDatabase();
 		localDB.closeConnection();
 		remoteDB.closeConnection();
 		networkManager.disconnection(username);
@@ -120,12 +123,7 @@ public class Manager {
 	
 	// [LocalDB] Delete a username from the local table when they disconnect
 	public static void userDisconnected(String username) {
-		localDB.deleteUserByName(username);
-	}
-	
-	// [LocalDB] Delete a username from the local table when they disconnect
-	public static void userDisconnected(InetAddress IP) {
-		localDB.deleteUserByIP(IP);
+		localDB.userDisconnected(username);
 	}
 	
 	// [LocalDB] Get a username by their IP
@@ -136,6 +134,11 @@ public class Manager {
 	// [LocalDB] Get an IP by their username
 	public static InetAddress getIP(String name) {
 		return localDB.getIP(name);
+	}
+	
+	// [LocalDB] Get connected usernames stored in the table
+	public static ArrayList<String> getConnectedUsernames() {
+		return localDB.getConnectedUsernames() ; 
 	}
 	
 	// [LocalDB] Get all usernames stored in the table

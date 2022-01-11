@@ -108,7 +108,26 @@ public class LocalDB {
 		try {
 			// Execute the statement 
 			this.statement.executeUpdate(query) ; 
-			System.out.println("[LocalDB] State toggle...");
+			System.out.println("[LocalDB] State toggle.");
+		} 
+		catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	// Function to update the username 
+	public void updateUsername(InetAddress IP, String newUsername) {
+		System.out.println("[LocalDB] Update username...");
+		String IPString = IP.toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		String query = "UPDATE UsernameToIP SET Username = '" + newUsername + "' WHERE IP = '" + IPString + "' ;" ; 
+		
+		try {
+			// Execute the statement 
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[LocalDB] Username updated");
 		} 
 		catch (SQLException e) {
 			System.out.println(e);
