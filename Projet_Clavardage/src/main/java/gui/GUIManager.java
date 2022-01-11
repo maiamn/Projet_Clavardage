@@ -16,7 +16,8 @@ public class GUIManager {
 	static ChatGUI chat ; 
 	static ChangeUsernameGUI changeUsername ; 
 	static DisconnectionGUI disconnection ;
-	static Conversations conversations ; 
+	static ConversationsGUI conversations ; 
+	static HistoryGUI history ; 
 	
 	//Constructor
 	public GUIManager() {
@@ -148,7 +149,12 @@ public class GUIManager {
 	
 	// SWITH TO CONVERSATIONS PAGE 
 	public static void switchToConversations(String username) {
-		conversations = new Conversations() ; 
+		conversations = new ConversationsGUI(username) ; 
+	}
+	
+	// SWITCH TO HISTORY PAGE
+	public static void switchToHistory(String you, String interlocutor) {
+		history = new HistoryGUI(you, interlocutor) ; 
 	}
 	
 	// SWITCH TO CHANGE USERNAME

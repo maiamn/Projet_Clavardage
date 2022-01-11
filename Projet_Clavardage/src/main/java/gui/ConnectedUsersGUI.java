@@ -42,7 +42,7 @@ public class ConnectedUsersGUI {
 		welcome.setFont(new Font("Century Gothic", Font.BOLD, 16));
 		topPanel.add(welcome);
 		
-		// Get all usernames
+		// Get all usernames 
 		allUsers = GUIManager.getAllConnectedUsers() ;
         
 		// Construct Table of usernames and buttons

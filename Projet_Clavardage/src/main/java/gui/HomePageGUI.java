@@ -11,7 +11,7 @@ public class HomePageGUI {
 	private JPanel topPanel; 
 	private JPanel centerPanel; 
 	
-	private final JLabel welcome ;  
+	private final JLabel welcome ;   
 	private final JButton connectedUsers = new JButton("See connected users") ;
 	private final JButton sendMessage = new JButton("Send a message") ;
 	private final JButton histories = new JButton ("See conversations") ; 
@@ -84,7 +84,7 @@ public class HomePageGUI {
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				homePageFrame.setVisible(false);
-        				GUIManager.switchToSendMessage(username) ; 
+        				GUIManager.switchToConversations(username) ; 
                   }
                 }
               );
