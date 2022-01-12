@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Manager {
-	//test Jenkins et git
+	//test Jenkins et git apres modif
 	// Attributes 
 	protected static String username ;
 	private static NetworkManager networkManager = new NetworkManager();
