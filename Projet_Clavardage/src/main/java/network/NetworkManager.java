@@ -21,7 +21,6 @@ public class NetworkManager {
 
 	// Constructor 
 	public NetworkManager() {
-		System.out.println("Constructeur du NetworkManager");
 		this.serverTCP = new ServerTCP() ; 
 		this.serverUDP = new ServerUDP(5001, 50000) ;
 
@@ -65,7 +64,6 @@ public class NetworkManager {
 	///////////////////////////// RUN SERVERS ////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 	public void runServers() {
-		System.out.println("[NetworkManager] running servers");
 		new Thread(this.serverTCP).start();
 		new Thread(this.serverUDP).start();
 	}
@@ -98,7 +96,6 @@ public class NetworkManager {
 
 	// Classic message sending function
 	public void sendMessage(String msg, InetAddress destinationIP) {
-		System.out.println("[ClientTCP] " + msg);
 		// Classic message between users 
 		String formatedMsg = messageFormatter(MessageType.MESSAGE, Manager.getUsername(), msg);
 		// Sends message and closes socket
@@ -113,7 +110,6 @@ public class NetworkManager {
 	// Availability of the username
 	public synchronized boolean usernameAvailable(String username) {
 		isAvailable = true ;
-		System.out.println("[NetworkManager] Calling usernameAvailable(username)");
 		long timeElapsed = 0;
 		long start = System.currentTimeMillis();
 		long finish = 0;
@@ -140,7 +136,6 @@ public class NetworkManager {
 
 	// Once we are connected, we send a broadcast with our username and our IP
 	public void notifyConnected(String username) {
-		System.out.println("Calling notifyConnected(username) with IP: " + myIPString);
 		String msg = messageFormatter(MessageType.USERNAME_CONNECTED, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
@@ -153,14 +148,12 @@ public class NetworkManager {
 
 	// Notify all users when a user is disconnected 
 	public void notifyDisconnected(String username) {
-		System.out.println("Calling notifyDisonnected()");
 		String msg = messageFormatter(MessageType.USERNAME_DISCONNECT, username, myIPString) ;
 		ClientUDP.broadcast(msg);
 	}
 
 	//Broadcast asking everyone for their username
 	public void askUsernames(String myusername) {
-		System.out.println("Calling askUsernames()");
 		String msg = messageFormatter(MessageType.GET_USERNAMES, myusername, "") ;
 		ClientUDP.broadcast(msg);
 	}
@@ -178,7 +171,6 @@ public class NetworkManager {
 
 	// The username wanted is not available so we notify the user
 	public void sendUnavailableUsername(InetAddress destinationIP) {
-		System.out.println("Calling sendUnavailableUsername(host)");
 		String msg = messageFormatter(MessageType.USERNAME_BRDCST, Manager.getUsername(), "") ;
 		ClientTCP.sendMessage(msg, destinationIP);
 	}
@@ -203,12 +195,9 @@ public class NetworkManager {
 	// If someone asks our username, we answer with our username and our IP
 	public static void sendUsername(String destinationUsername) {
 		if (!destinationUsername.equals(Manager.getUsername())) {
-			System.out.println("Calling sendUsername");
 			String msg = messageFormatter(MessageType.GET_USERNAMES, Manager.getUsername(), myIPString) ;
 			InetAddress destinationIP = Manager.getIP(destinationUsername);
-			System.out.println("sendUsername : getIP ok");
-			ClientTCP.sendMessage(msg, destinationIP);	
-			System.out.println("senUsername : sendMessage ok");
+			ClientTCP.sendMessage(msg, destinationIP);
 		}
 	}
 
@@ -224,8 +213,6 @@ public class NetworkManager {
 			IPSender = IPSender.substring(1);
 		}
 		Manager.addMessageToHistory(IPSender, myIPString, message, formattedDate);
-
-		System.out.println(user + " at " + formattedDate + ": " + message);
 	}
 
 

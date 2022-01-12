@@ -12,7 +12,6 @@ public class ServerUDP extends Thread{
 	
 	// Constructor
 	public ServerUDP(int port, int length) {
-		System.out.println("[ServerUDP] Calling constructor");
 		this.port = port;
 		this.length = length;
 		this.connected = true ; 
@@ -26,19 +25,15 @@ public class ServerUDP extends Thread{
 	
 	//Reception of a new message 
 	public void dataProcessing(String data) {
-		System.out.println("[ServeurUDP]"+ data);
 		String[] token = data.split("/-/");
-		
 		
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
 		String username = token[1];
-
 		String content ;
 		
 		switch (type) {
 		
 		case USERNAME_BRDCST:
-			System.out.println("[ServeurUDP] USERNAME_BRDCST");
 			// Someone asks if a username is available 
 			try {
 				content = token[2];
@@ -51,7 +46,6 @@ public class ServerUDP extends Thread{
 			break;
 			
 		case USERNAME_CONNECTED:
-			System.out.println("[ServeurUDP] USERNAME_CONNECTED");
 			// A new user is connected
 			try {
 				content = token[2];
@@ -64,20 +58,16 @@ public class ServerUDP extends Thread{
 			break;
 			
 		case USERNAME_DISCONNECT:
-			System.out.println("[ServeurUDP] USERNAME_DISCONNECT");
 			// A user is disconnected
 			NetworkManager.userDisconnected(username);
 			break;
 			
 		case GET_USERNAMES:
 			// A user asks for our username
-			System.out.println("[ServeurUDP] GET_USERNAMES");
 			NetworkManager.sendUsername(username);
-			System.out.println("[ServeurUDP] GET_USERNAMES done");
 			break;
 			
-		case USERNAME_CHANGED:
-			System.out.println("[ServeurUDP] USERNAME_CHANGED") ; 
+		case USERNAME_CHANGED: 
 			try {
 				content = token[2];
 				InetAddress IP = InetAddress.getByName(content); 
@@ -89,7 +79,6 @@ public class ServerUDP extends Thread{
 			
 		
 		default:
-			System.out.println("[ServeurUDP] Type de message non reconnu");
 			break;
 			
 		}
@@ -99,7 +88,6 @@ public class ServerUDP extends Thread{
 	
 	// Direct communication with table
 	public void run() {
-		System.out.println("[ServerUDP] running");
 		try {
 			DatagramSocket socket = new DatagramSocket(port);
 			DatagramPacket packet = null;

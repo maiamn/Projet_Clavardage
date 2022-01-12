@@ -20,11 +20,9 @@ public class RemoteDB {
 	
 	// Constructor 
 	public RemoteDB() {
-		System.out.println("[RemoteDB] Calling RemoteDB constructor");
 		
 		// Load the driver class file 
 		try {
-			System.out.println("[RemoteDB] Loading the driver class file");
 			Class.forName("com.mysql.cj.jdbc.Driver") ; 
 		} 
 		catch (ClassNotFoundException e) {
@@ -33,16 +31,10 @@ public class RemoteDB {
 		
 		try {
 			// Make a database connection
-			System.out.println("[RemoteDB] Database connection...");
 			this.connection = DriverManager.getConnection(this.addrDb, this.login, this.password);
-			System.out.println("[RemoteDB] Database connected");
-			
+						
 			// Create a statement object
-			System.out.println("[RemoteDB] Statement objects creation...");
 			this.statement = this.connection.createStatement() ; 
-
-			System.out.println("[RemoteDB] Statement objects created");
-
 	
 			// Execute the statement 
 			String query = "CREATE TABLE IF NOT EXISTS History " +
@@ -51,9 +43,7 @@ public class RemoteDB {
 	                   " Message VARCHAR(50000) not NULL, " +
 	                   " Date VARCHAR(255) not NULL)"; 
 			
-			System.out.println("[RemoteDB] Creating the table...");
 			this.statement.executeUpdate(query) ;
-			System.out.println("[RemoteDB] Table created");
 		} 
 		
 		catch (SQLException e) {
@@ -82,7 +72,6 @@ public class RemoteDB {
 	
 	// Get messages history (50 last messages) from the database
 	public Conversation getMessages(String person1, String person2) {
-		System.out.println("[RemoteDB} Calling getMessage...") ; 
 		// Init conversation
 		Conversation result = new Conversation(null, null, null, null) ;
 		
@@ -110,7 +99,6 @@ public class RemoteDB {
 				dates.add(rs.getString(4));
 			}
 			rs.close(); 
-			System.out.println("[RemoteDB] Message fetched");
 			
 		} catch (Exception e) {
 			System.out.println(e) ; 
@@ -136,17 +124,12 @@ public class RemoteDB {
 		result.setMessages(messagesArray);
 		
 		// Return result
-		System.out.println("[RemoteDB] Messages:");
-		for (String msg : messagesArray) {
-			System.out.println(msg);
-		}
 		return result ;
 	}
 	
 	
 	// Get messages history (50 last messages) from the database
-	public String getDateLastMessage(String person1, String person2) {
-		System.out.println("[RemoteDB} Calling getDateLastMessage...") ; 
+	public String getDateLastMessage(String person1, String person2) { 
 		// Init conversation
 		String date = "" ; 
 		
@@ -163,7 +146,6 @@ public class RemoteDB {
 				date = rs.getString(1) ; 
 			}
 			rs.close(); 
-			System.out.println("[RemoteDB] Date fetched");
 			
 		} catch (Exception e) {
 			System.out.println(e) ; 
@@ -176,7 +158,6 @@ public class RemoteDB {
 	
 	// Function to get all the interlocutors of one person 
 	public String[] getInterlocutors(String person) {
-		System.out.println("[RemoteDB} Calling getInterlocutors...") ; 
 		
 		// Init result
 		String[] interlocutors ; 
@@ -196,7 +177,6 @@ public class RemoteDB {
 				interlocutorsArray.add(rs.getString(1));
 			}
 			rs.close(); 
-			System.out.println("[RemoteDB] Interlocutors fetched fetched");
 			
 		} catch (Exception e) {
 			System.out.println(e) ; 
@@ -215,13 +195,11 @@ public class RemoteDB {
 
 	// Drop database 
 	public void dropDatabase() {
-		System.out.println("[RemoteDB] Dropping the database...");
 		String query = "DROP TABLE History ;" ;
 		
 		try {
 			// Execute the statement 
 			this.statement.executeUpdate(query) ;
-			System.out.println("[RemoteDB] Database dropped");
 		} 
 		catch (SQLException e) {
 			System.out.println(e);
@@ -231,10 +209,8 @@ public class RemoteDB {
 		
 	// Close the connection of database 
 	public void closeConnection() {
-		System.out.println("[RemoteDB] Closing connection...");
 		try {
 			this.connection.close() ;
-			System.out.println("[RemoteDB] Connection closed");
 		} 
 		catch (SQLException e) {
 			System.out.println(e) ; 

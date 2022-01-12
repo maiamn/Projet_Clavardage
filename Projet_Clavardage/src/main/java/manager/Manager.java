@@ -188,7 +188,6 @@ public class Manager {
 	
 	// [RemoteDB] Get history
 	public static Conversation getHistory(String username1, String username2) {
-		System.out.println("MANAGER / username1 : " + username1 + " username2 : " + username2);
 		String IP1 = getIP(username1).toString();
 		String IP2 = getIP(username2).toString();
 		if (IP1.charAt(0) == ('/')) {
@@ -197,7 +196,6 @@ public class Manager {
 		if (IP2.charAt(0) == ('/')) {
 			IP2 = IP2.substring(1);
 		}
-		System.out.println("MANAGER / IP1 : " + IP1 + " IP2 : " + IP2);
 		return remoteDB.getMessages(IP1, IP2);
 	}
 	
@@ -233,9 +231,7 @@ public class Manager {
 	public static boolean newMessage(String user1, String user2) {
 		boolean res ; 
 		String lastAccessString = getLastAccess(user2) ; 
-		System.out.println("Last access string = " + lastAccessString) ; 
-		String lastDateString = getLastDate(user1, user2) ; 
-		System.out.println("Last date of message = " + lastDateString) ; 
+		String lastDateString = getLastDate(user1, user2) ;  
 		
 		if (lastAccessString.equals("") || lastDateString.equals("")) { 
 			res = false ; 
@@ -279,7 +275,6 @@ public class Manager {
 	
 	public static void main (String [] args) {
 		connection("test");
-		System.out.println(networkManager.getMyIPString());
 		disconnection();
 	}
 

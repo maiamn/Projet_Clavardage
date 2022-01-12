@@ -33,7 +33,6 @@ public class MessageProcessingTCP implements Runnable {
 
 	// Message processing depending on message format
 	public void dataFilter(String msg) {
-		System.out.println("[ServeurTCP]"+ msg);
 		String[] token = msg.split("/-/");
 		NetworkManager.MessageType type = NetworkManager.MessageType.valueOf(token[0].toUpperCase());
 		String username = token[1];
@@ -44,13 +43,11 @@ public class MessageProcessingTCP implements Runnable {
 
 		case USERNAME_BRDCST:
 			// The username we want to use is already taken 
-			System.out.println("[ServerTCP] USERNAME_BRDCST");
 			NetworkManager.notifyUsernameUnavailable();
 			break;
 
 		case GET_USERNAMES:
 			// We received a response when we asked someone for their username
-			System.out.println("[ServerTCP] GET_USERNAMES");
 			try {
 				content = token[2];
 				InetAddress IP = InetAddress.getByName(content); 
@@ -63,13 +60,11 @@ public class MessageProcessingTCP implements Runnable {
 
 		case MESSAGE:
 			// we received a new message, we notify networkmanager
-			System.out.println("[ServerTCP] MESSAGE");
 			content = token[2];
 			NetworkManager.notifyNewMessage(content, username);
 			break;
 
 		default:
-			System.out.println("[ServerTCP] Type non reconnu");
 			break;
 		}
 	}
@@ -85,7 +80,7 @@ public class MessageProcessingTCP implements Runnable {
 
 
 	public void processMessage() {
-		System.out.println(this.message) ; 
+		//System.out.println(this.message) ; 
 	}
 
 

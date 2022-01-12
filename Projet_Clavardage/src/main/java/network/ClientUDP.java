@@ -15,7 +15,6 @@ public class ClientUDP {
 
 	// Broadcast function
 	public static void broadcast (String msg) {
-		System.out.println("[ClientUDP]"+ msg);
 		
 		// Forbidden address containing only bytes 0
 		byte[] forbidAddrByte = new byte[]{(byte)0, (byte)0, (byte)0, (byte)0};
@@ -53,7 +52,6 @@ public class ClientUDP {
 			buffer = msg.getBytes();
 
 			for(InetAddress ip : broadcasts) {
-				System.out.println(" Broadcast = " + ip);
 				DatagramPacket packet = new DatagramPacket(buffer, buffer.length, ip, port);
 				socket.send(packet);
 			}

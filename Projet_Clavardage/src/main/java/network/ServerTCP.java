@@ -30,9 +30,7 @@ public class ServerTCP extends Thread {
 			
 			// Use of a while loop to allow multiple connections
 			while(connected) {
-				System.out.println("Waiting for connection") ;
 				clientSocket = serverSocket.accept();
-				System.out.println("Connection successful") ;
 				new Thread(new MessageProcessingTCP (clientSocket, serverSocket, this)).start() ;
 			}
 			
