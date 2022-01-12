@@ -2,6 +2,9 @@ package gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -36,6 +39,12 @@ public class HistoryGUI {
 		// Define usernames
 		you = user1 ; 
 		interlocutor = user2 ; 
+		
+		// New access to the conversation -> Set the new date 
+		LocalDateTime date = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String formattedDate = date.format(format);
+		GUIManager.setLastAccess(interlocutor, formattedDate) ;
 		
 		// Main frame
 		historyFrame = new JFrame("~ MessengIR ~ When you talk with " + interlocutor ) ; 

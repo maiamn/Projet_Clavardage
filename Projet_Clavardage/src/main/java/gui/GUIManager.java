@@ -17,7 +17,8 @@ public class GUIManager {
 	static ChangeUsernameGUI changeUsername ; 
 	static DisconnectionGUI disconnection ;
 	static ConversationsGUI conversations ; 
-	static HistoryGUI history ; 
+	static HistoryGUI history ;
+	static NewMessagesGUI newMessages ; 
 	
 	//Constructor
 	public GUIManager() {
@@ -99,8 +100,17 @@ public class GUIManager {
 	//////////////////////////////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////// HISTORIES  ///////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////////////////////////////////
-	public static String[] getInterlocutors(String username) {
+	public static ArrayList<String> getInterlocutors(String username) {
 		return Manager.getInterlocutors(username) ; 
+	}
+	
+	// New messages 
+	public static void setLastAccess(String username, String newDate) {
+		Manager.setLastAccess(username, newDate) ;
+	}
+	
+	public static boolean newMessages(String you, String dest) {
+		return Manager.newMessage(you, dest) ; 
 	}
 	
 	
@@ -145,6 +155,11 @@ public class GUIManager {
 	public static void switchToChat(String sender, String receiver) {
 		System.out.println("ChatGUI : sender = " + sender + " receiver = " + receiver) ; 
 		chat = new ChatGUI(sender, receiver) ; 
+	}
+	
+	// SWITCH TO NEW MESSAGES PAGE 
+	public static void switchToNewMessages(String username) {
+		newMessages = new NewMessagesGUI(username) ; 
 	}
 	
 	// SWITH TO CONVERSATIONS PAGE 

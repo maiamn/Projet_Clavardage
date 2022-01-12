@@ -47,7 +47,8 @@ public class LocalDB {
 			String query = "CREATE TABLE IF NOT EXISTS UsernameToIP " +
 			           "(username VARCHAR(255) not NULL, " +
 			           " ip VARCHAR(255) not NULL PRIMARY KEY," +
-			           " isConnected BOOLEAN not NULL CHECK (isConnected IN (0,1))) ;" ;  
+			           " isConnected BOOLEAN not NULL CHECK (isConnected IN (0,1))," +
+			           " lastAccess VARCHAR(255) not NULL) ;" ;  
 			
 			System.out.println("[LocalDB] Creating the table...");
 			this.statement.executeUpdate(query) ;
@@ -59,27 +60,11 @@ public class LocalDB {
 		}
 	}
 	
-	
-	// Add a user to the database
-//	public void addUser(String username, InetAddress IP) {
-//		System.out.println("[LocalDB] Adding a user in the table...");
-//		String IPString = IP.toString();
-//		if (IPString.charAt(0) == ('/')) {
-//			IPString = IPString.substring(1);
-//		}
-//		String query = "INSERT INTO UsernameToIP (Username, IP, isConnected) VALUES ('" + username + "', '" + IPString + "', 1) ;" ; 
-//		
-//		try {
-//			// Execute the statement 
-//			this.statement.executeUpdate(query) ; 
-//			System.out.println("[LocalDB] User added");
-//		} 
-//		catch (SQLException e) {
-//			System.out.println(e);
-//		}
-//	}
-	
-	// Add or update a user in the database 
+
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//                                       Add or update a user in the database                                   //
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	public void addUser(String username, InetAddress IP) {
 		System.out.println("[LocalDB] Adding a user or updating the table...");
 		String IPString = IP.toString();
@@ -87,7 +72,7 @@ public class LocalDB {
 			IPString = IPString.substring(1);
 		}
 		
-		String query = "REPLACE INTO UsernameToIP(Username, IP, isConnected) VALUES ('" + username + "', '" + IPString + "', 1) ;" ;
+		String query = "REPLACE INTO UsernameToIP(Username, IP, isConnected, lastAccess) VALUES ('" + username + "', '" + IPString + "', 1, '') ;" ;
 		
 		try {
 			// Execute the statement 
@@ -99,7 +84,12 @@ public class LocalDB {
 		}
 	}
 	
-	// Function to reset connection state 
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//                                                     Setters                                                  //
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	// Function to set the connected state -> disconnected 
 	public void userDisconnected(String username) {
 		System.out.println("[LocalDB] Toggle connected state of user...");
 		
@@ -134,7 +124,31 @@ public class LocalDB {
 		}
 	}
 	
-	// Get information from the database
+	// Function to update the last access date 
+	public void updateLastAccess(InetAddress IP, String newDate) {
+		System.out.println("[LocalDB] Update last access...");
+		String IPString = IP.toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		String query = "UPDATE UsernameToIP SET lastAccess = '" + newDate + "' WHERE IP = '" + IPString + "' ;" ; 
+		
+		try {
+			// Execute the statement 
+			this.statement.executeUpdate(query) ; 
+			System.out.println("[LocalDB] Last access updated");
+		} 
+		catch (SQLException e) {
+			System.out.println(e);
+		}
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//                                                     Getters                                                  //
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	// Get the username according to the IP address
 	public String getUsername(InetAddress IP) {
 		System.out.println("[LocalDB] Getting a username by their IP address...");
 		String IPString = IP.toString();
@@ -159,6 +173,7 @@ public class LocalDB {
 		return username ;	
 	}
 	
+	// Get the IP address according to the username
 	public InetAddress getIP(String username) {
 		System.out.println("[LocalDB] Getting an IP address by their username...");
 		String query = "SELECT UsernameToIP.IP FROM UsernameToIP WHERE Username = '" + username + "' ;";	
@@ -181,6 +196,31 @@ public class LocalDB {
 		System.out.println("[LocalDB] IP fetched");
 		return IP ; 
 	}
+	
+	// Get the last access according to the IP 
+	public String getLastAccess(InetAddress IP) {
+		System.out.println("[LocalDB] Getting a last access by their IP address...");
+		String IPString = IP.toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		String query = "SELECT UsernameToIP.lastAccess FROM UsernameToIP WHERE IP = '" + IPString + "' ;";	
+		String lastAccess = "" ; 
+		try {
+			// Execute the statement 
+			ResultSet rs = this.statement.executeQuery(query) ; 
+			if (rs.next()) {
+				 lastAccess = rs.getString(1);
+			}
+			rs.close(); 
+		} 
+		catch (SQLException e) {
+			System.out.println(e);
+		}
+
+		System.out.println("[LocalDB] username fetched");
+		return lastAccess ;	
+	}	
 	
 	
 	// Get all usernames of the database 
@@ -231,8 +271,12 @@ public class LocalDB {
 		}
 	
 		
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//                                                Delete an element                                             //
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 	
-	// Delete a user to the database
+	// Delete a user to the database according to the username 
 	public void deleteUserByName(String username) {
 		System.out.println("[LocalDB] Deleting a user using their name from the table...");
 		String query = "DELETE FROM UsernameToIP WHERE Username='" + username + "' ;" ;	
@@ -247,6 +291,7 @@ public class LocalDB {
 		}
 	}
 	
+	// Delete a user to the database according to the IP address 
 	public void deleteUserByIP(InetAddress IP) {
 		System.out.println("[LocalDB] Deleting a user using their IP from the table...");
 		String IPString = IP.toString();
@@ -266,7 +311,10 @@ public class LocalDB {
 	}
 	
 	
-	// Drop database 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//                                                 Drop the database                                            //
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
+	
 	public void dropDatabase() {
 		System.out.println("[LocalDB] Dropping the database...");
 		String query = "DROP TABLE UsernameToIP ;" ;
@@ -282,7 +330,9 @@ public class LocalDB {
 	}
 	
 	
-	// Close the connection of database 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	//                                         Close the connection of database                                     //
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 	public void closeConnection() {
 		System.out.println("[LocalDB] Closing connection...");
 		try {

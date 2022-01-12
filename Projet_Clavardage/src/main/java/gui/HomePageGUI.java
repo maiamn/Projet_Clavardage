@@ -14,6 +14,7 @@ public class HomePageGUI {
 	private final JLabel welcome ;   
 	private final JButton connectedUsers = new JButton("See connected users") ;
 	private final JButton sendMessage = new JButton("Send a message") ;
+	private final JButton newMessages = new JButton("Unread messages") ; 
 	private final JButton histories = new JButton ("See conversations") ; 
 	private final JButton changeUsername = new JButton("Change my username") ; 
 	private final JButton disconnection = new JButton("Disconnection") ; 
@@ -76,6 +77,19 @@ public class HomePageGUI {
                 }
               );
         
+        // See unread messages
+        newMessages.setPreferredSize(new Dimension(200,50));
+        newMessages.setMinimumSize(new Dimension(200,50));
+        newMessages.setMaximumSize(new Dimension(200,50));
+        newMessages.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				homePageFrame.setVisible(false);
+        				GUIManager.switchToNewMessages(username) ; 
+                  }
+                }
+              );
+        
         // See conversations
         histories.setPreferredSize(new Dimension(200,50));
         histories.setMinimumSize(new Dimension(200,50));
@@ -105,6 +119,7 @@ public class HomePageGUI {
 		Box options = Box.createVerticalBox() ; 
 		options.add(connectedUsers) ; 
 		options.add(sendMessage);
+		options.add(newMessages);
 		options.add(histories);
 		options.add(changeUsername) ; 
 		options.add(disconnection) ; 

@@ -2,6 +2,9 @@ package gui;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -41,8 +44,12 @@ public class ChatGUI {
 		// Define sender and receiver of conversation
 		sender = you ; 
 		receiver = dest ;
-		System.out.println("ChatGUI / Init : nb messages = " + 50) ; 
-		System.out.println("ChatGUI / Init : sender = " + sender + " receiver = " + receiver) ; 
+		
+		// New access to the conversation -> Set the new date 
+		LocalDateTime date = LocalDateTime.now();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+		String formattedDate = date.format(format);
+		GUIManager.setLastAccess(receiver, formattedDate) ;
 			
 		// Define element of table 
 		senders = GUIManager.getSenders(sender, receiver) ; 
@@ -155,6 +162,12 @@ public class ChatGUI {
         refresh.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
+        				// New access to the conversation -> Set the new date 
+        				LocalDateTime date = LocalDateTime.now();
+        				DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        				String formattedDate = date.format(format);
+        				GUIManager.setLastAccess(receiver, formattedDate) ;
+        				
         				chatFrame.setVisible(false) ; 
         				GUIManager.switchToChat(sender, receiver);
         			}

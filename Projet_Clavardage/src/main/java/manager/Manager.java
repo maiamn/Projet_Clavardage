@@ -2,11 +2,14 @@ package manager;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import database.* ;
 import network.* ;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -128,6 +131,21 @@ public class Manager {
 		localDB.userDisconnected(username);
 	}
 	
+	// [LocalDB] Set the new last access 
+	public static void setLastAccess(String username, String newDate) {
+		String IPString = getIP(username).toString();
+		if (IPString.charAt(0) == ('/')) {
+			IPString = IPString.substring(1);
+		}
+		InetAddress IP = null;
+		try {
+			IP = InetAddress.getByName(IPString);
+		} catch (UnknownHostException e) {
+			System.out.println(e) ; 
+		} 
+		localDB.updateLastAccess(IP, newDate);
+	}
+	
 	// [LocalDB] Get a username by their IP
 	public static String getUsername(InetAddress IP) {
 		return localDB.getUsername(IP);
@@ -136,6 +154,11 @@ public class Manager {
 	// [LocalDB] Get an IP by their username
 	public static InetAddress getIP(String name) {
 		return localDB.getIP(name);
+	}
+	
+	// [LocalDB] Get the last access to a conversation
+	public static String getLastAccess(String username) {
+		return localDB.getLastAccess(localDB.getIP(username)) ; 
 	}
 	
 	// [LocalDB] Get connected usernames stored in the table
@@ -179,21 +202,63 @@ public class Manager {
 		return remoteDB.getMessages(IP1, IP2);
 	}
 	
-	public static String[] getInterlocutors(String username) {
+	// [RemoteDB] Get interlocutors
+	public static ArrayList<String> getInterlocutors(String username) {
 		String IP = getIP(username).toString();
 		if (IP.charAt(0) == ('/')) {
 			IP = IP.substring(1);
 		}
 		String[] IPArray = remoteDB.getInterlocutors(IP) ; 
-		String[] usersArray = new String [IPArray.length] ; 
+		ArrayList<String> interlocutors = new ArrayList<String>(); 
 		for (int i=0; i<IPArray.length; i++) {
 			try {
-				usersArray[i] = getUsername(InetAddress.getByName(IPArray[i])) ;
+				interlocutors.add(getUsername(InetAddress.getByName(IPArray[i]))) ;
 			} catch (UnknownHostException e) {
 				System.out.println(e) ; 
 			} 
 		}
-		return usersArray ; 
+		return interlocutors ; 
+	}
+		
+	// [RemoteDB] Get the date of the last message received 
+	public static String getLastDate(String sender, String receiver) {
+		return remoteDB.getDateLastMessage(sender, receiver) ; 
+	}
+	
+	
+	//////////////////////////////////////////////////////////////////////
+	/////////////////////////////SEND MESSAGE/////////////////////////////
+	//////////////////////////////////////////////////////////////////////
+	
+	// Know if there is an unread message 
+	public static boolean newMessage(String user1, String user2) {
+		boolean res ; 
+		String lastAccessString = getLastAccess(user2) ; 
+		System.out.println("Last access string = " + lastAccessString) ; 
+		String lastDateString = getLastDate(user1, user2) ; 
+		System.out.println("Last date of message = " + lastDateString) ; 
+		
+		if (lastAccessString.equals("") || lastDateString.equals("")) { 
+			res = false ; 
+		} else {
+			Date lastAccess = null ; 
+			Date lastDate = null ; 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			try {
+				lastAccess = sdf.parse(lastAccessString);
+				lastDate = sdf.parse(lastDateString); 
+			} catch (ParseException e) {
+				System.out.println(e) ; 
+			}
+			
+			if (lastAccess.after(lastDate)) {
+				res = false ; 
+			}
+			else {
+				res = true ; 
+			}
+		}
+		return res ; 
 	}
 	
 	

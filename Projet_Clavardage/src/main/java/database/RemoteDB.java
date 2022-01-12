@@ -144,6 +144,36 @@ public class RemoteDB {
 	}
 	
 	
+	// Get messages history (50 last messages) from the database
+	public String getDateLastMessage(String person1, String person2) {
+		System.out.println("[RemoteDB} Calling getDateLastMessage...") ; 
+		// Init conversation
+		String date = "" ; 
+		
+		// Query to order DB by descending date and select messages 
+		String query = "SELECT History.Date FROM History "
+				+ "WHERE (Sender = '" + person2 + "' AND Receiver = '" + person1 + "') "
+				+ "ORDER BY Date DESC LIMIT 50" ; 
+
+		try {
+			// Execute the statement 
+			ResultSet rs = this.statement.executeQuery(query) ;
+			
+			if (rs.next()) {
+				date = rs.getString(1) ; 
+			}
+			rs.close(); 
+			System.out.println("[RemoteDB] Date fetched");
+			
+		} catch (Exception e) {
+			System.out.println(e) ; 
+		}
+		
+		// return resul 
+		return date ;
+	}
+	
+	
 	// Function to get all the interlocutors of one person 
 	public String[] getInterlocutors(String person) {
 		System.out.println("[RemoteDB} Calling getInterlocutors...") ; 

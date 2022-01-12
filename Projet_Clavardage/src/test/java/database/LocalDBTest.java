@@ -37,16 +37,18 @@ public class LocalDBTest {
 	
 	// Person 
 	protected static int nbUsers = 100 ; 
-	protected static ArrayList<String> usernames = new ArrayList<String>() ; 
+	protected static ArrayList<String> usernames = new ArrayList<String>() ;
+	protected static ArrayList<String> connected = new ArrayList<String>() ; 
 	protected static ArrayList<String> getUsernames = new ArrayList<String>() ; 
+	protected static ArrayList<String> getConnectedUsernames = new ArrayList<String>() ; 
 	protected static ArrayList<InetAddress> IPAddresses = new ArrayList<InetAddress>() ; 	
+	// Last access 
+	protected static String access = "17.06.2021 09:34:15" ;
 	// Random number 
 	Random rand = new Random() ;
 	protected static int nbTests = 10 ;
 	protected static ArrayList<Integer> indexes = new ArrayList<Integer>() ; 
 	/* **************************************************************************************** */
-	
-	
 	
 	
 	
@@ -56,7 +58,6 @@ public class LocalDBTest {
 	
 	@BeforeClass 
 	public static void initAll() throws IOException {
-		
 		// Connection to database
 		addrDb = "jdbc:mysql://localhost:3306/localdatabase?";
 		login = "root" ;
@@ -127,6 +128,8 @@ public class LocalDBTest {
 				assertEquals(IPString, rs.getString("ip")) ; 
 				// Check connected
 				assertTrue(rs.getBoolean("isConnected")) ; 
+				// Check last access empty 
+				assertEquals("", rs.getString("lastAccess")) ; 
 			}
 			
 		} catch (SQLException e) {
@@ -134,8 +137,140 @@ public class LocalDBTest {
 		}
 	} 
 
+
+	/////////////////////////////////FUNCTION userDisconnected /////////////////////////////////
+	@Test
+	public void testUserDisconnected() {
+		try {
+			for(int i=0; i<nbUsers; i++) {
+				// Disconnect the user
+				db.userDisconnected(usernames.get(i));
+				// Get the line corresponding to the user
+				ResultSet rs = db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE Username='" + usernames.get(i) + "' ; ") ; 
+				if (rs.next()) {
+					// Check connected
+					assertFalse(rs.getBoolean("isConnected")) ; 
+				}
+			}
+		} catch (SQLException e) {
+			System.out.println(e) ; 
+		}
+	}
 	
-	//////////////////////////////// FUNCTION deleteUserByName //////////////////////////////////	
+	
+	///////////////////////////////// FUNCTION updateUsername //////////////////////////////////
+	@Test
+	public void testUpdateUsername() {
+		try {
+			for (int i=0; i<nbUsers; i++) {
+				// IP address of the user 
+				byte[] ipAddr = new byte[]{(byte)192, (byte)168, (byte)0, (byte)i} ;
+				InetAddress IPAddress = InetAddress.getByAddress(ipAddr) ;
+				// Update the username 
+				db.updateUsername(IPAddress, ("user"+i));
+				// Get the line corresponding to the user 
+				ResultSet rs = db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE Username='" + usernames.get(i) + "' ;") ; 
+				if (rs.next()) {
+					// Check username
+					assertEquals("user"+i, rs.getString("Username")) ; 
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e) ; 
+		}
+	}
+
+	
+	//////////////////////////////// FUNCTION updateLastAccess /////////////////////////////////
+	@Test
+	public void testUpdateLastAccess() {
+		try {
+			for (int i=0; i<nbUsers; i++) {
+				// IP address of the user 
+				byte[] ipAddr = new byte[]{(byte)192, (byte)168, (byte)0, (byte)i} ;
+				InetAddress IPAddress = InetAddress.getByAddress(ipAddr) ;
+				// Update the last access 
+				db.updateLastAccess(IPAddress, access);
+				// Get the line corresponding to the user 
+				ResultSet rs = db.statement.executeQuery("SELECT * FROM UsernameToIP WHERE Username='" + usernames.get(i) + "' ;") ; 
+				if (rs.next()) {
+					// Check last access
+					assertEquals(access, rs.getString("lastAccess")) ; 
+				}				
+			}
+		} catch (Exception e) {
+			System.out.println(e) ; 
+		}
+	}
+	
+	
+	/////////////////////////////////// FUNCTION getUsername ///////////////////////////////////	
+	@Test
+	public void testGetUsername() {
+		for (int i=0; i<nbUsers; i++) {
+			String user = db.getUsername(IPAddresses.get(i)) ; 
+			assertEquals(usernames.get(i), user) ; 
+		}
+	} 
+	
+	
+	////////////////////////////////////// FUNCTION getIP //////////////////////////////////////	
+	@Test
+	public void testGetIP() {
+		for (int i=0; i<nbUsers; i++) {
+			InetAddress IP = db.getIP(usernames.get(i)) ;
+			assertEquals(IPAddresses.get(i), IP) ; 
+		}
+	} 
+
+	
+	////////////////////////////////// FUNCTION getLastAccess //////////////////////////////////	
+	@Test
+	public void testGetLastAccess() {
+		try {
+			for (int i=0; i<nbUsers; i++) {
+				// IP address of the user 
+				byte[] ipAddr = new byte[]{(byte)192, (byte)168, (byte)0, (byte)i} ;
+				InetAddress IPAddress = InetAddress.getByAddress(ipAddr) ;
+				// Update the last access 
+				db.updateLastAccess(IPAddress, access);
+				// Get the result
+				String res = db.getLastAccess(IPAddress) ;
+				assertEquals(access, res) ; 			
+			}
+		} catch (Exception e) {
+			System.out.println(e) ; 
+		}
+	}
+
+	
+	///////////////////////////////// FUNCTION getAllUsernames /////////////////////////////////	
+	@Test
+	public void testGetAllUsernames() {
+		getUsernames = db.getAllUsernames() ; 
+		assertEquals(usernames, getUsernames) ; 
+	} 
+	
+	
+	//////////////////////////////// FUNCTION getConnectedUSers ////////////////////////////////	
+	@Test
+	public void testGetConnectedUsers() {
+		// Disconnect 50 last users 
+		for(int i=nbUsers/2; i<nbUsers; i++) {
+			db.userDisconnected(usernames.get(i));
+		}
+		
+		// Define connected users 
+		for (int i=0 ; i<nbUsers/2 ; i++) {
+			connected.add(usernames.get(i)) ; 
+		}
+		
+		getConnectedUsernames = db.getConnectedUsernames() ; 
+		assertEquals(connected, getConnectedUsernames) ; 
+	} 
+	
+	
+	/////////////////////////////// FUNCTION deleteUserByName /////////////////////////////////	
 	@Test
 	public void testDeleteUserByName() {
 		try {
@@ -203,49 +338,6 @@ public class LocalDBTest {
 		
 	} 
 
-	
-	/////////////////////////////////// FUNCTION getUsername ///////////////////////////////////	
-	@Test
-	public void testGetUsername() {
-		for (int i=0; i<nbUsers; i++) {
-			try {
-				ResultSet rs=db.statement.executeQuery("SELECT username FROM UsernameToIP WHERE ip='" + IPAddresses.get(i) + "'") ;
-				if (rs.next()) {
-					assertEquals(usernames.get(i), rs.getString(1)) ; 
-				}
-			} catch (SQLException e) {
-				System.out.println(e) ; 
-			}
-		}
-	} 
-
-	
-	////////////////////////////////////// FUNCTION getIP //////////////////////////////////////	
-	@Test
-	public void testGetIP() {
-		for (int i=0; i<nbUsers; i++) {
-			try {
-				ResultSet rs=db.statement.executeQuery("SELECT ip FROM UsernameToIP WHERE username='" + usernames.get(i) + "'") ;
-				if (rs.next()) {
-					String IPString = IPAddresses.get(i).toString();
-					if (IPString.charAt(0) == ('/')) {
-						IPString = IPString.substring(1);
-					}
-					assertEquals(IPString, rs.getString(1)) ; 
-				}
-			} catch (SQLException e) {
-				System.out.println(e) ; 
-			}
-		}
-	} 
-	
-
-	///////////////////////////////// FUNCTION getAllUsernames /////////////////////////////////	
-	@Test
-	public void testGetAllUsernames() {
-		getUsernames = db.getAllUsernames() ; 
-		assertEquals(usernames, getUsernames) ; 
-	} 
 
 	
 	/////////////////////////////////// FUNCTION dropDatabase //////////////////////////////////	

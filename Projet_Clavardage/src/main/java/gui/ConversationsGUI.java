@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -22,7 +24,7 @@ public class ConversationsGUI {
 	private JPanel topPanel;
 	private final JLabel welcome ;
 	// Main part 
-	String[] interlocutors ; 
+	ArrayList<String> interlocutors ; 
 	private JPanel centerPanel ; 
 	final JComboBox<String> jComboBox ; 
 	private JButton choose = new JButton("Choose") ; 
@@ -49,12 +51,13 @@ public class ConversationsGUI {
 		
 		// Get all users with whom the user has already spoken
 		interlocutors = GUIManager.getInterlocutors(username) ;
-		System.out.println("[ConversationsGUI] Interlocutors") ; 
-		for (int i=0; i<interlocutors.length; i++) {
-			System.out.println(interlocutors[i]) ; 
+		String[] interlocutorsArray = new String [interlocutors.size()]; 
+		for (int k=0; k<interlocutors.size(); k++) {
+			interlocutorsArray[k] = interlocutors.get(k) ; 
 		}
+		
 		// Drop down menu
-		jComboBox = new JComboBox<String>(interlocutors) ; 
+		jComboBox = new JComboBox<String>(interlocutorsArray) ; 
 		// Button to switch to the history with this person 
         choose.setPreferredSize(new Dimension(150,30));
         choose.setMinimumSize(new Dimension(150,30));
