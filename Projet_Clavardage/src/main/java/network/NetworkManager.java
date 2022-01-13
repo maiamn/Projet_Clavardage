@@ -222,7 +222,6 @@ public class NetworkManager {
 
 	// Principal function of disconnection
 	public void disconnection(String username) {
-		System.out.println("[NetworkManager] Calling disconnection()");
 		notifyDisconnected(username);
 		serverUDP.setConnected(false) ;
 		serverTCP.setConnected(false) ;

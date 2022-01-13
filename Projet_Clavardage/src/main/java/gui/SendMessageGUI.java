@@ -3,7 +3,8 @@ package gui;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.ArrayList; 
+import java.util.ArrayList;
+import java.util.Iterator; 
 
 public class SendMessageGUI { 
 	// Attributes 
@@ -15,15 +16,12 @@ public class SendMessageGUI {
 	
 	private final JLabel welcome = new JLabel("Who do you want to talk with?") ;
 	
-	private final JLabel check = new JLabel ("You can check if a user is online!") ; 
-	private final JTextField search = new JTextField(30) ; 
+	ArrayList<String> connectedUsers ; 
+	final JComboBox<String> jComboBox ; 
+	private JButton choose = new JButton("Choose") ; 
 	private final JButton isReachable = new JButton("Check!") ; 
-	
-	private final String other = "Otherwise you can check again the connected users or go back to home page!" ; 
-	private final JButton connectedUsers = new JButton("See connected users") ; 
+
 	private final JButton homePage = new JButton ("Back to home page") ; 
-	
-	public static JLabel errorMessage ; 
 	
 	public static String username ;
 	
@@ -44,58 +42,51 @@ public class SendMessageGUI {
 		
 		// Center part to check if a user is online
 		
-		// Button to check a username 
-        isReachable.addActionListener(
-        		new ActionListener() {
-        			public void actionPerformed(ActionEvent e) {
-        				// Get the username choosen by the user
-        				String name = search.getText() ; 
-        				ArrayList<String> connectedUsers = GUIManager.getAllConnectedUsers() ;
-        		  		// Check if the username corresponds to a connected users
-        		  		boolean correct = GUIManager.userReachable(connectedUsers, name) ; 
-        		  		if(!correct) {
-        		  			errorMessage = new JLabel("<html>This user is unreachable! "
-        		  					+ "<br> You can check in the connected users list who is online! </html>", SwingConstants.CENTER) ; 
-        		  			// Pop up window
-        		  			JOptionPane.showMessageDialog(sendMessageFrame, errorMessage);
-        		  		} 
-        		  		else {
-        		  			if (name.equals(username)) {
-            		  			errorMessage = new JLabel("<html>You cannot talk to yourself! </html>", SwingConstants.CENTER) ; 
-            		  			// Pop up window
-            		  			JOptionPane.showMessageDialog(sendMessageFrame, errorMessage);
-        		  			} else {
-	        		  			System.out.println("GUI : sender = " + username + " receiver = " + name);
-	        		  			GUIManager.switchToChat(username, name) ; 
-	        		  			sendMessageFrame.setVisible(false);
-        		  			}
-        		  		}
-                  }
-                }
-              );
+		// Get all connected users
+		connectedUsers = GUIManager.getAllConnectedUsers() ; 
+		connectedUsers.add("Mateo") ;
+		connectedUsers.add("Celia") ; 
+		connectedUsers.add("Clarisse") ; 
+		connectedUsers.add("Maia") ; 
+		// Remove our own username
+        // Creating iterator object
+        Iterator<String> itr = connectedUsers.iterator();
+        // Remove element username
+        // Iterator.remove()
+        while (itr.hasNext()) {
+            String x = itr.next();
+            if (x.equals(username)) {
+            	itr.remove();
+            }      
+        }
+		String[] connectedUsersArray = new String [connectedUsers.size()]; 
+		for (int k=0; k<connectedUsers.size(); k++) {
+			connectedUsersArray[k] = connectedUsers.get(k) ; 
+		}
 		
-		Box checking = Box.createVerticalBox() ;
-		checking.add(check) ; 
-		checking.add(search) ; 
-		checking.add(isReachable) ; 
-		centerPanel = new JPanel() ; 
-		centerPanel.add(checking) ; 
-		centerPanel.setBorder(BorderFactory.createTitledBorder("Check is a user is reachable:"));
-
-
-        // Bottom part to go back to home page or to check connected users
-        connectedUsers.setPreferredSize(new Dimension(150,30));
-        connectedUsers.setMinimumSize(new Dimension(150,30));
-        connectedUsers.setMaximumSize(new Dimension(150,30));
-        connectedUsers.addActionListener(
+		// Drop down menu
+		jComboBox = new JComboBox<String>(connectedUsersArray) ; 
+		// Button to switch to the history with this person 
+        choose.setPreferredSize(new Dimension(150,30));
+        choose.setMinimumSize(new Dimension(150,30));
+        choose.setMaximumSize(new Dimension(150,30));
+        choose.addActionListener(
         		new ActionListener() {
         			public void actionPerformed(ActionEvent e) {
         				sendMessageFrame.setVisible(false);
-        				GUIManager.switchToConnectedUsers(username) ; 
+        				String user = jComboBox.getItemAt(jComboBox.getSelectedIndex()); 
+        				GUIManager.switchToChat(username, user) ; 
                   }
                 }
               );
         
+		Box options = Box.createVerticalBox() ; 
+		options.add(jComboBox) ; 
+		options.add(choose);
+        centerPanel = new JPanel() ;
+        centerPanel.add(options) ; 
+        
+        // Bottom panel
         homePage.setPreferredSize(new Dimension(150,30));
         homePage.setMinimumSize(new Dimension(150,30));
         homePage.setMaximumSize(new Dimension(150,30));
@@ -108,12 +99,8 @@ public class SendMessageGUI {
                 }
               );
         
-		Box options = Box.createHorizontalBox() ; 
-		options.add(connectedUsers) ; 
-		options.add(homePage);
 		bottomPanel = new JPanel() ; 
-		bottomPanel.add(options) ; 
-		bottomPanel.setBorder(BorderFactory.createTitledBorder(other));
+		bottomPanel.add(homePage) ; 
 		
 		// Main Frame 
         //authentificationFrame.setSize(widthWindow, heightWindow);
