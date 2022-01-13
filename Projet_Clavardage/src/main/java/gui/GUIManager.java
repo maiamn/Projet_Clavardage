@@ -153,7 +153,6 @@ public class GUIManager {
 	
 	// SWITCH TO SEND MESSAGE PAGE
 	public static void switchToChat(String sender, String receiver) {
-		System.out.println("ChatGUI : sender = " + sender + " receiver = " + receiver) ; 
 		chat = new ChatGUI(sender, receiver) ; 
 	}
 	

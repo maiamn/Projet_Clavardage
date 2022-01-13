@@ -29,6 +29,7 @@ public class HistoryGUI {
 	private JPanel centerPanel ; 
 	// Bottom part 
 	private JPanel bottomPanel ;
+	private JButton refresh = new JButton("Refresh") ;
 	private JButton back = new JButton("Back to home page") ; 
 	
 	public static String you ; 
@@ -124,7 +125,19 @@ public class HistoryGUI {
         centerPanel.add(scrollPane, BorderLayout.CENTER) ; 
         
         
-        // Bottom part to back to home page
+        // Bottom part to refresh or to go back to home page
+        // Button to refresh 
+        refresh.setPreferredSize(new Dimension(150,30));
+        refresh.setMinimumSize(new Dimension(150,30));
+        refresh.setMaximumSize(new Dimension(150,30));
+        refresh.addActionListener(
+        		new ActionListener() {
+        			public void actionPerformed(ActionEvent e) {
+        				historyFrame.setVisible(false);
+        				GUIManager.switchToHistory(you, interlocutor) ; 
+                  }
+                }
+              );
 		// Button to go back to home page
         back.setPreferredSize(new Dimension(150,30));
         back.setMinimumSize(new Dimension(150,30));
@@ -137,8 +150,12 @@ public class HistoryGUI {
                   }
                 }
               );
-        bottomPanel = new JPanel() ; 
-        bottomPanel.add(back) ; 
+        
+        Box options = Box.createHorizontalBox() ; 
+		options.add(refresh);
+		options.add(back);
+		bottomPanel = new JPanel() ; 
+		bottomPanel.add(options) ; 
         
         // Main frame 
         historyFrame.setLayout(new BorderLayout());

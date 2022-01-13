@@ -229,13 +229,20 @@ public class Manager {
 	
 	// Know if there is an unread message 
 	public static boolean newMessage(String user1, String user2) {
-		boolean res ; 
+		boolean res = true ; 
 		String lastAccessString = getLastAccess(user2) ; 
 		String lastDateString = getLastDate(user1, user2) ;  
 		
-		if (lastAccessString.equals("") || lastDateString.equals("")) { 
+		if (lastAccessString.equals("") && lastDateString.equals("")) {
 			res = false ; 
-		} else {
+		} 
+		else if (lastAccessString.equals("") && !lastDateString.equals("")) {
+			res = true ; 
+		}
+		else if (!lastAccessString.equals("") && lastDateString.equals("")) {
+			res = false ; 
+		}
+		else if (!lastAccessString.equals("") && !lastDateString.equals("")) {
 			Date lastAccess = null ; 
 			Date lastDate = null ; 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
