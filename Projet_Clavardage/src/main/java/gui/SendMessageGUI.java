@@ -44,10 +44,6 @@ public class SendMessageGUI {
 		
 		// Get all connected users
 		connectedUsers = GUIManager.getAllConnectedUsers() ; 
-		connectedUsers.add("Mateo") ;
-		connectedUsers.add("Celia") ; 
-		connectedUsers.add("Clarisse") ; 
-		connectedUsers.add("Maia") ; 
 		// Remove our own username
         // Creating iterator object
         Iterator<String> itr = connectedUsers.iterator();
