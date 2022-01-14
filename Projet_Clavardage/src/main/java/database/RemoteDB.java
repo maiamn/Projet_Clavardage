@@ -134,7 +134,7 @@ public class RemoteDB {
 		String date = "" ; 
 		
 		// Query to order DB by descending date and select messages 
-		String query = "SELECT History.Date FROM History "
+		String query = "SELECT * FROM History "
 				+ "WHERE (Sender = '" + person2 + "' AND Receiver = '" + person1 + "') "
 				+ "ORDER BY Date DESC LIMIT 50" ; 
 
@@ -143,7 +143,8 @@ public class RemoteDB {
 			ResultSet rs = this.statement.executeQuery(query) ;
 			
 			if (rs.next()) {
-				date = rs.getString(1) ; 
+				System.out.println("RemoteDB -> There is a result") ; 
+				date = rs.getString("Date") ; 
 			}
 			rs.close(); 
 			
@@ -152,6 +153,7 @@ public class RemoteDB {
 		}
 		
 		// return resul 
+		System.out.println("REMOTE DB -> " + date) ; 
 		return date ;
 	}
 	
