@@ -129,21 +129,79 @@ public class RemoteDB {
 	
 	
 	// Get messages history (50 last messages) from the database
-	public String getDateLastMessage(String person1, String person2) { 
-		// Init conversation
+		public Conversation getReceivedMessages(String person1, String person2) {
+			// Init conversation
+			Conversation result = new Conversation(null, null, null, null) ;
+			
+			// Query to order DB by descending date and select messages 
+			String query = "SELECT * FROM History "
+					+ "WHERE (Sender = '" + person2 + "' AND Receiver = '" + person1 + "') "
+					+ "ORDER BY Date DESC LIMIT 50" ; 
+			
+			ArrayList<String> senders = new ArrayList<String>();
+			ArrayList<String> receivers = new ArrayList<String>();
+			ArrayList<String> messages = new ArrayList<String>();
+			ArrayList<String> dates = new ArrayList<String>();
+			
+			try {
+				// Execute the statement 
+				ResultSet rs = this.statement.executeQuery(query) ;
+				
+				while(rs.next()) {
+					// getArray not supported by mysql
+					// Move sql.array content to ArrayList
+					senders.add( rs.getString(1) );
+					receivers.add(rs.getString(2));
+					messages.add(rs.getString(3));
+					dates.add(rs.getString(4));
+				}
+				rs.close(); 
+				
+			} catch (Exception e) {
+				System.out.println(e) ; 
+			}
+			
+			// Define String[] instead of ArrayList 
+			String[] sendersArray = new String[senders.size()];
+			String[] receiversArray = new String[receivers.size()] ; 
+			String[] datesArray = new String[dates.size()] ; 
+			String[] messagesArray = new String[messages.size()] ;
+			
+			for (int k=0; k<senders.size(); k++) {
+				sendersArray[k]=senders.get(k) ; 
+				receiversArray[k] = receivers.get(k) ; 
+				datesArray[k] = dates.get(k) ; 
+				messagesArray[k] = messages.get(k) ; 
+			}
+			
+			// Define the result
+			result.setSenders(sendersArray);
+			result.setReceivers(receiversArray);
+			result.setDates(datesArray);
+			result.setMessages(messagesArray);
+			
+			// Return result
+			return result ;
+		}
+		
+	// Get messages history (50 last messages) from the database
+	public String getLastDateMessage(String person1, String person2) { 
+		// Init date
 		String date = "" ; 
 		
 		// Query to order DB by descending date and select messages 
 		String query = "SELECT * FROM History "
-				+ "WHERE (Sender = '" + person2 + "' AND Receiver = '" + person1 + "') "
-				+ "ORDER BY Date DESC LIMIT 1" ; 
+				+ "WHERE (Sender = '" + person1 + "' AND Receiver = '" + person2 + "') "
+				+ "OR (Sender = '" + person2 + "' AND Receiver = '" + person1 + "') "
+				+ "ORDER BY Date DESC LIMIT 50" ; 
+		System.out.println("Remote DB" + query) ; 
 		try {
 			// Execute the statement 
 			ResultSet rs = this.statement.executeQuery(query) ;
 			
 			if (rs.next()) {
 				System.out.println("RemoteDB -> There is a result") ; 
-				date = rs.getString("Date") ; 
+				date = rs.getString(4) ; 
 			}
 			rs.close(); 
 			

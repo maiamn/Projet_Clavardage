@@ -219,7 +219,15 @@ public class Manager {
 		
 	// [RemoteDB] Get the date of the last message received 
 	public static String getLastDate(String sender, String receiver) {
-		return remoteDB.getDateLastMessage(sender, receiver) ; 
+		String IP1 = getIP(sender).toString();
+		String IP2 = getIP(receiver).toString();
+		if (IP1.charAt(0) == ('/')) {
+			IP1 = IP1.substring(1);
+		}
+		if (IP2.charAt(0) == ('/')) {
+			IP2 = IP2.substring(1);
+		}
+		return remoteDB.getReceivedMessages(IP1, IP2).getDates()[0] ; 
 	}
 	
 	
