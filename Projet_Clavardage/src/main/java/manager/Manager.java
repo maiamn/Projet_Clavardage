@@ -237,11 +237,9 @@ public class Manager {
 	
 	// Know if there is an unread message 
 	public static boolean newMessage(String user1, String user2) {
-		System.out.println("MANAGER - newMessage") ; 
 		boolean res = true ; 
 		String lastAccessString = getLastAccess(user2) ; 
 		String lastDateString = getLastDate(user1, user2) ;  
-		System.out.println("Last acces = " + lastAccessString + "- last message = " + lastDateString) ; 
 		
 		if (lastAccessString.equals("") && lastDateString.equals("")) {
 			res = false ; 
@@ -270,7 +268,6 @@ public class Manager {
 				res = true ; 
 			}
 		}
-		System.out.println("RESULT NEW MESSAGES - " + res) ; 
 		return res ; 
 	}
 	

@@ -175,7 +175,6 @@ public class LocalDB {
 	
 	// Get the last access according to the IP 
 	public String getLastAccess(InetAddress IP) {
-		System.out.println("LocalDB : getLastAccess") ; 
 		String IPString = IP.toString();
 		if (IPString.charAt(0) == ('/')) {
 			IPString = IPString.substring(1);
@@ -187,7 +186,6 @@ public class LocalDB {
 			ResultSet rs = this.statement.executeQuery(query) ; 
 			if (rs.next()) {
 				 lastAccess = rs.getString("lastAccess") ; 
-				 System.out.println("LocalDB :" + lastAccess) ; 
 			}
 			rs.close(); 
 		} 

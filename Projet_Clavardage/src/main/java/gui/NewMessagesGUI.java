@@ -49,7 +49,6 @@ public class NewMessagesGUI {
 		for (int k=0; k<nbInterlocutors; k++) {
 			usersTable[k][0] = new String(interlocutors.get(k)) ;
 			if (GUIManager.newMessages(username, interlocutors.get(k))) {
-				System.out.println("NewMessages GUI : there is new messages ? " + GUIManager.newMessages(username, interlocutors.get(k))) ;
 				usersTable[k][1] = "UNREAD MESSAGE(S)" ; 
 			} else {
 				usersTable[k][1] = "Up to date" ; 
