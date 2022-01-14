@@ -38,7 +38,7 @@ public class LocalDB {
 			           "(username VARCHAR(255) not NULL, " +
 			           " ip VARCHAR(255) not NULL PRIMARY KEY," +
 			           " isConnected BOOLEAN not NULL CHECK (isConnected IN (0,1))," +
-			           " lastAccess VARCHAR(255)) ;" ;  
+			           " lastAccess VARCHAR(255) not NULL) ;" ;  
 
 			this.statement.executeUpdate(query) ;
 		} 
@@ -58,8 +58,8 @@ public class LocalDB {
 		if (IPString.charAt(0) == ('/')) {
 			IPString = IPString.substring(1);
 		}
-		
-		String query = "REPLACE INTO UsernameToIP(Username, IP, isConnected) VALUES ('" + username + "', '" + IPString + "', 1) ;" ;
+		String actualLastAccess = getLastAccess(IP) ; 
+		String query = "REPLACE INTO UsernameToIP(Username, IP, isConnected, lastAccess) VALUES ('" + username + "', '" + IPString + "', 1, '" + actualLastAccess + "') ;" ;
 		
 		try {
 			// Execute the statement 
