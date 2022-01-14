@@ -179,13 +179,14 @@ public class LocalDB {
 		if (IPString.charAt(0) == ('/')) {
 			IPString = IPString.substring(1);
 		}
-		String query = "SELECT UsernameToIP.lastAccess FROM UsernameToIP WHERE IP = '" + IPString + "' ;";	
+		String query = "SELECT * FROM UsernameToIP WHERE IP = '" + IPString + "' ;";	
 		String lastAccess = "" ; 
 		try {
 			// Execute the statement 
 			ResultSet rs = this.statement.executeQuery(query) ; 
 			if (rs.next()) {
-				 lastAccess = rs.getString(1);
+				 lastAccess = rs.getString("lastAccess") ; 
+				 System.out.println(lastAccess) ; 
 			}
 			rs.close(); 
 		} 
