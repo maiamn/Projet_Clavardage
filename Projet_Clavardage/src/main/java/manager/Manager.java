@@ -109,9 +109,9 @@ public class Manager {
 	
 	// Notify everyone that we are disconnected and drop databases
 	public static void disconnection() {
+		networkManager.disconnection(username);
 		localDB.closeConnection();
 		remoteDB.closeConnection();
-		networkManager.disconnection(username);
 	}
 	
 	
