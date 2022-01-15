@@ -58,8 +58,8 @@ public class LocalDB {
 		if (IPString.charAt(0) == ('/')) {
 			IPString = IPString.substring(1);
 		}
-		String actualLastAccess = getLastAccess(IP) ; 
-		String query = "REPLACE INTO UsernameToIP(Username, IP, isConnected, lastAccess) VALUES ('" + username + "', '" + IPString + "', 1, '" + actualLastAccess + "') ;" ;
+		
+		String query = "REPLACE INTO UsernameToIP(Username, IP, isConnected, lastAccess) VALUES ('" + username + "', '" + IPString + "', 1, '') ;" ;
 		
 		try {
 			// Execute the statement 
@@ -179,13 +179,13 @@ public class LocalDB {
 		if (IPString.charAt(0) == ('/')) {
 			IPString = IPString.substring(1);
 		}
-		String query = "SELECT * FROM UsernameToIP WHERE IP = '" + IPString + "' ;";	
+		String query = "SELECT UsernameToIP.lastAccess FROM UsernameToIP WHERE IP = '" + IPString + "' ;";	
 		String lastAccess = "" ; 
 		try {
 			// Execute the statement 
 			ResultSet rs = this.statement.executeQuery(query) ; 
 			if (rs.next()) {
-				 lastAccess = rs.getString("lastAccess") ; 
+				 lastAccess = rs.getString(1);
 			}
 			rs.close(); 
 		} 

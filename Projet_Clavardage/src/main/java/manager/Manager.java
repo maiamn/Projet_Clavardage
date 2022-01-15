@@ -44,19 +44,26 @@ public class Manager {
 		return res ; 
 	}
 	
-	// Function that hecks that there is no special character
+	// Function that checks that there is no special character
 	public static boolean validCharUsername(String usernameWanted) {
 		boolean res = true ; 
 		res = res && noSpecialCharacter(usernameWanted) ;
 		return res ; 
 	}
 	
+	// Function that checks that the username is not already in the local db
+	public static boolean validLocalDBUsername(String usernameWanted) {
+		InetAddress IP = localDB.getIP(usernameWanted) ;
+		return (IP.equals(null) || IP.equals(networkManager.getMyIP()));
+	}
+
 	// Function that checks that the username is valid: length, special characters, availability
 	public static boolean validUsername(String usernameWanted) {
 		boolean res = true ; 
 		res = res && validLengthUsername(usernameWanted) ; 
 		res = res && validCharUsername(usernameWanted) ; 
 		res = res && networkManager.usernameAvailable(usernameWanted) ; 
+		res = res && validLocalDBUsername(usernameWanted);
 		if(res) {
 			username = usernameWanted;
 		}

@@ -350,6 +350,7 @@ public class LocalDBTest {
 			assertTrue(true) ;
 		}	
 		db = new LocalDB() ; 
-	}  
+	} 
+	
 
 }
