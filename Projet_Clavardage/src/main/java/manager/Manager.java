@@ -54,7 +54,7 @@ public class Manager {
 	// Function that checks that the username is not already in the local db
 	public static boolean validLocalDBUsername(String usernameWanted) {
 		InetAddress IP = localDB.getIP(usernameWanted) ;
-		return (IP.equals(null) || IP.equals(networkManager.getMyIP()));
+		return (IP==null || IP.equals(networkManager.getMyIP()));
 	}
 
 	// Function that checks that the username is valid: length, special characters, availability
