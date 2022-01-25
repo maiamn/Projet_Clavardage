@@ -110,7 +110,7 @@ public class GUIManager {
 	}
 	
 	public static boolean newMessages(String you, String dest) {
-		return Manager.newMessage(you, dest) ; 
+		return Manager.newMessage(you, dest) ;  
 	}
 	
 	

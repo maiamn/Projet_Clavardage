@@ -28,7 +28,7 @@ public class LocalDB {
 		
 		try {
 			// Make a database connection
-			this.connection = DriverManager.getConnection("jdbc:sqlite:test.db");
+			this.connection = DriverManager.getConnection("jdbc:sqlite:localDB.db");
 			
 			// Create a statement object
 			this.statement = this.connection.createStatement() ; 
@@ -161,19 +161,18 @@ public class LocalDB {
 			ResultSet rs = this.statement.executeQuery(query) ; 
 			
 			if (rs.next()) {
-				 IPString = rs.getString(1);
+				 IPString = rs.getString(1) ; 
 				 IP = InetAddress.getByName(IPString) ; 
 			}
 			rs.close(); 
 		} 
 		catch (Exception e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
-		
 		return IP ; 
 	}
 	
-	// Get the last access according to the IP 
+	// Get the last access according to the IP  
 	public String getLastAccess(InetAddress IP) {
 		String IPString = IP.toString();
 		if (IPString.charAt(0) == ('/')) {
@@ -190,7 +189,7 @@ public class LocalDB {
 			rs.close(); 
 		} 
 		catch (SQLException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 
 		return lastAccess ;	

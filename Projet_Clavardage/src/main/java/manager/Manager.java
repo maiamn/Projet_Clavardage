@@ -139,7 +139,7 @@ public class Manager {
 	
 	// [LocalDB] Set the new last access 
 	public static void setLastAccess(String username, String newDate) {
-		String IPString = getIP(username).toString();
+		String IPString = localDB.getIP(username).toString();
 		if (IPString.charAt(0) == ('/')) {
 			IPString = IPString.substring(1);
 		}
@@ -244,8 +244,8 @@ public class Manager {
 	
 	// Know if there is an unread message 
 	public static boolean newMessage(String user1, String user2) {
-		boolean res = true ; 
-		String lastAccessString = getLastAccess(user2) ; 
+		boolean res = true ;  
+		String lastAccessString = getLastAccess(user2) ;
 		String lastDateString = getLastDate(user1, user2) ;  
 		
 		if (lastAccessString.equals("") && lastDateString.equals("")) {
