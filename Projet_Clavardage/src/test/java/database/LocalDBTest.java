@@ -64,7 +64,7 @@ public class LocalDBTest {
 		password = "root" ;
  
 		try {
-			db.connection = DriverManager.getConnection("jdbc:sqlite:test.db");
+			db.connection = DriverManager.getConnection("jdbc:sqlite:localDB.db");
 		} catch (SQLException e)
         {
             fail(e.toString());

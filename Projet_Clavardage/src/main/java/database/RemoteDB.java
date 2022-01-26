@@ -24,7 +24,7 @@ public class RemoteDB {
 		// Load the driver class file 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver") ; 
-		} 
+		}  
 		catch (ClassNotFoundException e) {
 			System.out.println("Error while loading the driver class file" + e) ; 
 		}
@@ -49,7 +49,7 @@ public class RemoteDB {
 		catch (SQLException e) {
 			System.out.println(e);
 		}
-	}
+	} 
 	
 	
 	// Add a message to the database
